@@ -9,7 +9,7 @@ public enum Length {
         this.length = length;
     }
 
-    public int getLength() {
+    public int value() {
         return length;
     }
 }
