@@ -1,11 +1,12 @@
 package model.ship;
 
-import model.ship.Ship;
-
 public class Destroyer extends Ship {
+    public Destroyer() {
+        super();
+        this.length = Length.DESTROYER;
+        this.shootingPower = ShootingPower.DESTROYER;
+        this.shipType = ShipType.DESTROYER;
 
-
-    public Destroyer(int x, int y, boolean isVertical, Powershot powershot, Length length) {
-        super(x, y, isVertical, powershot, length);
     }
+
 }
