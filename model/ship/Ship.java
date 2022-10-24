@@ -4,6 +4,8 @@ public abstract class Ship {
     protected boolean isVertical;
     protected Powershot powershot;
     protected Length length;
+    protected Direction direction;
+    protected ShipType shipType;
     protected int x;
     protected int y;
 
