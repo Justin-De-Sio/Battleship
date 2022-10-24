@@ -1,5 +1,7 @@
 package model;
 
+import model.ship.Ship;
+
 public class Square {
     private boolean isHit;
     private boolean isContainShip = false;
@@ -23,13 +25,10 @@ public class Square {
         return isContainShip;
     }
 
-    public void setContainShip(boolean isContainShip) {
+    public void setIsContainShip(boolean isContainShip) {
         this.isContainShip = isContainShip;
     }
 
-    public Ship getShip() {
-        return ship;
-    }
 
     public void hit() {
         isHit = true;
@@ -41,10 +40,6 @@ public class Square {
 
     public Ship getShip() {
         return ship;
-    }
-
-    public void setShip(Ship ship) {
-        this.ship = ship;
     }
 
     public void setShip(Ship ship) {
