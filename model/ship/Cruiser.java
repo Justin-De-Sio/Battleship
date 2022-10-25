@@ -5,6 +5,5 @@ public class Cruiser extends Ship {
         super();
         this.length = Length.CRUISER;
         this.shootingPower = ShootingPower.CRUISER;
-        this.shipType = ShipType.CRUISER;
     }
 }

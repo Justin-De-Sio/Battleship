@@ -5,7 +5,6 @@ public class BattleShip extends Ship {
         super();
         this.length = Length.BATTLESHIP;
         this.shootingPower = ShootingPower.BATTLESHIP;
-        this.shipType = ShipType.BATTLESHIP;
 
     }
 }

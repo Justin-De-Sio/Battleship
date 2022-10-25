@@ -1,7 +1,6 @@
 package model;
 
 import model.ship.Ship;
-import model.ship.ShipType;
 
 public class Square {
     private boolean isHit;

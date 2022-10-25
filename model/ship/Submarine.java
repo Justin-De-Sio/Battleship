@@ -5,7 +5,6 @@ public class Submarine extends Ship {
         super();
         this.length = Length.SUBMARINE;
         this.shootingPower = ShootingPower.SUBMARINE;
-        this.shipType = ShipType.SUBMARINE;
 
     }
 

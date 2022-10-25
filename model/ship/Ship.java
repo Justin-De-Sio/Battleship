@@ -11,7 +11,6 @@ public abstract class Ship {
     protected ShootingPower shootingPower;
     protected Length length;
 
-    protected ShipType shipType;
     protected ArrayList<int[]> coordinates;
 
     protected int strikeCount;
@@ -44,12 +43,6 @@ public abstract class Ship {
 
     // add coordinates to the ship
 
-
-
-
-    public ShipType getShipType() {
-        return shipType;
-    }
 
     public boolean isInZone(int x, int y) {
         return x < 15 && y < 15;

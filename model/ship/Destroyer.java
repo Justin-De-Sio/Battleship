@@ -5,7 +5,6 @@ public class Destroyer extends Ship {
         super();
         this.length = Length.DESTROYER;
         this.shootingPower = ShootingPower.DESTROYER;
-        this.shipType = ShipType.DESTROYER;
 
     }
 
