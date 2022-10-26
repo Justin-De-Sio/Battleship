@@ -10,13 +10,6 @@ public class Board {
     private final Square[][] board;
     private final Ship[] ships;
 
-    // Retourne la case de la board en x et y, de type Square
-    public Square getSquare(int x, int y){
-        return board[x][y];
-    }
-
-
-
     public Board() {
         final int BOARD_SIZE = 15;
         final int SHIP_NUMBER = 10;
@@ -30,9 +23,6 @@ public class Board {
 
 
     }
-
-
-
 
     public void shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
         int shipNumber = 0;
@@ -59,11 +49,17 @@ public class Board {
     }
 
 
-
+    public void hit(int x, int y) {
+        // TODO : il faut qu'il tire sur l'autre board
+        // TODO : il faut choisir le bateau qui tire
+        board[x][y].hit();
+    }
 
     public boolean isHit(int x, int y) {
         return board[x][y].isHit();
     }
+
+
 
 
     public boolean isSunk(int x, int y) {
@@ -103,6 +99,64 @@ public class Board {
             board[coordinate[0]][coordinate[1]].setShip(null);
         }
     }
+    public boolean shoot(int x, int y, Ship ship)
+    {
+        if(!board[x][y].isHit())
+        {
+            int p_d_tir = ship.getPowershot().value();
+            if (p_d_tir == 1) {
+                board[x][y].hit();
+                if (board[x][y].isContainShip())
+                {
+                    board[x][y].IncrementStrikeCount();
+                    return true;
+                }
+                else {return true;}
+            }
+            if (p_d_tir==4)
+            {
+                for (int yi=0;yi<2;yi++)
+                {
+                    for (int xi=0;xi<2;xi++)
+                    {
+                        board[x+xi][y+yi].hit();
+                        if (board[x+xi][y+yi].isContainShip())
+                        {
+                            board[x+xi][y+yi].IncrementStrikeCount();
+                        }
+
+                    }
+                }
+            return true;
+
+            }
+            if (p_d_tir==9)
+            {
+                x=x-1;
+                y=y-1;
+                for (int yi=0;yi<3;yi++)
+                {
+                    for (int xi=0;xi<3;xi++)
+                    {
+                        board[x+xi][y+yi].hit();
+                        if (board[x+xi][y+yi].isContainShip())
+                        {
+                            board[x+xi][y+yi].IncrementStrikeCount();
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        else
+        {
+            System.out.println("erreur!!! vous avez déjas tirer sur cette case");
+            return false;
+        }
+
+        return false;
+    }
+
 
 
     public void placeShipRandomly(Ship ship) {
