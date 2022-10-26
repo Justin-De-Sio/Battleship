@@ -45,8 +45,18 @@ public class Square {
     public void setShip(Ship ship) {
         this.ship = ship;
     }
-    public void IncrementStrikeCount(){
-        ship.incrementStrikeCount();;
+    public void IncrementStrikeCount(){//je suis pa s très sur
+        ship.incrementStrikeCount();
     }
+    public void shoot()
+    {// fonction shoot
+        this.hit();//je hit la casse
+        if (this.isContainShip)// je regarde si elle contien un ship
+        {
+          this.IncrementStrikeCount();//si oui j'increment (voir méthode aux dessu)
+          return;
+        }
+        else{return;}
 
+    }
 }
