@@ -101,55 +101,48 @@ public class Board {
     }
     public boolean shoot(int x, int y, Ship ship)
     {
+        //je vérifie que la case n'a j'ammais été hit
         if(!board[x][y].isHit())
         {
             int p_d_tir = ship.getPowershot().value();
-            if (p_d_tir == 1) {
-                board[x][y].hit();
-                if (board[x][y].isContainShip())
-                {
-                    board[x][y].IncrementStrikeCount();
-                    return true;
-                }
-                else {return true;}
+            if (p_d_tir == 1)
+            {//si la puisance de tir==1 je fais shoot sur x et y
+                board[x][y].shoot();
+                return true;
             }
+
             if (p_d_tir==4)
-            {
+            {//si la puisance de tir, je fais shoot sur un carré 2x2: je commence en hout à droite
                 for (int yi=0;yi<2;yi++)
                 {
                     for (int xi=0;xi<2;xi++)
                     {
-                        board[x+xi][y+yi].hit();
-                        if (board[x+xi][y+yi].isContainShip())
-                        {
-                            board[x+xi][y+yi].IncrementStrikeCount();
-                        }
+                        board[x+xi][y+yi].shoot();
 
                     }
                 }
             return true;
-
             }
+
+
             if (p_d_tir==9)
-            {
-                x=x-1;
+            {// si la puisance de tir est =9 alors, la position du tir est aux millieux du carré 3X3:
+                x=x-1;//je me positione en haut à droite
                 y=y-1;
                 for (int yi=0;yi<3;yi++)
                 {
                     for (int xi=0;xi<3;xi++)
                     {
-                        board[x+xi][y+yi].hit();
-                        if (board[x+xi][y+yi].isContainShip())
-                        {
-                            board[x+xi][y+yi].IncrementStrikeCount();
-                        }
+                        board[x+xi][y+yi].shoot();
                     }
                 }
                 return true;
             }
+
+
         }
         else
-        {
+        {// si la casse est déja hit je renvois uen erreur
             System.out.println("erreur!!! vous avez déjas tirer sur cette case");
             return false;
         }
