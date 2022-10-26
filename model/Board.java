@@ -99,8 +99,63 @@ public class Board {
             board[coordinate[0]][coordinate[1]].setShip(null);
         }
     }
+    public boolean shoot(int x, int y, Ship ship)
+    {
+        if(!board[x][y].isHit())
+        {
+            int p_d_tir = ship.getPowershot().value();
+            if (p_d_tir == 1) {
+                board[x][y].hit();
+                if (board[x][y].isContainShip())
+                {
+                    board[x][y].IncrementStrikeCount();
+                    return true;
+                }
+                else {return true;}
+            }
+            if (p_d_tir==4)
+            {
+                for (int yi=0;yi<2;yi++)
+                {
+                    for (int xi=0;xi<2;xi++)
+                    {
+                        board[x+xi][y+yi].hit();
+                        if (board[x+xi][y+yi].isContainShip())
+                        {
+                            board[x+xi][y+yi].IncrementStrikeCount();
+                        }
 
+                    }
+                }
+            return true;
 
+            }
+            if (p_d_tir==9)
+            {
+                x=x-1;
+                y=y-1;
+                for (int yi=0;yi<3;yi++)
+                {
+                    for (int xi=0;xi<3;xi++)
+                    {
+                        board[x+xi][y+yi].hit();
+                        if (board[x+xi][y+yi].isContainShip())
+                        {
+                            board[x+xi][y+yi].IncrementStrikeCount();
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        else
+        {
+            System.out.println("erreur!!! vous avez déjas tirer sur cette case");
+            return false;
+        }
+
+        return false;
+    }
 
 
 

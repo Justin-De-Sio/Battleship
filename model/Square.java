@@ -45,6 +45,8 @@ public class Square {
     public void setShip(Ship ship) {
         this.ship = ship;
     }
-
+    public void IncrementStrikeCount(){
+        ship.incrementStrikeCount();;
+    }
 
 }
