@@ -1,19 +1,20 @@
 package model;
 
 import model.ship.Ship;
-import model.ship.ShipType;
 
 public class Square {
     private boolean isHit;
     private boolean isContainShip = false;
     private Ship ship = null;
 
+    // A ajouter pour l'affichage ?
+    private char designator = '~';
+
     Square() {
         isHit = false;
         isContainShip = false;
         ship = null;
     }
-
 
     public boolean isHit() {
         return isHit;
@@ -32,9 +33,8 @@ public class Square {
     }
 
 
-    public void hit(Square target) {
-        this.isHit = true;
-        this.ship.hit(target);
+    public void hit() {
+        isHit = true;
     }
 
     public void containShip() {
@@ -49,15 +49,8 @@ public class Square {
         this.ship = ship;
     }
 
-    public void shoot()
-    {// fonction shoot
-        this.hit();//je hit la casse
-        if (this.isContainShip)// je regarde si elle contien un ship
-        {
-            ship.incrementStrikeCount();//si oui j'increment (voir méthode aux dessu)
-          return;
-        }
-        else{return;}
+    public char getDesignator() { return designator; }
 
-    }
+    public void setDesignator(char designator) { this.designator = designator; }
+
 }
