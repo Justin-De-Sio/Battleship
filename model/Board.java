@@ -10,6 +10,13 @@ public class Board {
     private final Square[][] board;
     private final Ship[] ships;
 
+    // Retourne la case de la board en x et y, de type Square
+    public Square getSquare(int x, int y){
+        return board[x][y];
+    }
+
+
+
     public Board() {
         final int BOARD_SIZE = 15;
         final int SHIP_NUMBER = 10;
