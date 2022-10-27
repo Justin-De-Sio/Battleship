@@ -29,7 +29,7 @@ public class ViewCommandLineInterface {
                 if (!board.getBoard()[i][j].isContainShip())
                 System.out.print("~" + " | ");
                 else {
-                    System.out.print("b" + " | ");
+                    System.out.print("■" + " | ");
                 }
 
             }
