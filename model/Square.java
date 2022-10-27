@@ -35,7 +35,9 @@ public class Square {
 
     public void hit() {
         isHit = true;
+        if (this.ship!=null){
         ship.incrementStrikeCount();
+        }
     }
 
     public void containShip() {
