@@ -1,5 +1,7 @@
 package model.ship;
 
+import model.Square;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -64,6 +66,18 @@ public abstract class Ship {
 
     public void incrementStrikeCount() {
         this.strikeCount++;
+    }
+
+    public void hit(Square target) {
+
+        if (target.getShip() != null) {
+            if (target.getShip().getShipType() == ShipType.SUBMARINE && this.getShipType() == ShipType.SUBMARINE) {
+                target.getShip().incrementStrikeCount();
+            }else {
+                target.getShip().incrementStrikeCount();
+            }
+        }
+
     }
 }
 
