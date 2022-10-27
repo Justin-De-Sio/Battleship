@@ -10,12 +10,6 @@ public class Board {
     private final Square[][] board;
     private final Ship[] ships;
 
-    // Retourne la case de la board en x et y, de type Square
-    public Square getSquare(int x, int y) {
-        return board[x][y];
-    }
-
-
     public Board() {
         final int BOARD_SIZE = 15;
         final int SHIP_NUMBER = 10;
@@ -29,6 +23,9 @@ public class Board {
 
 
     }
+
+
+
 
     public void shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
         int shipNumber = 0;
@@ -55,45 +52,6 @@ public class Board {
     }
 
 
-    public boolean hits(Ship shipAttacker, int xTarget, int yTarget) {
-        //je vérifie que la case n'a j'amais été hit
-        if (!board[xTarget][yTarget].isHit()) {
-            int p_d_tir = shipAttacker.getPowershot().value();
-            switch (p_d_tir) {
-                case 1: {
-                    board[xTarget][yTarget].hit();
-                    return true;
-                }
-                case 4: {
-                    for (int yi = 0; yi < 2; yi++) {
-                        for (int xi = 0; xi < 2; xi++) {
-                            board[xTarget + xi][yTarget + yi].hit();
-                        }
-                    }
-                    return true;
-                }
-                case 9:{
-                    xTarget = xTarget - 1;//je me positione en haut à droite
-                    yTarget = yTarget - 1;
-                    for (int yi = 0; yi < 3; yi++) {
-                        for (int xi = 0; xi < 3; xi++) {
-                            board[xTarget + xi][yTarget + yi].hit();
-                        }
-                    }
-                    return true;
-                }
-                default:{
-                    System.out.println("erreur!!!");
-                    return false;
-                }
-
-            }
-        }
-         else {// si la casse est déja hit je renvois uen erreur
-            System.out.println("erreur!!! vous avez déjas tirer sur cette case");
-            return false;
-        }
-    }
 
 
     public boolean isHit(int x, int y) {

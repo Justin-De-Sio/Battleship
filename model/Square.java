@@ -1,6 +1,7 @@
 package model;
 
 import model.ship.Ship;
+import model.ship.ShipType;
 
 public class Square {
     private boolean isHit;
@@ -15,6 +16,7 @@ public class Square {
         isContainShip = false;
         ship = null;
     }
+
 
     public boolean isHit() {
         return isHit;
@@ -33,11 +35,9 @@ public class Square {
     }
 
 
-    public void hit() {
-        isHit = true;
-        if (this.ship!=null){
-        ship.incrementStrikeCount();
-        }
+    public void hit(Square target) {
+        this.isHit = true;
+        this.ship.hit(target);
     }
 
     public void containShip() {
