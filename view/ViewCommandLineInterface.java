@@ -82,9 +82,17 @@ public class ViewCommandLineInterface {
 //       controller.quit();
     }
 
-    private int converter_A_to_1(char lettre){
+    private int converter_A_to_0(char lettre){
         int accii_lettre=lettre;
+        if ((97<=accii_lettre)&&(accii_lettre<=111)){//si on à des minuscule je le transforme en majuscule
+            accii_lettre=accii_lettre-32;
+        }
+        if ((65<=accii_lettre)&&(accii_lettre<=79)){//je vérifier que l'on m'envois une lettre entre A et O
         return accii_lettre-65;
+        }
+        else {
+            return -1; //-1 est la valeur qu'il retourne en cas d'erreur
+        }
     }
 
     private void displayHelp() {
