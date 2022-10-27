@@ -51,9 +51,7 @@ public class GameController {
         }
     }
 
-    public String whoIsWinner() {
-        return board1.isGameOver() ? "Player 2" : "Player 1";
-    }
+
 
 
     public void hits(int xAttacker, int yAttacker, int xTarget, int yTarget) {
