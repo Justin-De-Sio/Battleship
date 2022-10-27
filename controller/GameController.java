@@ -13,9 +13,11 @@ public class GameController {
     private Board attacker;
     private Board victim;
     private GameState gameState;
+    private GameEvaluator evaluator;
 
-    public GameController(ViewCommandLineInterface view) {
+    public GameController(ViewCommandLineInterface view, GameEvaluator evaluator) {
         this.view = view;
+        this.evaluator = evaluator;
         this.board1 = new Board();
         this.board2 = new Board();
         this.attacker = board1;
