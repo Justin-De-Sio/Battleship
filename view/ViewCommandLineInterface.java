@@ -82,6 +82,11 @@ public class ViewCommandLineInterface {
 //       controller.quit();
     }
 
+    private int converter_A_to_1(char lettre){
+        int accii_lettre=lettre;
+        return accii_lettre-65;
+    }
+
     private void displayHelp() {
 
         System.out.println("                 **********  Aide  **********");
