@@ -159,4 +159,8 @@ public class Board {
         }
         return true;
     }
+
+    public Ship[] getShips() {
+        return ships;
+    }
 }

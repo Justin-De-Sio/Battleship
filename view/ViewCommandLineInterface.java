@@ -42,4 +42,8 @@ public class ViewCommandLineInterface {
 //        controller.quit();
 //        displayMenu();
     }
+
+    public void displayWinner(Board evaluateWinner) {
+        // TODO
+    }
 }
