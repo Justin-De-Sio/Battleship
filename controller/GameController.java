@@ -40,19 +40,18 @@ public class GameController {
                 view.askForAction();
             }
             // winner
-            if (board1.isGameOver() || board2.isGameOver()) {
+            if (evaluateWinner() != null) {
+                view.displayWinner(evaluateWinner());
                 gameState = GameState.FINISHED;
-                view.displayGameOver(whoIsWinner());
             }
+
 
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
     }
 
-    public String whoIsWinner() {
-        return board1.isGameOver() ? "Player 2" : "Player 1";
-    }
+
 
 
     public void hits(int xAttacker, int yAttacker, int xTarget, int yTarget) {
@@ -101,6 +100,9 @@ public class GameController {
         System.exit(0);
     }
 
+    public Board evaluateWinner() {
+        return new GameEvaluator().evaluateWinner(board1, board2);
+    }
 
     // methode move
 
