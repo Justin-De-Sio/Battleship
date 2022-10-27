@@ -11,10 +11,9 @@ public class Board {
     private final Ship[] ships;
 
     // Retourne la case de la board en x et y, de type Square
-    public Square getSquare(int x, int y){
+    public Square getSquare(int x, int y) {
         return board[x][y];
     }
-
 
 
     public Board() {
@@ -56,11 +55,46 @@ public class Board {
     }
 
 
-    public void hit(int x, int y, Board targetBoard) {
-        // TODO : il faut qu'il tire sur l'autre board
-        // TODO : il faut choisir le bateau qui tire
-        targetBoard.getBoard()[x][y].hit();
+    public boolean hits(Ship shipAttacker, int xTarget, int yTarget) {
+        //je vérifie que la case n'a j'amais été hit
+        if (!board[xTarget][yTarget].isHit()) {
+            int p_d_tir = shipAttacker.getPowershot().value();
+            switch (p_d_tir) {
+                case 1: {
+                    board[xTarget][yTarget].hit();
+                    return true;
+                }
+                case 4: {
+                    for (int yi = 0; yi < 2; yi++) {
+                        for (int xi = 0; xi < 2; xi++) {
+                            board[xTarget + xi][yTarget + yi].hit();
+                        }
+                    }
+                    return true;
+                }
+                case 9:{
+                    xTarget = xTarget - 1;//je me positione en haut à droite
+                    yTarget = yTarget - 1;
+                    for (int yi = 0; yi < 3; yi++) {
+                        for (int xi = 0; xi < 3; xi++) {
+                            board[xTarget + xi][yTarget + yi].hit();
+                        }
+                    }
+                    return true;
+                }
+                default:{
+                    System.out.println("erreur!!!");
+                    return false;
+                }
+
+            }
+        }
+         else {// si la casse est déja hit je renvois uen erreur
+            System.out.println("erreur!!! vous avez déjas tirer sur cette case");
+            return false;
+        }
     }
+
 
     public boolean isHit(int x, int y) {
         return board[x][y].isHit();
@@ -103,45 +137,6 @@ public class Board {
             board[coordinate[0]][coordinate[1]].setIsContainShip(false);
             board[coordinate[0]][coordinate[1]].setShip(null);
         }
-    }
-
-    public boolean shoot(Ship shipAttacker, int xTarget, int yTarget) {
-        //je vérifie que la case n'a j'ammais été hit
-        if (!board[xTarget][yTarget].isHit()) {
-            int p_d_tir = shipAttacker.getPowershot().value();
-            if (p_d_tir == 1) {//si la puisance de tir==1 je fais shoot sur x et y
-                board[xTarget][yTarget].shoot();
-                return true;
-            }
-
-            if (p_d_tir == 4) {//si la puisance de tir, je fais shoot sur un carré 2x2: je commence en hout à droite
-                for (int yi = 0; yi < 2; yi++) {
-                    for (int xi = 0; xi < 2; xi++) {
-                        board[xTarget + xi][yTarget + yi].shoot();
-                    }
-                }
-                return true;
-            }
-
-
-            if (p_d_tir == 9) {// si la puisance de tir est =9 alors, la position du tir est aux millieux du carré 3X3:
-                xTarget = xTarget - 1;//je me positione en haut à droite
-                yTarget = yTarget - 1;
-                for (int yi = 0; yi < 3; yi++) {
-                    for (int xi = 0; xi < 3; xi++) {
-                        board[xTarget + xi][yTarget + yi].shoot();
-                    }
-                }
-                return true;
-            }
-
-
-        } else {// si la casse est déja hit je renvois uen erreur
-            System.out.println("erreur!!! vous avez déjas tirer sur cette case");
-            return false;
-        }
-
-        return false;
     }
 
 
