@@ -64,7 +64,7 @@ public abstract class Ship {
     public void hit(Square target) {
 
         if (target.getShip() != null) {
-            if (target.getShip().getShipType() == ShipType.SUBMARINE && this.getShipType() == ShipType.SUBMARINE) {
+            if (target.getShip().getLength() == Length.SUBMARINE && this.length == Length.SUBMARINE) {
                 target.getShip().incrementStrikeCount();
             }else {
                 target.getShip().incrementStrikeCount();
