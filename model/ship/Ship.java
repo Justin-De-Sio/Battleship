@@ -1,9 +1,6 @@
 package model.ship;
 
-import model.Square;
-
 import java.util.ArrayList;
-import java.util.Map;
 
 public abstract class Ship {
 
@@ -21,6 +18,7 @@ public abstract class Ship {
         this.strikeCount = 0;
         this.coordinates = new ArrayList<int[]>();
     }
+
     public void addCoordinates(int x, int y) {
         int[] coordinate = {x, y};
         coordinates.add(coordinate);
@@ -29,6 +27,7 @@ public abstract class Ship {
     public ArrayList<int[]> getCoordinates() {
         return coordinates;
     }
+
     public boolean isVertical() {
         return isVertical;
     }
@@ -41,9 +40,8 @@ public abstract class Ship {
         return length;
     }
 
-    // add coordinates to the ship
 
-
+    // TODO : prendre en compte la taille du bateau
     public boolean isInZone(int x, int y) {
         return x < 15 && y < 15;
     }
@@ -61,16 +59,18 @@ public abstract class Ship {
         this.strikeCount++;
     }
 
-    public void hit(Square target) {
+    public void hit(Ship target) {
 
-        if (target.getShip() != null) {
-            if (target.getShip().getLength() == Length.SUBMARINE && this.length == Length.SUBMARINE) {
-                target.getShip().incrementStrikeCount();
-            }else {
-                target.getShip().incrementStrikeCount();
+        if (target != null) {
+            if (target.getLength() == Length.SUBMARINE && this.length == Length.SUBMARINE) {
+                target.incrementStrikeCount();
+            } else {
+                target.incrementStrikeCount();
             }
         }
 
     }
+
+
 }
 

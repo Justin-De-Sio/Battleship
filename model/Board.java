@@ -7,31 +7,24 @@ import model.ship.*;
 // contain 10 ships
 //Les bateaux peuvent bouger d'une case à la fois
 public class Board {
-    private final Square[][] board;
+    private final Ship[][] board;
     private final Ship[] ships;
-
-    // Retourne la case de la board en x et y, de type Square
-    public Square getSquare(int x, int y){
-        return board[x][y];
-    }
-
 
 
     public Board() {
         final int BOARD_SIZE = 15;
         final int SHIP_NUMBER = 10;
-        this.board = new Square[BOARD_SIZE][BOARD_SIZE];
+        this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
         this.ships = new Ship[SHIP_NUMBER];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = new Square();
+                board[i][j] = new Ship() {
+                };
             }
         }
 
 
     }
-
-
 
 
     public void shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
@@ -54,23 +47,6 @@ public class Board {
         }
     }
 
-    public Square[][] getBoard() {
-        return board;
-    }
-
-
-
-
-    public boolean isHit(int x, int y) {
-        return board[x][y].isHit();
-    }
-
-
-    public boolean isSunk(int x, int y) {
-        Square square = board[x][y];
-        Ship ship = square.getShip();
-        return ship.isSunk();
-    }
 
     // take care of orientation and position
     public boolean placeShip(Ship ship, int x, int y) {
@@ -78,8 +54,7 @@ public class Board {
             if (x + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
                     ship.addCoordinates(x + i, y);
-                    board[x + i][y].setIsContainShip(true);
-                    board[x + i][y].setShip(ship);
+                    board[x + i][y] = ship;
                 }
                 return true;
             }
@@ -87,8 +62,7 @@ public class Board {
             if (y + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
                     ship.addCoordinates(x, y + i);
-                    board[x][y + i].setIsContainShip(true);
-                    board[x][y + i].setShip(ship);
+                    board[x][y + i] = ship;
                 }
                 return true;
             }
@@ -97,11 +71,7 @@ public class Board {
     }
 
     public void removeShip(Ship ship) {
-        for (int i = 0; i < ship.getLength().value(); i++) {
-            int[] coordinate = ship.getCoordinates().get(i);
-            board[coordinate[0]][coordinate[1]].setIsContainShip(false);
-            board[coordinate[0]][coordinate[1]].setShip(null);
-        }
+     // TODO
     }
 
 
@@ -151,16 +121,17 @@ public class Board {
         }
     }
 
-    public boolean isGameOver() {
-        for (Ship ship : ships) {
-            if (!ship.isSunk()) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     public Ship[] getShips() {
         return ships;
+    }
+
+    public Ship getShip(int xAttacker, int yAttacker) {
+        return board[xAttacker][yAttacker];
+    }
+
+    public Ship[][] getBoard() {
+        return board;
     }
 }

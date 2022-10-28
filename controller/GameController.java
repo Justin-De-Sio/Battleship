@@ -57,7 +57,7 @@ public class GameController {
 
 
     public void hits(int xAttacker, int yAttacker, int xTarget, int yTarget) {
-        Ship shipAttacker = attacker.getBoard()[xAttacker][yAttacker].getShip();
+        Ship shipAttacker = attacker.getBoard()[xAttacker][yAttacker];
 
         switch (shipAttacker.getPowershot().value()) {
             case 1: {
@@ -81,9 +81,7 @@ public class GameController {
                     }
                 }
             }
-            default: {
-                System.out.println("erreur!!!");
-            }
+
 
         }
     }
