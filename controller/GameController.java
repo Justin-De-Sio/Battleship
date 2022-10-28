@@ -103,7 +103,7 @@ public class GameController {
     }
 
     public Board evaluateWinner() {
-        return new GameEvaluator().evaluateWinner(board1, board2);
+        return evaluator.evaluateWinner(board1, board2);
     }
 
     // methode move
