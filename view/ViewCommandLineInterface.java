@@ -73,10 +73,11 @@ public class ViewCommandLineInterface {
                 displayHelp();
                 break;
             case 4:
-                System.out.println("mmm");
+                controller.quit();
                 break;
             default:
-                controller.quit();
+                displayMenu();
+
         }
 
 //       controller.quit();
