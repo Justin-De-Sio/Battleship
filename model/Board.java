@@ -134,4 +134,34 @@ public class Board {
     public Ship[][] getBoard() {
         return board;
     }
+
+    public void hits(int xAttacker, int yAttacker, int xTarget, int yTarget, Board victim) {
+        Ship shipAttacker = this.getBoard()[xAttacker][yAttacker];
+
+        switch (shipAttacker.getPowershot().value()) {
+            case 1: {
+                shipAttacker.hit(victim.getBoard()[xTarget][yTarget]);
+
+            }
+            case 4: {
+                for (int y = 0; y < 2; y++) {
+                    for (int x = 0; x < 2; x++) {
+                        shipAttacker.hit(victim.getBoard()[xTarget + x][yTarget + y]);
+                    }
+                }
+
+            }
+            case 9: {
+                xTarget--;//je me positione en haut à droite
+                yTarget--;
+                for (int y = 0; y < 3; y++) {
+                    for (int x = 0; x < 3; x++) {
+                        shipAttacker.hit(victim.getBoard()[xTarget + x][yTarget + y]);
+                    }
+                }
+            }
+
+
+        }
+    }
 }

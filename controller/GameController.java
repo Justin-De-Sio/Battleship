@@ -52,10 +52,7 @@ public class GameController {
             victim = (victim == board1) ? board2 : board1;
         }
     }
-
-
-
-
+/*
     public void hits(int xAttacker, int yAttacker, int xTarget, int yTarget) {
         Ship shipAttacker = attacker.getBoard()[xAttacker][yAttacker];
 
@@ -85,6 +82,9 @@ public class GameController {
 
         }
     }
+*/
+
+
 
     public void startNewGame() {
         this.gameState = GameState.IN_PROGRESS;
