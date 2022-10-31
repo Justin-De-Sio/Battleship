@@ -4,12 +4,12 @@ import controller.GameController;
 import model.Board;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Scanner;
 
 public class ViewCommandLineInterface {
 
     private GameController controller;
-    private int ChoiceJ;
+
 
     public void setController(GameController gameController) {
         this.controller = gameController;
@@ -25,7 +25,7 @@ public class ViewCommandLineInterface {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (!board.getBoard()[i][j].isContainShip())
-                System.out.print("~" + " | ");
+                    System.out.print("~" + " | ");
                 else {
                     System.out.print("■" + " | ");
                 }
@@ -37,9 +37,6 @@ public class ViewCommandLineInterface {
     }
 
     public void displayMenu() {
-
-        // TODO
-
         System.out.println("               ************************************                ");
         System.out.println("               ************************************                ");
         System.out.println("*************  Bienvenue dans la bataille Navale  ************* ");
@@ -54,46 +51,23 @@ public class ViewCommandLineInterface {
         System.out.println("3 : Aide");
         System.out.println("4 : Quitter\n");
 
-        Scanner scanner = new Scanner(System.in);
-        this.ChoiceJ = scanner.nextInt();
+        controller.MenuChoice(new Scanner(System.in).nextInt());
 
-        switch (ChoiceJ) {
-
-            case 1:
-                controller.startNewGame();
-                break;
-            case 2:
-                controller.startLastGame();
-                break;
-            case 3:
-                displayHelp();
-                displayMenu();
-                break;
-            case 4:
-                controller.quit();
-                break;
-            default:
-                displayMenu();
-
-        }
-
-//       controller.quit();
     }
 
-    private int converter_A_to_0(char lettre){
-        int accii_lettre=lettre;
-        if ((97<=accii_lettre)&&(accii_lettre<=111)){//si on à des minuscule je le transforme en majuscule
-            accii_lettre=accii_lettre-32;
+    private int converter_A_to_0(char lettre) {
+        int accii_lettre = lettre;
+        if ((97 <= accii_lettre) && (accii_lettre <= 111)) {//si on à des minuscule je le transforme en majuscule
+            accii_lettre = accii_lettre - 32;
         }
-        if ((65<=accii_lettre)&&(accii_lettre<=79)){//je vérifier que l'on m'envois une lettre entre A et O
-        return accii_lettre-65;
-        }
-        else {
+        if ((65 <= accii_lettre) && (accii_lettre <= 79)) {//je vérifier que l'on m'envois une lettre entre A et O
+            return accii_lettre - 65;
+        } else {
             return -1; //-1 est la valeur qu'il retourne en cas d'erreur
         }
     }
 
-    private void displayHelp() {
+    public void displayHelp() {
 
         System.out.println("                 **********  Aide  **********");
         System.out.println("                 |      L'objectif est de faire couler tous les bateaux ennemi     |");
@@ -170,7 +144,8 @@ public class ViewCommandLineInterface {
                     }
                 }
 
-                if (!goodInput) throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                if (!goodInput)
+                    throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -202,7 +177,8 @@ public class ViewCommandLineInterface {
                 scanner.nextLine();
             }
 
-            if (choice != 1 && choice != 2) System.out.println("Mauvais input ! Vous devez choisir de vous déplacer (1) ou de tirer (2) !");
+            if (choice != 1 && choice != 2)
+                System.out.println("Mauvais input ! Vous devez choisir de vous déplacer (1) ou de tirer (2) !");
 
             System.out.println();
         }
@@ -211,7 +187,6 @@ public class ViewCommandLineInterface {
         return choice;
 
     }
-
 
 
     public void displayGameOver(String winner) {
