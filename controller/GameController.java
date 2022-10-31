@@ -36,11 +36,11 @@ public class GameController {
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
                 view.displayBoard(board1);
-                view.askForShoot();
                 view.askForAction();
+                view.askForCoord();
             } else {
                 view.displayBoard(board2);
-                view.askForAction();
+                view.askForCoord();
             }
             // winner
             if (evaluateWinner() != null) {

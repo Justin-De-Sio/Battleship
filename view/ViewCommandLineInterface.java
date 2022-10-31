@@ -2,10 +2,7 @@ package view;
 
 import controller.GameController;
 import model.Board;
-import model.Square;
 
-import javax.xml.bind.annotation.XmlType;
-import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -127,8 +124,8 @@ public class ViewCommandLineInterface {
 
     }
 
-    // TODO : Nom a changer : askForCoord()
-    public void askForAction() {
+
+    public void askForCoord() {
         // Demande au joueur où il tire
         // Récupérer coordonnées du bateau qui tire et de la case touchée
         // TODO : Décider de renvoyer le result sous forme de String[] ou String normal, ou bien String pour la lettre et String pour numbers ? (préférence pour String[], qui permet ensuite de parser en nombre)
@@ -140,13 +137,13 @@ public class ViewCommandLineInterface {
 
         // Récupérer le x et le y
 
-        Scanner sin = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         boolean goodInput = false;
         String numbers = "";
 
         while (!goodInput) {
             try {
-                String[] result = sin.nextLine().toLowerCase().split("");
+                String[] result = scanner.nextLine().toLowerCase().split("");
 
                 // On vérifie qu'il y a deux ou trois caractères
                 if (result.length >= 2 && result.length <= 3) {
@@ -182,10 +179,10 @@ public class ViewCommandLineInterface {
 
     }
 
-    // TODO : Nom à changer : askForAction()
+
     // Retourne 1 si déplacement
     // Retourne 2 si tir
-    public int askForShoot() {
+    public int askForAction() {
         System.out.println();
         System.out.println("Choisissez une option :");
         System.out.println("1 - Se déplaceṙ");
