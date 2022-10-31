@@ -157,34 +157,28 @@ public class ViewCommandLineInterface {
 
     // Retourne 1 si déplacement
     // Retourne 2 si tir
-    public int askForAction() {
+    public void askForMoveOrShoot() {
         System.out.println();
         System.out.println("Choisissez une option :");
         System.out.println("1 - Se déplaceṙ");
         System.out.println("2 - Tirer");
         System.out.println();
 
-        int choice = 0;
-
         Scanner scanner = new Scanner(System.in);
 
-
+        int choice = 0;
         while (choice != 1 && choice != 2) {
             try {
                 choice = scanner.nextInt();
 
             } catch (java.util.InputMismatchException e) {
                 scanner.nextLine();
+                System.out.println("Vous devez entrer un chiffre !");
             }
-
-            if (choice != 1 && choice != 2)
-                System.out.println("Mauvais input ! Vous devez choisir de vous déplacer (1) ou de tirer (2) !");
 
             System.out.println();
         }
 
-
-        return choice;
 
     }
 
