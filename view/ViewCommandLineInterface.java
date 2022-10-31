@@ -8,14 +8,13 @@ import java.util.Scanner;
 
 public class ViewCommandLineInterface {
 
-    private GameController controller;
 
+    private GameController controller;
 
     public void setController(GameController gameController) {
         this.controller = gameController;
 
     }
-
 
     public void displayBoard(Board board) {
 
@@ -55,17 +54,6 @@ public class ViewCommandLineInterface {
 
     }
 
-    private int converter_A_to_0(char lettre) {
-        int accii_lettre = lettre;
-        if ((97 <= accii_lettre) && (accii_lettre <= 111)) {//si on à des minuscule je le transforme en majuscule
-            accii_lettre = accii_lettre - 32;
-        }
-        if ((65 <= accii_lettre) && (accii_lettre <= 79)) {//je vérifier que l'on m'envois une lettre entre A et O
-            return accii_lettre - 65;
-        } else {
-            return -1; //-1 est la valeur qu'il retourne en cas d'erreur
-        }
-    }
 
     public void displayHelp() {
 
@@ -98,60 +86,19 @@ public class ViewCommandLineInterface {
 
     }
 
-
-    public void askForCoord() {
-        // Demande au joueur où il tire
-        // Récupérer coordonnées du bateau qui tire et de la case touchée
-        // TODO : Décider de renvoyer le result sous forme de String[] ou String normal, ou bien String pour la lettre et String pour numbers ? (préférence pour String[], qui permet ensuite de parser en nombre)
-
-        // TODO : Tirer avec hit dans board ? Pour moi, ca c'est dans le controller, le view s'occupe de récupérer l'input de l'utilisateur et le donne au controller, qui parse l'input et qui modifie les données du model
-
-
-        System.out.println("Où souhaitez-vous effectuer votre action ?");
-
-        // Récupérer le x et le y
-
+    public String askSelectShip() {
+        System.out.println("Où souhaitez-vous Tirer ?");
         Scanner scanner = new Scanner(System.in);
-        boolean goodInput = false;
-        String numbers = "";
-
-        while (!goodInput) {
-            try {
-                String[] result = scanner.nextLine().toLowerCase().split("");
-
-                // On vérifie qu'il y a deux ou trois caractères
-                if (result.length >= 2 && result.length <= 3) {
-
-                    // On vérifie que le premier caractère est une lettre entre A et O
-                    if (converter_A_to_0(result[0].charAt(0)) != -1) {
-
-                        if (result.length == 2) {
-                            numbers = result[1];
-
-                            // On vérifie que le chiffre donné est compris entre 0 et 9 si on a 2 caractères
-                            if (numbers.charAt(0) >= '0' && numbers.charAt(0) <= '9') {
-                                goodInput = true;
-                            }
-
-                        } else if (result.length == 3) {
-                            numbers = result[1].concat(result[2]);
-
-                            // On vérifie si le premier chiffre est un 1 et le deuxième 0 jusqu'à 4 (pour permettre 0 à 14)
-                            if ((numbers.charAt(0) == '0' || numbers.charAt(0) == '1') && (numbers.charAt(1) >= '0' && numbers.charAt(1) <= '4')) {
-                                goodInput = true;
-                            }
-                        }
-                    }
-                }
-
-                if (!goodInput)
-                    throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+        String result = scanner.nextLine();
+        try {
+            if (!controller.isValideCoord(result)) {
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            askSelectShip();
         }
-
+        return result;
     }
 
 
@@ -178,7 +125,7 @@ public class ViewCommandLineInterface {
 
             System.out.println();
         }
-
+        controller.callMoveOrShoot(choice);
 
     }
 
@@ -191,5 +138,9 @@ public class ViewCommandLineInterface {
         //  afficher le gagnant et faire un switch case
 //        controller.quit();
 //        displayMenu();
+    }
+
+    public void askForMove() {
+
     }
 }
