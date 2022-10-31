@@ -76,8 +76,9 @@ public class GameController {
         }
     }
 
-
-
+    public String whoIsWinner() {
+        return board1.isGameOver() ? "Player 2" : "Player 1";
+    }
 
     public void startNewGame() {
         this.gameState = GameState.IN_PROGRESS;

@@ -11,6 +11,7 @@ public class ViewCommandLineInterface {
 
     private GameController controller;
 
+
     public void setController(GameController gameController) {
         this.controller = gameController;
 
@@ -54,6 +55,18 @@ public class ViewCommandLineInterface {
 
     }
 
+    private int converter_A_to_0(char lettre){
+        int accii_lettre=lettre;
+        if ((97<=accii_lettre)&&(accii_lettre<=111)){//si on à des minuscule je le transforme en majuscule
+            accii_lettre=accii_lettre-32;
+        }
+        if ((65<=accii_lettre)&&(accii_lettre<=79)){//je vérifier que l'on m'envois une lettre entre A et O
+        return accii_lettre-65;
+        }
+        else {
+            return -1; //-1 est la valeur qu'il retourne en cas d'erreur
+        }
+    }
 
     public void displayHelp() {
 
@@ -92,8 +105,9 @@ public class ViewCommandLineInterface {
         String result = scanner.nextLine();
         try {
             if (!controller.isValideCoord(result)) {
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
-            }
+
+                    throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+}
         } catch (Exception e) {
             System.out.println(e.getMessage());
             askSelectShip();
@@ -123,12 +137,14 @@ public class ViewCommandLineInterface {
                 System.out.println("Vous devez entrer un chiffre !");
             }
 
+            if (choice != 1 && choice != 2)
+                System.out.println("Mauvais input ! Vous devez choisir de vous déplacer (1) ou de tirer (2) !");
+
             System.out.println();
         }
         controller.callMoveOrShoot(choice);
 
     }
-
 
     public void displayGameOver(String winner) {
 
