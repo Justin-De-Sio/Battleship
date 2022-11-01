@@ -6,7 +6,7 @@ import model.Board;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ViewCommandLineInterface {
+public class ViewCommandLineInterface implements Viewable {
 
 
     private GameController controller;
@@ -146,17 +146,8 @@ public class ViewCommandLineInterface {
 
     }
 
-    public void displayGameOver(String winner) {
-
-        System.out.println("                 **********  Quitter **********");
-        System.out.println("                 |       La partie est finie      |");
-
-        //  afficher le gagnant et faire un switch case
-//        controller.quit();
-//        displayMenu();
-    }
-
     public void askForMove() {
+        // TODO
 
     }
 

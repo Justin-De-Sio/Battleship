@@ -2,7 +2,6 @@ package controller;
 
 import model.Board;
 import model.ship.GameState;
-import model.ship.Ship;
 import view.ViewCommandLineInterface;
 
 public class GameController {
