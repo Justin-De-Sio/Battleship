@@ -47,9 +47,6 @@ public class Board {
         }
     }
 
-    public Square[][] getBoard() {
-        return board;
-    }
 
 
     public void hit(int x, int y, Board targetBoard) {

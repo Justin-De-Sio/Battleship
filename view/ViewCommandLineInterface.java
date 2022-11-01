@@ -23,7 +23,7 @@ public class ViewCommandLineInterface {
         for (int i = 0; i < 15; i++) {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
-                if (!board.getBoard()[i][j].isContainShip())
+                if (board.getBoard()[i][j] == null)
                     System.out.print("~" + " | ");
                 else {
                     System.out.print("■" + " | ");
@@ -142,5 +142,20 @@ public class ViewCommandLineInterface {
 
     public void askForMove() {
 
+    }
+
+    public void displayWinner(Board evaluateWinner) {
+        System.out.println("                 **********  Quitter **********");
+        System.out.println("                 |       La partie est finie      |");
+        System.out.println("                 |       Le gagnant est : " + evaluateWinner + "      |");
+        System.out.println("                 |       Appuyez sur Entrée pour revenir au menu      |");
+        Scanner readinput = new Scanner(System.in);
+
+        String enterkey = "x";
+
+        while (!enterkey.equals("")) {
+            enterkey = readinput.nextLine();
+        }
+        displayMenu();
     }
 }
