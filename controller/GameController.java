@@ -76,6 +76,9 @@ public class GameController {
         }
     }
 
+
+
+
     public void startNewGame() {
         this.gameState = GameState.IN_PROGRESS;
 
