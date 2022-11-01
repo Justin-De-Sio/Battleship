@@ -22,8 +22,12 @@ public class Board {
                 };
             }
         }
+        int totalBattleship = 2;
+        int totalCruiser = 2;
+        int totalDestroyer = 2;
+        int totalSubmarine = 2;
 
-
+        shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
     }
 
 
