@@ -48,20 +48,6 @@ public class Board {
     }
 
 
-
-    public void hit(int x, int y, Board targetBoard) {
-        // TODO : il faut qu'il tire sur l'autre board
-        // TODO : il faut choisir le bateau qui tire
-        targetBoard.getBoard()[x][y].hit();
-    }
-
-    public boolean isHit(int x, int y) {
-        return board[x][y].isHit();
-    }
-
-
-
-
     public boolean isSunk(int x, int y) {
         Square square = board[x][y];
         Ship ship = square.getShip();
