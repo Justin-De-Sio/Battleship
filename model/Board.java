@@ -48,6 +48,10 @@ public class Board {
     }
 
 
+    public boolean isSunk(int x, int y) {
+         return board[x][y].isSunk();
+    }
+
     // take care of orientation and position
     public boolean placeShip(Ship ship, int x, int y) {
         if (ship.isVertical()) {
