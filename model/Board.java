@@ -49,9 +49,7 @@ public class Board {
 
 
     public boolean isSunk(int x, int y) {
-        Square square = board[x][y];
-        Ship ship = square.getShip();
-        return ship.isSunk();
+         return board[x][y].isSunk();
     }
 
     // take care of orientation and position
