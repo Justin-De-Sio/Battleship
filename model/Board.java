@@ -18,8 +18,8 @@ public class Board {
         this.ships = new Ship[SHIP_NUMBER];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = new Ship() {
-                };
+                board[i][j] = null;
+
             }
         }
         int totalBattleship = 2;
