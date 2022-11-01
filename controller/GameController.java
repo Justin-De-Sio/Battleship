@@ -1,22 +1,28 @@
 package controller;
 
+import manager.ChoiceManager;
+import manager.LastAliveEvaluator;
 import model.Board;
 import model.ship.GameState;
-import view.ViewCommandLineInterface;
+import model.ship.Ship;
+import view.Viewable;
 
 public class GameController {
 
-    private final ViewCommandLineInterface view;
+    private final Viewable view;
     private final Board board1;
     private final Board board2;
     private Board attacker;
     private Board victim;
     private GameState gameState;
     private GameEvaluator evaluator;
+    private ChoiceManagerable choiceManager;
 
-    public GameController(ViewCommandLineInterface view, GameEvaluator evaluator) {
+
+    public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
         this.evaluator = evaluator;
+        this.choiceManager = new ChoiceManager(view,this);//TODO le choixManager doit être créé dans le main
         this.board1 = new Board();
         this.board2 = new Board();
         this.attacker = board1;
@@ -53,28 +59,13 @@ public class GameController {
         }
     }
 
-    public void MenuChoice(int choice) {
-        switch (choice) {
-
-            case 1:
-                this.startNewGame();
-                break;
-            case 2:
-                this.startLastGame();
-                break;
-            case 3:
-                view.displayHelp();
-                view.displayMenu();
-                break;
-            case 4:
-                this.quit();
-                break;
-            default:
-                view.displayMenu();
-
-        }
+    public void selectMenuChoice(int choice) {
+        choiceManager.selectMenuChoice(choice);
     }
 
+    public void selectMoveOrShoot(int choice) {
+        choiceManager.selectMoveOrShoot(choice);
+    }
 
 
 
@@ -88,12 +79,20 @@ public class GameController {
     }
 
 
-    private void Shoot() {
-        String coords =  view.askSelectShip();
-        int xAttacker = getNumberIndex(coords);
-        int yAttacker = getLetterIndex(coords);
-        //TODO check if the ship is already hit
-        //TODO get x y victime
+    public void Shoot() {
+        String coords;
+        coords = view.askSelectShipAttacker();
+        final int xAttacker = getNumberIndex(coords);
+        final int yAttacker = getLetterIndex(coords);
+        Ship shipAttacker = this.attacker.getBoard()[xAttacker][yAttacker];
+        System.out.println(shipAttacker);
+        coords = view.askSelectTarget();
+        final int xVictim = getNumberIndex(coords);
+        final int yVictim = getLetterIndex(coords);
+
+        //TODO exeption si pas de bateau
+        this.attacker.shoots(shipAttacker, xVictim, yVictim, this.victim);
+
 
     }
 
@@ -103,11 +102,10 @@ public class GameController {
 
 
     }
+
     public int getNumberIndex(String coords) {
         return Integer.parseInt(coords.substring(1));
     }
-
-
 
 
     public boolean isValideCoord(String coords) {
@@ -133,7 +131,7 @@ public class GameController {
                         goodInput = true;
                     }
 
-                } else if (coordsAvecNomnull.length == 3) {
+                } else {
                     numbers = coordsAvecNomnull[1].concat(coordsAvecNomnull[2]);
 
                     // On vérifie si le premier chiffre est un 1 et le deuxième 0 jusqu'à 4 (pour permettre 0 à 14)
@@ -147,8 +145,8 @@ public class GameController {
         return goodInput;
 
     }
-    public int converter_A_to_0(char lettre) {
-        int accii_lettre = lettre;
+
+    public int converter_A_to_0(int accii_lettre) {
         if ((97 <= accii_lettre) && (accii_lettre <= 111)) {//si on à des minuscule je le transforme en majuscule
             accii_lettre = accii_lettre - 32;
         }
@@ -163,18 +161,6 @@ public class GameController {
         System.exit(0);
     }
 
-    public void callMoveOrShoot(int choice) {
-        switch (choice) {
-            case 1:
-                view.askForMove();
-                break;
-            case 2:
-                Shoot();
-                break;
-            default:
-                view.askForMoveOrShoot();
-        }
-    }
 
 
 

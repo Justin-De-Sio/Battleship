@@ -13,4 +13,14 @@ public interface Viewable {
     void displayWinner(Board board);
 
     void setController(GameController gameController);
+
+    void displayHelp();
+
+    void askForMove();
+
+    String askSelectShipAttacker();
+
+    String askSelectTarget();
+
+
 }

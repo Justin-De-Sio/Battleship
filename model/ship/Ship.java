@@ -59,7 +59,7 @@ public abstract class Ship {
         this.strikeCount++;
     }
 
-    public void hit(Ship target) {
+    public void shoot(Ship target) {
 
         if (target != null) {
             if (target.getLength() == Length.SUBMARINE && this.length == Length.SUBMARINE) {

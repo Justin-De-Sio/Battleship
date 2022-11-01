@@ -51,19 +51,18 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("3 : Aide");
         System.out.println("4 : Quitter\n");
 
-        controller.MenuChoice(new Scanner(System.in).nextInt());
+        controller.selectMenuChoice(new Scanner(System.in).nextInt());
 
     }
 
-    private int converter_A_to_0(char lettre){
-        int accii_lettre=lettre;
-        if ((97<=accii_lettre)&&(accii_lettre<=111)){//si on à des minuscule je le transforme en majuscule
-            accii_lettre=accii_lettre-32;
+    private int converter_A_to_0(char lettre) {
+        int accii_lettre = lettre;
+        if ((97 <= accii_lettre) && (accii_lettre <= 111)) {//si on à des minuscule je le transforme en majuscule
+            accii_lettre = accii_lettre - 32;
         }
-        if ((65<=accii_lettre)&&(accii_lettre<=79)){//je vérifier que l'on m'envois une lettre entre A et O
-        return accii_lettre-65;
-        }
-        else {
+        if ((65 <= accii_lettre) && (accii_lettre <= 79)) {//je vérifier que l'on m'envois une lettre entre A et O
+            return accii_lettre - 65;
+        } else {
             return -1; //-1 est la valeur qu'il retourne en cas d'erreur
         }
     }
@@ -99,18 +98,34 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    public String askSelectShip() {
+    public String askSelectShipAttacker() {
+        System.out.println("Quel navire voulez utiliser pour attaquer ?");
+        Scanner scanner = new Scanner(System.in);
+        String result = scanner.nextLine();
+        try {
+            if (!controller.isValideCoord(result)) {
+
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            askSelectShipAttacker();
+        }
+        return result;
+    }
+
+    public String askSelectTarget() {
         System.out.println("Où souhaitez-vous Tirer ?");
         Scanner scanner = new Scanner(System.in);
         String result = scanner.nextLine();
         try {
             if (!controller.isValideCoord(result)) {
 
-                    throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
-}
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            askSelectShip();
+            askSelectTarget();
         }
         return result;
     }
@@ -142,7 +157,7 @@ public class ViewCommandLineInterface implements Viewable {
 
             System.out.println();
         }
-        controller.callMoveOrShoot(choice);
+        controller.selectMoveOrShoot(choice);
 
     }
 
