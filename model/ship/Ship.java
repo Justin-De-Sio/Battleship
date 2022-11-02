@@ -45,30 +45,28 @@ public abstract class Ship {
         return strikeCount == length.value();
     }
 
-    public boolean isInZone(int x, int y) {
-        // TODO : prendre en compte la taille du bateau
-        return x < 15 && y < 15;
-    }
-
 
     public int getStrikeCount() {
         return strikeCount;
     }
 
-    public void incrementStrikeCount() {
+    public void strike() {
+        //TODO marker les parties du bateau touché
         this.strikeCount++;
     }
 
-    public void shoot(Ship target) {
-
+    public boolean shoot(Ship target) {
+        Length submarine = Length.SUBMARINE;
         if (target != null) {
-            if (target.getLength() == Length.SUBMARINE && this.length == Length.SUBMARINE) {
-                target.incrementStrikeCount();
-            } else {
-                target.incrementStrikeCount();
+            if (this.length == submarine) {
+                target.strike();
+                return true;
+            } else if (target.getLength() != submarine) {
+                target.strike();
+                return true;
             }
         }
-
+        return false;
     }
 
 

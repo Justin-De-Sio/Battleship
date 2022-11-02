@@ -1,7 +1,6 @@
 package controller;
 
 import manager.ChoiceManager;
-import manager.LastAliveEvaluator;
 import model.Board;
 import model.ship.GameState;
 import model.ship.Ship;
@@ -22,7 +21,7 @@ public class GameController {
     public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
         this.evaluator = evaluator;
-        this.choiceManager = new ChoiceManager(view,this);//TODO le choixManager doit être créé dans le main
+        this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
         this.board1 = new Board();
         this.board2 = new Board();
         this.attacker = board1;
@@ -68,7 +67,6 @@ public class GameController {
     }
 
 
-
     public void startNewGame() {
         this.gameState = GameState.IN_PROGRESS;
 
@@ -79,20 +77,27 @@ public class GameController {
     }
 
 
-    public void Shoot() {
-        String coords;
-        coords = view.askSelectShipAttacker();
+    public Ship selectShip() {
+        String coords = view.askSelectShipAttacker();
         final int xAttacker = getNumberIndex(coords);
         final int yAttacker = getLetterIndex(coords);
         Ship shipAttacker = this.attacker.getBoard()[xAttacker][yAttacker];
-        System.out.println(shipAttacker);
-        coords = view.askSelectTarget();
+        if (shipAttacker == null) {
+            // TODO throw exception
+            System.out.println("No ship at this position");
+            selectShip();
+        }
+        return shipAttacker;
+    }
+
+
+    public void Shoot() {
+
+        Ship attackerShip = selectShip();
+        String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-
-        //TODO exeption si pas de bateau
-        this.attacker.shoots(shipAttacker, xVictim, yVictim, this.victim);
-
+        this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
 
     }
 
@@ -160,8 +165,6 @@ public class GameController {
     public void quit() {
         System.exit(0);
     }
-
-
 
 
     public Board evaluateWinner() {
