@@ -41,13 +41,13 @@ public abstract class Ship {
     }
 
 
-    // TODO : prendre en compte la taille du bateau
-    public boolean isInZone(int x, int y) {
-        return x < 15 && y < 15;
-    }
-
     public boolean isSunk() {
         return strikeCount == length.value();
+    }
+
+    public boolean isInZone(int x, int y) {
+        // TODO : prendre en compte la taille du bateau
+        return x < 15 && y < 15;
     }
 
 

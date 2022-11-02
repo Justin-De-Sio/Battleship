@@ -13,9 +13,9 @@ public class Board {
 
     public Board() {
         final int BOARD_SIZE = 15;
-        final int SHIP_NUMBER = 10;
+
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
-        this.ships = new Ship[SHIP_NUMBER];
+
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 board[i][j] = null;
@@ -27,12 +27,18 @@ public class Board {
         int totalDestroyer = 2;
         int totalSubmarine = 2;
 
-        shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
+
+        this.ships = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
+        for(Ship ship: ships){
+            placeShipRandomly(ship);
+        }
+
     }
 
 
-    public void shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
+    public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
         int shipNumber = 0;
+        Ship[] ships = new Ship[battleShipNumber + cruiserNumber + destroyerNumber + submarineNumber];
         for (int i = 0; i < battleShipNumber; i++) {
             ships[shipNumber] = new BattleShip();
             shipNumber++;
@@ -49,6 +55,7 @@ public class Board {
             ships[shipNumber] = new Submarine();
             shipNumber++;
         }
+        return ships;
     }
 
 
