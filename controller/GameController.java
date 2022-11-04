@@ -85,14 +85,14 @@ public class GameController {
         if (shipAttacker == null) {
             // TODO throw exception
             System.out.println("No ship at this position");
-            selectShip();
+            shipAttacker = selectShip();
         }
         return shipAttacker;
     }
 
 
     public void Shoot() {
-            //TODO regler les problemes de nullpointer
+        //TODO regler les problemes de nullpointer
         Ship attackerShip = selectShip();
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
