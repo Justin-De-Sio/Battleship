@@ -13,8 +13,6 @@ public abstract class Ship {
     protected int strikeCount;
 
     public Ship() {
-
-        this.isVertical = Math.random() < 0.5;
         this.strikeCount = 0;
         this.coordinates = new ArrayList<int[]>();
     }
@@ -24,6 +22,9 @@ public abstract class Ship {
         coordinates.add(coordinate);
     }
 
+    public void setIsVertical(boolean isVertical){
+        this.isVertical = isVertical;
+    }
     public ArrayList<int[]> getCoordinates() {
         return coordinates;
     }

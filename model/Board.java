@@ -63,8 +63,14 @@ public class Board {
          return board[x][y].isSunk();
     }
 
+
+
+    public boolean placeShip(Ship ship, int x, int y){
+        return placeShip(ship,x,y,ship.isVertical());
+    }
     // take care of orientation and position
-    public boolean placeShip(Ship ship, int x, int y) {
+    public boolean placeShip(Ship ship, int x, int y, boolean isVertical) {
+        ship.setIsVertical(isVertical);
         if (ship.isVertical()) {
             if (x + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
@@ -93,13 +99,15 @@ public class Board {
     public void placeShipRandomly(Ship ship) {
         int x = (int) (Math.random() * 15);
         int y = (int) (Math.random() * 15);
-        while (!placeShip(ship, x, y)) {
+        boolean isVertical = Math.random() < 0.5;
+        while (!placeShip(ship, x, y, isVertical)) {
             x = (int) (Math.random() * 15);
             y = (int) (Math.random() * 15);
 
         }
-
     }
+
+
 
 
     //le bateau peut bouger d'une case à la fois
