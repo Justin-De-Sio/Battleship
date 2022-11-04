@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import model.Board;
+import model.ship.Direction;
 
 public interface Viewable {
     void displayBoard(Board board);
@@ -18,9 +19,10 @@ public interface Viewable {
 
     void askForMove();
 
-    String askSelectShipAttacker();
+    String askSelectShip();
 
     String askSelectTarget();
 
 
+    Direction askDirection(Direction direction1, Direction direction2);
 }

@@ -29,7 +29,7 @@ public class Board {
 
 
         this.ships = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
-        for(Ship ship: ships){
+        for (Ship ship : ships) {
             placeShipRandomly(ship);
         }
 
@@ -60,14 +60,14 @@ public class Board {
 
 
     public boolean isSunk(int x, int y) {
-         return board[x][y].isSunk();
+        return board[x][y].isSunk();
     }
 
 
-
-    public boolean placeShip(Ship ship, int x, int y){
-        return placeShip(ship,x,y,ship.isVertical());
+    public boolean placeShip(Ship ship, int x, int y) {
+        return placeShip(ship, x, y, ship.isVertical());
     }
+
     // take care of orientation and position
     public boolean placeShip(Ship ship, int x, int y, boolean isVertical) {
         ship.setIsVertical(isVertical);
@@ -91,8 +91,13 @@ public class Board {
         return false;
     }
 
-    public void removeShip(Ship ship) {
-     // TODO
+    public int[] removeShip(Ship ship) {
+        int[] coordinates = new int[2];
+        for (int i = 0; i < ship.getLength().value(); i++) {
+            coordinates = ship.getCoordinates().get(i);
+            board[coordinates[0]][coordinates[1]] = null;
+        }
+        return coordinates;
     }
 
 
@@ -108,42 +113,11 @@ public class Board {
     }
 
 
-
-
     //le bateau peut bouger d'une case à la fois
     // le bateau sera remove de l'ancienne position et placé à la nouvelle
-    public void move(Direction direction, Ship ship) {
-        int[] coordinate = ship.getCoordinates().get(0);
-        int x = coordinate[0];
-        int y = coordinate[1];
-        switch (direction) {
-            case NORTH:
-                if (x - 1 >= 0) {
-                    removeShip(ship);
-                    placeShip(ship, x - 1, y);
-                }
-                break;
-            case SOUTH:
-                if (x + 1 <= 14) {
-                    removeShip(ship);
-                    placeShip(ship, x + 1, y);
-                }
-                break;
-            case EAST:
-                if (y - 1 >= 0) {
-                    removeShip(ship);
-                    placeShip(ship, x, y - 1);
-                }
-                break;
-            case WEST:
-                if (y + 1 <= 14) {
-                    removeShip(ship);
-                    placeShip(ship, x, y + 1);
-                }
-                break;
-        }
-    }
+    public void moveShip(Ship ship, Direction direction) {
 
+    }
 
 
     public Ship[] getShips() {

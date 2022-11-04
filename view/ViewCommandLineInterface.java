@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import model.Board;
+import model.ship.Direction;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -55,18 +56,6 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    private int converter_A_to_0(char lettre) {
-        int accii_lettre = lettre;
-        if ((97 <= accii_lettre) && (accii_lettre <= 111)) {//si on à des minuscule je le transforme en majuscule
-            accii_lettre = accii_lettre - 32;
-        }
-        if ((65 <= accii_lettre) && (accii_lettre <= 79)) {//je vérifier que l'on m'envois une lettre entre A et O
-            return accii_lettre - 65;
-        } else {
-            return -1; //-1 est la valeur qu'il retourne en cas d'erreur
-        }
-    }
-
     public void displayHelp() {
 
         System.out.println("                 **********  Aide  **********");
@@ -98,8 +87,8 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    public String askSelectShipAttacker() {
-        System.out.println("Quel navire voulez utiliser pour attaquer ?");
+    public String askSelectShip() {
+        System.out.println("Quel navire voulez utiliser ?");
         Scanner scanner = new Scanner(System.in);
         String result = scanner.nextLine();
         try {
@@ -109,7 +98,7 @@ public class ViewCommandLineInterface implements Viewable {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            askSelectShipAttacker();
+            askSelectShip();
         }
         return result;
     }
@@ -128,6 +117,26 @@ public class ViewCommandLineInterface implements Viewable {
             askSelectTarget();
         }
         return result;
+    }
+
+    @Override
+    public Direction askDirection(Direction direction1, Direction direction2) {
+        System.out.println("Quelle direction voulez-vous utiliser ?");
+        System.out.println("1 : " + direction1);
+        System.out.println("2 : " + direction2);
+          Scanner scanner = new Scanner(System.in);
+        int result = scanner.nextInt();
+        try {
+            if (result != 1 && result != 2) {
+
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format '1' ou '2' ! ");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            askDirection(direction1, direction2);
+        }
+        return result == 1 ? direction1 : direction2;
+
     }
 
 
@@ -162,7 +171,7 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
     public void askForMove() {
-        // TODO
+
 
     }
 

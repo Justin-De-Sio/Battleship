@@ -40,7 +40,7 @@ public class ChoiceManager implements ChoiceManagerable {
     public void selectMoveOrShoot(int choice) {
         switch (choice) {
             case 1:
-                view.askForMove();
+                gameController.moveShip();
                 break;
             case 2:
                 gameController.Shoot();

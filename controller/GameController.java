@@ -2,6 +2,7 @@ package controller;
 
 import manager.ChoiceManager;
 import model.Board;
+import model.ship.Direction;
 import model.ship.GameState;
 import model.ship.Ship;
 import view.Viewable;
@@ -78,7 +79,7 @@ public class GameController {
 
 
     public Ship selectShip() {
-        String coords = view.askSelectShipAttacker();
+        String coords = view.askSelectShip();
         final int xAttacker = getNumberIndex(coords);
         final int yAttacker = getLetterIndex(coords);
         Ship shipAttacker = this.attacker.getBoard()[xAttacker][yAttacker];
@@ -98,6 +99,17 @@ public class GameController {
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
         this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
+
+    }
+    public void moveShip() {
+        Ship ship = selectShip();
+        Direction direction;
+        if(ship.isVertical()) {
+            direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
+        } else {
+            direction = view.askDirection(Direction.EAST, Direction.WEST);
+        }
+        this.attacker.moveShip(ship, direction);
 
     }
 
@@ -171,7 +183,6 @@ public class GameController {
         return evaluator.evaluateWinner(board1, board2);
     }
 
-    // methode move
 
 
 }
