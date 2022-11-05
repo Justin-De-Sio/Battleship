@@ -41,7 +41,7 @@ public class Bot {
         int randy=(int)(Math.random()*15);
         int randx=(int)(Math.random()*15);
         Ship bateau=B_board.getShips()[rand_boat];
-        B_board.hits(bateau,randx,randy,Joeur);
+        B_board.shoots(bateau,randx,randy,Joeur);
     }
     public boolean hit_or_move(){// si 1 on tir, si 0 on bouge
         int rand=(int)(Math.random()*10);
