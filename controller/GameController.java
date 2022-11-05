@@ -2,6 +2,7 @@ package controller;
 
 import manager.ChoiceManager;
 import model.Board;
+import model.Bot;
 import model.ship.GameState;
 import model.ship.Ship;
 import view.Viewable;
@@ -10,13 +11,13 @@ public class GameController {
 
     private final Viewable view;
     private final Board board1;
-    private final Board board2;
+    private  Board board2;
     private Board attacker;
     private Board victim;
     private GameState gameState;
     private GameEvaluator evaluator;
     private ChoiceManagerable choiceManager;
-
+    private Bot Bot;
 
     public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
@@ -24,6 +25,7 @@ public class GameController {
         this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
         this.board1 = new Board();
         this.board2 = new Board();
+        this.Bot=new Bot(this.board2);
         this.attacker = board1;
         this.victim = board2;
 
@@ -33,18 +35,28 @@ public class GameController {
     }
 
     public void run() {
+
         if (gameState == GameState.NOT_STARTED) {
             view.displayMenu();
         }
 
         while (gameState == GameState.IN_PROGRESS) {
+
             if (attacker == board1) {
                 view.displayBoard(board1);
                 view.askForMoveOrShoot();
 
             } else {
                 view.displayBoard(board2);
-
+                Bot.set_Bboard(board2);
+                boolean i=Bot.hit_or_move();
+                if (i){
+                    Bot.hit(board1);
+                }
+                else{
+                    Bot.move();
+                }
+               board2=Bot.get_Bboard();
             }
             // winner
             if (evaluateWinner() != null) {

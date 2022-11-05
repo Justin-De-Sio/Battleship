@@ -8,7 +8,7 @@ public class Bot {
 
     private Board B_board = new Board();
 
-    public void Bot( Board bot){
+    public  Bot( Board bot){
         this.B_board=bot;
     }
     public Board get_Bboard(){return this.B_board;}
