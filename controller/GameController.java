@@ -7,7 +7,9 @@ import model.ship.GameState;
 import model.ship.Ship;
 import view.Viewable;
 
-public class GameController {
+import java.io.Serializable;
+
+public class GameController implements Serializable {
 
     private final Viewable view;
     private Board board1;
@@ -33,6 +35,7 @@ public class GameController {
         this.gameState = GameState.NOT_STARTED;
     }
 
+
     public void run() {
         if (gameState == GameState.NOT_STARTED) {
             view.displayMenu();
@@ -40,12 +43,14 @@ public class GameController {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
+                // Joueur 1
                 view.displayBoard(board1);
                 view.askForMoveOrShoot();
 
             } else {
+                // BOT
                 view.displayBoard(board2);
-
+                view.askForMoveOrShoot();
             }
             // winner
             if (evaluateWinner() != null) {
@@ -53,7 +58,7 @@ public class GameController {
                 gameState = GameState.FINISHED;
             }
 
-
+            saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
@@ -74,7 +79,13 @@ public class GameController {
     }
 
     public void startLastGame() {
-        //TODO load last game
+        board1 = (Board) Serializer.deSerialize(board1, "board1Data");
+        board2 = (Board) Serializer.deSerialize(board2, "board2Data");
+    }
+
+    public void saveGame() {
+        Serializer.serialize(board1, "board1Data");
+        Serializer.serialize(board2, "board2Data");
     }
 
 
@@ -101,10 +112,11 @@ public class GameController {
         this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
 
     }
+
     public void moveShip() {
         Ship ship = selectShip();
         Direction direction;
-        if(ship.isVertical()) {
+        if (ship.isVertical()) {
             direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
         } else {
             direction = view.askDirection(Direction.EAST, Direction.WEST);
@@ -182,7 +194,6 @@ public class GameController {
     public Board evaluateWinner() {
         return evaluator.evaluateWinner(board1, board2);
     }
-
 
 
 }

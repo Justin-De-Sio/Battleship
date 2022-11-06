@@ -1,6 +1,5 @@
 import controller.GameController;
 import controller.GameEvaluator;
-import manager.ChoiceManager;
 import manager.LastAliveEvaluator;
 import view.ViewCommandLineInterface;
 
