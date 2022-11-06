@@ -123,7 +123,8 @@ public class GameController {
     }
 
     public int getNumberIndex(String coords) {
-        return Integer.parseInt(coords.substring(1));
+        //can reveive a string like "A1" or "A10"
+        return Integer.parseInt(coords.substring(1)) - 1;
     }
 
 

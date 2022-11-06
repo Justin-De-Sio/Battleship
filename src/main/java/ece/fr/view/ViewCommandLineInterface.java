@@ -98,7 +98,7 @@ public class ViewCommandLineInterface implements Viewable {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            askSelectShip();
+            return askSelectShip();
         }
         return result;
     }
@@ -114,7 +114,7 @@ public class ViewCommandLineInterface implements Viewable {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            askSelectTarget();
+            return askSelectTarget();
         }
         return result;
     }
@@ -133,7 +133,7 @@ public class ViewCommandLineInterface implements Viewable {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            askDirection(direction1, direction2);
+            return askDirection(direction1, direction2);
         }
         return result == 1 ? direction1 : direction2;
 
