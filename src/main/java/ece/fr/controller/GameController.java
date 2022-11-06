@@ -1,11 +1,11 @@
-package src.controller;
+package ece.fr.controller;
 
-import src.manager.ChoiceManager;
-import src.model.Board;
-import src.model.ship.Direction;
-import src.model.ship.GameState;
-import src.model.ship.Ship;
-import src.view.Viewable;
+import ece.fr.manager.ChoiceManager;
+import ece.fr.model.Board;
+import ece.fr.model.ship.Direction;
+import ece.fr.model.ship.GameState;
+import ece.fr.model.ship.Ship;
+import ece.fr.view.Viewable;
 
 public class GameController {
 

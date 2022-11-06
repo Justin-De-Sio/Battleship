@@ -1,8 +1,8 @@
-package src.view;
+package ece.fr.view;
 
-import src.controller.GameController;
-import src.model.Board;
-import src.model.ship.Direction;
+import ece.fr.controller.GameController;
+import ece.fr.model.Board;
+import ece.fr.model.ship.Direction;
 
 public interface Viewable {
     void displayBoard(Board board);

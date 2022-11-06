@@ -1,4 +1,4 @@
-package src.model.ship;
+package ece.fr.model.ship;
 
 public class BattleShip extends Ship {
     public BattleShip() {

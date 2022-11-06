@@ -1,9 +1,9 @@
-package src;
+package ece.fr;
 
-import src.controller.GameController;
-import src.controller.GameEvaluator;
-import src.manager.LastAliveEvaluator;
-import src.view.ViewCommandLineInterface;
+import ece.fr.controller.GameController;
+import ece.fr.controller.GameEvaluator;
+import ece.fr.manager.LastAliveEvaluator;
+import ece.fr.view.ViewCommandLineInterface;
 
 public class Main {
     public static void main(String[] args) {

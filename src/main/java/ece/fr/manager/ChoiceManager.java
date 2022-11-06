@@ -1,8 +1,8 @@
-package src.manager;
+package ece.fr.manager;
 
-import src.controller.ChoiceManagerable;
-import src.controller.GameController;
-import src.view.Viewable;
+import ece.fr.controller.ChoiceManagerable;
+import ece.fr.controller.GameController;
+import ece.fr.view.Viewable;
 
 public class ChoiceManager implements ChoiceManagerable {
 

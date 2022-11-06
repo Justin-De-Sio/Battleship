@@ -1,8 +1,8 @@
-package src.manager;
+package ece.fr.manager;
 
-import src.controller.GameEvaluator;
-import src.model.Board;
-import src.model.ship.Ship;
+import ece.fr.controller.GameEvaluator;
+import ece.fr.model.Board;
+import ece.fr.model.ship.Ship;
 
 public class LastAliveEvaluator implements GameEvaluator {
 

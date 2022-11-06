@@ -1,4 +1,4 @@
-package src.model.ship;
+package ece.fr.model.ship;
 
 public enum ShootingPower {
     BATTLESHIP(9),

@@ -1,4 +1,4 @@
-package src.model.ship;
+package ece.fr.model.ship;
 
 import java.util.ArrayList;
 

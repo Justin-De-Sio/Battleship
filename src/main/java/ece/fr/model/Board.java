@@ -1,7 +1,7 @@
-package src.model;
+package ece.fr.model;
 
-import src.model.ship.*;
 
+import ece.fr.model.ship.*;
 
 // board 15x15
 // contain 10 ships
@@ -25,10 +25,7 @@ public class Board {
         placeShipsForTest(this.shipsList);
 
 
-
-
     }
-
 
 
     public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
@@ -68,6 +65,7 @@ public class Board {
         placeShip(shipsList[6], 14, 5, false);
         placeShip(shipsList[7], 11, 12, false);
     }
+
     public boolean placeShip(Ship ship, int x, int y) {
         return placeShip(ship, x, y, ship.isVertical());
     }
