@@ -150,38 +150,47 @@ public class Board {
 
     //le bateau peut bouger d'une case à la fois
     // le bateau sera remove de l'ancienne position et placé à la nouvelle
-    public void moveShip( Ship ship, Direction direction) {
+    public void moveShip(Ship ship, Direction direction) {
         int[] coordinate = ship.getCoordinates().get(0);
         int x = coordinate[0];
         int y = coordinate[1];
-        switch (direction) {
-            case NORTH:
-                if (x > 0) {
-                    removeShip(ship);
-                    placeShip(ship, x - 1, y);
-                }
-                break;
-            case SOUTH:
-                if (x < 14) {
-                    removeShip(ship);
-                    placeShip(ship, x + 1, y);
-                }
-                break;
-            case EAST:
-                if (y < 14) {
-                    removeShip(ship);
-                    placeShip(ship, x, y + 1);
-                }
-                break;
-            case WEST:
-                if (y > 0) {
-                    removeShip(ship);
-                    placeShip(ship, x, y - 1);
-                }
-                break;
+        // take care of length
+        try {
+            switch (direction) {
+                case NORTH:
+                    if (isPlaceable(ship, x, y - 1, ship.isVertical())) {
+                        removeShip(ship);
+                        placeShip(ship, x - 1, y);
+                    }
+                    break;
+                case SOUTH:
+                    if (isPlaceable(ship, x, y + 1, ship.isVertical())) {
+                        removeShip(ship);
+                        placeShip(ship, x + 1, y);
+                    }
+                    break;
+                case EAST:
+                    if (isPlaceable(ship, x + 1, y, ship.isVertical())) {
+                        removeShip(ship);
+                        placeShip(ship, x, y + 1);
+                    }
+                    break;
+                case WEST:
+                    if (isPlaceable(ship, x - 1, y, ship.isVertical())) {
+                        removeShip(ship);
+                        placeShip(ship, x, y - 1);
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException(String.valueOf(direction));
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("direction impossible: " + direction);
+            // TODO : demander à l'utilisateur de choisir une autre direction
         }
-    }
 
+
+    }
 
 
     public Ship[] getShipsList() {
