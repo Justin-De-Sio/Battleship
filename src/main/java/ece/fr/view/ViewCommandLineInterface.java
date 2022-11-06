@@ -90,7 +90,7 @@ public class ViewCommandLineInterface implements Viewable {
     public String askSelectShip() {
         System.out.println("Quel navire voulez utiliser ?");
         Scanner scanner = new Scanner(System.in);
-        String result = scanner.nextLine();
+        String result = scanner.nextLine().toUpperCase();
         try {
             if (!controller.isValideCoord(result)) {
 
@@ -106,7 +106,7 @@ public class ViewCommandLineInterface implements Viewable {
     public String askSelectTarget() {
         System.out.println("Où souhaitez-vous Tirer ?");
         Scanner scanner = new Scanner(System.in);
-        String result = scanner.nextLine();
+        String result = scanner.nextLine().toUpperCase();
         try {
             if (!controller.isValideCoord(result)) {
 
