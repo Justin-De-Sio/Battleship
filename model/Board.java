@@ -21,19 +21,14 @@ public class Board {
         final int totalDestroyer = 2;
         final int totalSubmarine = 2;
         this.shipsList = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
-        placeShipsRandomly(this.shipsList);
+//        placeShipsRandomly(this.shipsList);
+        placeShipsForTest(this.shipsList);
 
-//        placeShip(shipsList[0], 0, 0, true);
-//        placeShip(shipsList[1], 4, 2, false);
-//        placeShip(shipsList[2], 4, 4, true);
-//        placeShip(shipsList[3], 5, 6, false);
-//        placeShip(shipsList[4], 6, 8, true);
-//        placeShip(shipsList[5], 6, 10, false);
-//        placeShip(shipsList[6], 7, 12, true);
-//        placeShip(shipsList[7], 10, 14, false);
+
 
 
     }
+
 
 
     public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
@@ -63,7 +58,16 @@ public class Board {
         return board[x][y].isSunk();
     }
 
-
+    void placeShipsForTest(Ship[] shipsList) {
+        placeShip(shipsList[0], 0, 0, true);
+        placeShip(shipsList[1], 0, 3, true);
+        placeShip(shipsList[2], 0, 6, true);
+        placeShip(shipsList[3], 3, 7, true);
+        placeShip(shipsList[4], 1, 8, false);
+        placeShip(shipsList[5], 13, 10, false);
+        placeShip(shipsList[6], 14, 5, false);
+        placeShip(shipsList[7], 11, 12, false);
+    }
     public boolean placeShip(Ship ship, int x, int y) {
         return placeShip(ship, x, y, ship.isVertical());
     }
