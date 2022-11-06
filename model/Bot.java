@@ -2,6 +2,7 @@ package model;
 
 import model.ship.Direction;
 import model.ship.Ship;
+import java.awt.*;
 
 public class Bot {
 
@@ -16,13 +17,13 @@ public class Bot {
 
     public void move (){
         int rand_boat=(int) (Math.random()*10);//on choisi un bateau random parmis les 10
-        int direction=(int)(Math.random()*2);//on choisis parmis les deux direction possible
+        int direction=(int)(Math.random()*2);
         if (B_board.getShips()[rand_boat].isVertical()){//on regarde si le bateau est horizontal ou vertical
             if (direction==0){
-                B_board.move(Direction.NORTH,B_board.getShips()[rand_boat]);
+                while (!B_board.move(Direction.NORTH,B_board.getShips()[rand_boat])){}
             }
             else {
-                B_board.move(Direction.SOUTH,B_board.getShips()[rand_boat]);
+               while(! B_board.move(Direction.SOUTH,B_board.getShips()[rand_boat])){}
             }
         }
         else{
