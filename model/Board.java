@@ -8,7 +8,7 @@ import model.ship.*;
 //Les bateaux peuvent bouger d'une case à la fois
 public class Board {
     private final Ship[][] board;
-    private final Ship[] ships;
+    private final Ship[] shipsList;
 
 
     public Board() {
@@ -16,22 +16,22 @@ public class Board {
 
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
 
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = null;
+        final int totalBattleship = 2;
+        final int totalCruiser = 2;
+        final int totalDestroyer = 2;
+        final int totalSubmarine = 2;
+        this.shipsList = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
+        placeShipsRandomly(this.shipsList);
 
-            }
-        }
-        int totalBattleship = 2;
-        int totalCruiser = 2;
-        int totalDestroyer = 2;
-        int totalSubmarine = 2;
+//        placeShip(shipsList[0], 0, 0, true);
+//        placeShip(shipsList[1], 4, 2, false);
+//        placeShip(shipsList[2], 4, 4, true);
+//        placeShip(shipsList[3], 5, 6, false);
+//        placeShip(shipsList[4], 6, 8, true);
+//        placeShip(shipsList[5], 6, 10, false);
+//        placeShip(shipsList[6], 7, 12, true);
+//        placeShip(shipsList[7], 10, 14, false);
 
-
-        this.ships = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
-        for (Ship ship : ships) {
-            placeShipRandomly(ship);
-        }
 
     }
 
@@ -70,25 +70,52 @@ public class Board {
 
     // take care of orientation and position
     public boolean placeShip(Ship ship, int x, int y, boolean isVertical) {
-        ship.setIsVertical(isVertical);
-        if (ship.isVertical()) {
-            if (x + ship.getLength().value() <= 15) {
-                for (int i = 0; i < ship.getLength().value(); i++) {
+        //use isPlaceable
+
+        if (isPlaceable(ship, x, y, isVertical)) {
+            ship.setIsVertical(isVertical);
+            ship.addCoordinates(x, y);
+            board[x][y] = ship;
+            if (isVertical) {
+                for (int i = 1; i < ship.getLength().value(); i++) {
                     ship.addCoordinates(x + i, y);
                     board[x + i][y] = ship;
                 }
-                return true;
-            }
-        } else {
-            if (y + ship.getLength().value() <= 15) {
-                for (int i = 0; i < ship.getLength().value(); i++) {
+            } else {
+                for (int i = 1; i < ship.getLength().value(); i++) {
                     ship.addCoordinates(x, y + i);
                     board[x][y + i] = ship;
                 }
-                return true;
             }
+            return true;
         }
         return false;
+    }
+
+    public boolean isPlaceable(Ship ship, int x, int y, boolean isVertical) {
+        // check if ship is placeable
+        // check if ship is not out of bound
+        // check if ship is not overlapping
+// check if ship is not touching another ship
+
+        try {
+            if (isVertical) {
+                for (int i = 0; i < ship.getLength().value(); i++) {
+                    if (board[x + i][y] != null) {
+                        return false;
+                    }
+                }
+            } else {
+                for (int i = 0; i < ship.getLength().value(); i++) {
+                    if (board[x][y + i] != null) {
+                        return false;
+                    }
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+        return true;
     }
 
     public int[] removeShip(Ship ship) {
@@ -100,6 +127,11 @@ public class Board {
         return coordinates;
     }
 
+    public void placeShipsRandomly(Ship[] shipsList) {
+        for (Ship ship : shipsList) {
+            placeShipRandomly(ship);
+        }
+    }
 
     public void placeShipRandomly(Ship ship) {
         int x = (int) (Math.random() * 15);
@@ -120,8 +152,8 @@ public class Board {
     }
 
 
-    public Ship[] getShips() {
-        return ships;
+    public Ship[] getShipsList() {
+        return shipsList;
     }
 
     public Ship[][] getBoard() {

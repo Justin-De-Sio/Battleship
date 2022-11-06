@@ -19,7 +19,7 @@ public class LastAliveEvaluator implements GameEvaluator {
     }
 
     public  boolean isGameOver(Board board) {
-        for (Ship ship : board.getShips()) {
+        for (Ship ship : board.getShipsList()) {
             if (!ship.isSunk()) {
                 return false;
             }
