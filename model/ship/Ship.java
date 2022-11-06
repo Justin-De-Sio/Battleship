@@ -1,6 +1,7 @@
 package model.ship;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Ship {
 
@@ -22,6 +23,9 @@ public abstract class Ship {
     public void addCoordinates(int x, int y) {
         int[] coordinate = {x, y};
         coordinates.add(coordinate);
+    }
+    public void dellCooardinates(){
+        coordinates.clear();
     }
 
     public ArrayList<int[]> getCoordinates() {
