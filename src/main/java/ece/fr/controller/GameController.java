@@ -17,8 +17,6 @@ public class GameController {
     private GameState gameState;
     private GameEvaluator evaluator;
     private ChoiceManagerable choiceManager;
-
-
     public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
         this.evaluator = evaluator;
@@ -33,6 +31,10 @@ public class GameController {
         this.gameState = GameState.NOT_STARTED;
     }
 
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
     public void run() {
         if (gameState == GameState.NOT_STARTED) {
             view.displayMenu();
@@ -44,7 +46,6 @@ public class GameController {
                 view.askForMoveOrShoot();
 
             } else {
-                view.displayBoard(board2);
 
             }
             // winner
@@ -101,10 +102,11 @@ public class GameController {
         this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
 
     }
+
     public void moveShip() {
         Ship ship = selectShip();
         Direction direction;
-        if(ship.isVertical()) {
+        if (ship.isVertical()) {
             direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
         } else {
             direction = view.askDirection(Direction.EAST, Direction.WEST);
@@ -182,7 +184,6 @@ public class GameController {
     public Board evaluateWinner() {
         return evaluator.evaluateWinner(board1, board2);
     }
-
 
 
 }

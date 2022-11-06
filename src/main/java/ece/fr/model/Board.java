@@ -76,6 +76,7 @@ public class Board {
 
         if (isPlaceable(ship, x, y, isVertical)) {
             ship.setIsVertical(isVertical);
+            ship.clearCoordinates();
             ship.addCoordinates(x, y);
             board[x][y] = ship;
             if (isVertical) {
@@ -149,9 +150,38 @@ public class Board {
 
     //le bateau peut bouger d'une case à la fois
     // le bateau sera remove de l'ancienne position et placé à la nouvelle
-    public void moveShip(Ship ship, Direction direction) {
-
+    public void moveShip( Ship ship, Direction direction) {
+        int[] coordinate = ship.getCoordinates().get(0);
+        int x = coordinate[0];
+        int y = coordinate[1];
+        switch (direction) {
+            case NORTH:
+                if (x > 0) {
+                    removeShip(ship);
+                    placeShip(ship, x - 1, y);
+                }
+                break;
+            case SOUTH:
+                if (x < 14) {
+                    removeShip(ship);
+                    placeShip(ship, x + 1, y);
+                }
+                break;
+            case EAST:
+                if (y < 14) {
+                    removeShip(ship);
+                    placeShip(ship, x, y + 1);
+                }
+                break;
+            case WEST:
+                if (y > 0) {
+                    removeShip(ship);
+                    placeShip(ship, x, y - 1);
+                }
+                break;
+        }
     }
+
 
 
     public Ship[] getShipsList() {

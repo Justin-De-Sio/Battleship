@@ -159,6 +159,8 @@ public class ViewCommandLineInterface implements Viewable {
             } catch (java.util.InputMismatchException e) {
                 scanner.nextLine();
                 System.out.println("Vous devez entrer un chiffre !");
+            } catch (Exception e) {
+                System.out.println("Une erreur est survenue !");
             }
 
             if (choice != 1 && choice != 2)

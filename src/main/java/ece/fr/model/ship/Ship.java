@@ -21,6 +21,10 @@ public abstract class Ship {
         int[] coordinate = {x, y};
         coordinates.add(coordinate);
     }
+    public void clearCoordinates() {
+        coordinates.clear();
+    }
+
 
     public void setIsVertical(boolean isVertical){
         this.isVertical = isVertical;
