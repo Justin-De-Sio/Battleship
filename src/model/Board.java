@@ -1,6 +1,6 @@
-package model;
+package src.model;
 
-import model.ship.*;
+import src.model.ship.*;
 
 
 // board 15x15

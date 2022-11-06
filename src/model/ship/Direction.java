@@ -1,4 +1,4 @@
-package model.ship;
+package src.model.ship;
 
 public enum Direction {
     NORTH, SOUTH, EAST, WEST;

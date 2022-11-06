@@ -1,4 +1,4 @@
-package model.ship;
+package src.model.ship;
 
 public class Cruiser extends Ship {
     public Cruiser() {

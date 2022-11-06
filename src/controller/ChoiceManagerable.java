@@ -1,4 +1,4 @@
-package controller;
+package src.controller;
 
 public interface ChoiceManagerable {
     void selectMenuChoice(int choice);

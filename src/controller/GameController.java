@@ -1,11 +1,11 @@
-package controller;
+package src.controller;
 
-import manager.ChoiceManager;
-import model.Board;
-import model.ship.Direction;
-import model.ship.GameState;
-import model.ship.Ship;
-import view.Viewable;
+import src.manager.ChoiceManager;
+import src.model.Board;
+import src.model.ship.Direction;
+import src.model.ship.GameState;
+import src.model.ship.Ship;
+import src.view.Viewable;
 
 public class GameController {
 

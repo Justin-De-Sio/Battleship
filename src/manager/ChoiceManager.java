@@ -1,8 +1,8 @@
-package manager;
+package src.manager;
 
-import controller.ChoiceManagerable;
-import controller.GameController;
-import view.Viewable;
+import src.controller.ChoiceManagerable;
+import src.controller.GameController;
+import src.view.Viewable;
 
 public class ChoiceManager implements ChoiceManagerable {
 

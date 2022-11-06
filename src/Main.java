@@ -1,8 +1,9 @@
-import controller.GameController;
-import controller.GameEvaluator;
-import manager.ChoiceManager;
-import manager.LastAliveEvaluator;
-import view.ViewCommandLineInterface;
+package src;
+
+import src.controller.GameController;
+import src.controller.GameEvaluator;
+import src.manager.LastAliveEvaluator;
+import src.view.ViewCommandLineInterface;
 
 public class Main {
     public static void main(String[] args) {

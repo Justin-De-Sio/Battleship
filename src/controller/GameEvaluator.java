@@ -1,6 +1,6 @@
-package controller;
+package src.controller;
 
-import model.Board;
+import src.model.Board;
 
 public interface GameEvaluator {
     Board evaluateWinner(Board board1, Board board2);

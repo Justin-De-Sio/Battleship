@@ -1,8 +1,8 @@
-package manager;
+package src.manager;
 
-import controller.GameEvaluator;
-import model.Board;
-import model.ship.Ship;
+import src.controller.GameEvaluator;
+import src.model.Board;
+import src.model.ship.Ship;
 
 public class LastAliveEvaluator implements GameEvaluator {
 

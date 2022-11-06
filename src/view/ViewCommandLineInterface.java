@@ -1,8 +1,8 @@
-package view;
+package src.view;
 
-import controller.GameController;
-import model.Board;
-import model.ship.Direction;
+import src.controller.GameController;
+import src.model.Board;
+import src.model.ship.Direction;
 
 import java.io.IOException;
 import java.util.Scanner;

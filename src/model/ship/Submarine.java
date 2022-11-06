@@ -1,4 +1,4 @@
-package model.ship;
+package src.model.ship;
 
 public class Submarine extends Ship {
     public Submarine() {

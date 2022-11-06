@@ -1,4 +1,4 @@
-package model.ship;
+package src.model.ship;
 
 import java.util.ArrayList;
 
