@@ -22,10 +22,10 @@ public class Board {
 
             }
         }
-        int totalBattleship = 2;
+        int totalBattleship =1;
         int totalCruiser = 2;
-        int totalDestroyer = 2;
-        int totalSubmarine = 2;
+        int totalDestroyer = 3;
+        int totalSubmarine = 4;
 
 
         this.ships = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
@@ -69,7 +69,7 @@ public class Board {
             if (x + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
 
-                    if(board[x+i][y]==null) {
+                    if((board[x+i][y]==null)||(board[x+i][y]==ship)) {
                         ship.addCoordinates(x + i, y);
                         board[x + i][y] = ship;
                     }
@@ -82,7 +82,7 @@ public class Board {
         } else {
             if (y + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    if(board[x][y+i]==null) {
+                    if((board[x][y+i]==null) ||(board[x][y+i]==ship) ) {
                         ship.addCoordinates(x, y + i);
                         board[x][y + i] = ship;
                     }
@@ -96,8 +96,23 @@ public class Board {
         return false;
     }
 
-    public void removeShip(Ship ship) {
-     // TODO
+
+    public void removeShip(Ship ship,int x, int y) {
+        ship.dellCooardinates();
+        if (ship.isVertical()) {
+            if (x + ship.getLength().value() <= 15) {
+                for (int i = 0; i < ship.getLength().value(); i++) {
+                        board[x + i][y] = null;
+                    }
+            }
+        } else {
+            if (y + ship.getLength().value() <= 15) {
+                for (int i = 0; i < ship.getLength().value(); i++) {
+                        board[x][y + i] = null;
+                    }
+
+            }
+        }
     }
 
 
@@ -115,38 +130,45 @@ public class Board {
 
     //le bateau peut bouger d'une case à la fois
     // le bateau sera remove de l'ancienne position et placé à la nouvelle
-    public void move(Direction direction, Ship ship) {
+    public boolean move(Direction direction, Ship ship) {
         int[] coordinate = ship.getCoordinates().get(0);
         int x = coordinate[0];
         int y = coordinate[1];
+        System.out.println(x+"y="+y);
         switch (direction) {
             case NORTH:
                 if (x - 1 >= 0) {
-                    removeShip(ship);
-                    placeShip(ship, x - 1, y);
-
+                    removeShip(ship,x,y);
+                     placeShip(ship, x - 1, y);
+                    return true;
                 }
                 break;
             case SOUTH:
                 if (x + 1 <= 14) {
-                    removeShip(ship);
+                    removeShip(ship,x,y);
                     placeShip(ship, x + 1, y);
+                    return true;
                 }
                 break;
             case EAST:
                 if (y - 1 >= 0) {
-                    removeShip(ship);
+                    removeShip(ship,x,y);
                     placeShip(ship, x, y - 1);
+                    return true;
                 }
                 break;
             case WEST:
                 if (y + 1 <= 14) {
-                    removeShip(ship);
+                    removeShip(ship,x,y);
                     placeShip(ship, x, y + 1);
+                    return true;
                 }
                 break;
+            default:
+                return false;
         }
-        System.out.println(x+"y="+y);
+
+        return false;
     }
 
 
