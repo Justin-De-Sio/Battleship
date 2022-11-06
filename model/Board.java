@@ -68,16 +68,27 @@ public class Board {
         if (ship.isVertical()) {
             if (x + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    ship.addCoordinates(x + i, y);
-                    board[x + i][y] = ship;
+
+                    if(board[x+i][y]==null) {
+                        ship.addCoordinates(x + i, y);
+                        board[x + i][y] = ship;
+                    }
+                    else{
+                        return false;
+                    }
                 }
                 return true;
             }
         } else {
             if (y + ship.getLength().value() <= 15) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    ship.addCoordinates(x, y + i);
-                    board[x][y + i] = ship;
+                    if(board[x][y+i]==null) {
+                        ship.addCoordinates(x, y + i);
+                        board[x][y + i] = ship;
+                    }
+                    else{
+                        return false;
+                    }
                 }
                 return true;
             }
@@ -113,6 +124,7 @@ public class Board {
                 if (x - 1 >= 0) {
                     removeShip(ship);
                     placeShip(ship, x - 1, y);
+
                 }
                 break;
             case SOUTH:
@@ -134,6 +146,7 @@ public class Board {
                 }
                 break;
         }
+        System.out.println(x+"y="+y);
     }
 
 
