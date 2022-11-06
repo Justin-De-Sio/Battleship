@@ -10,7 +10,7 @@ import view.Viewable;
 public class GameController {
 
     private final Viewable view;
-    private final Board board1;
+    private  Board board1;
     private  Board board2;
     private Board attacker;
     private Board victim;
