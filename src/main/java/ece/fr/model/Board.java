@@ -162,32 +162,42 @@ public class Board {
                     if (isPlaceable(ship, x- 1, y , ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x - 1, y);
+                    }else {
+
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
                     break;
                 case SOUTH:
                     if (isPlaceable(ship, x+ 1, y , ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x + 1, y);
+                    }else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
                     break;
                 case EAST:
-                    Boolean r=isPlaceable(ship, x  , y+1, ship.isVertical());
-                    if (r)
+                    if (isPlaceable(ship, x  , y+1, ship.isVertical()))
                     {
                         removeShip(ship);
                         placeShip(ship, x, y + 1);
+                    }else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
+
                     break;
                 case WEST:
                     if (isPlaceable(ship, x - 1, y, ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x, y - 1);
+                    }else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
+
                     break;
                 default:
                     throw new IllegalArgumentException(String.valueOf(direction));
             }
-
+//TODO amméliorer l'exeption (reafractor) et cath l'erreur pour la vue
     }
 
 
