@@ -119,15 +119,20 @@ public class GameController {
     }
 
     public void moveShip() {
-        Ship ship = selectShip();
-        Direction direction;
-        if (ship.isVertical()) {
-            direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
-        } else {
-            direction = view.askDirection(Direction.EAST, Direction.WEST);
+        try {
+            Ship ship = selectShip();
+            Direction direction;
+            if (ship.isVertical()) {
+                direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
+            } else {
+                direction = view.askDirection(Direction.EAST, Direction.WEST);
+            }
+            this.attacker.moveShip(ship, direction);
         }
-        this.attacker.moveShip(ship, direction);
-
+        catch (IllegalArgumentException e) {
+            System.out.println("erreur: déplacement imposible");
+            moveShip();
+        }
     }
 
 
