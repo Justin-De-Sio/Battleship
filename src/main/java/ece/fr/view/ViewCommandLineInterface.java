@@ -38,13 +38,13 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
     public void displayMenu() {
-        System.out.println("               ************************************                ");
-        System.out.println("               ************************************                ");
+        System.out.println("\t\t\t  **********************************");
+        System.out.println("\t\t\t  **********************************");
         System.out.println("*************  Bienvenue dans la bataille Navale  ************* ");
-        System.out.println("               ************************************                ");
-        System.out.println("                        ******************                         ");
-        System.out.println("                        ******************                         ");
-        System.out.println("                             *********                             ");
+        System.out.println("\t\t\t   *********************************");
+        System.out.println("\t\t\t\t\t  ********************");
+        System.out.println("\t\t\t\t\t\t****************");
+        System.out.println("\t\t\t\t\t\t   **********");
 
 
         System.out.println("1 : Jouer une partie");
@@ -52,27 +52,47 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("3 : Aide");
         System.out.println("4 : Quitter\n");
 
-        controller.selectMenuChoice(new Scanner(System.in).nextInt());
+        Scanner scanner = new Scanner(System.in);
+
+        int choice = 0;
+        while (choice != 1 && choice != 2 && choice!=3 && choice!=4 ) {
+            try {
+                choice = scanner.nextInt();
+
+            } catch (java.util.InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Vous devez entrer un chiffre !");
+            } catch (Exception e) {
+                System.out.println("Une erreur est survenue !");
+            }
+
+            if (choice != 1 && choice != 2 && choice!=3 && choice!=4)
+                System.out.println("Mauvais input ! Vous devez choisir entre Jouer une partie (1) ou de charger une partie (2) ou d'afficher les aides (3) et encore de quitter !");
+
+            System.out.println();
+        }
+        controller.selectMenuChoice(choice);
+
 
     }
 
     public void displayHelp() {
 
-        System.out.println("                 **********  Aide  **********");
-        System.out.println("                 |      L'objectif est de faire couler tous les bateaux ennemi     |");
-        System.out.println("                 |     Chacun des joueurs posséde une grille afin de positionner les navires, l'autre grille sert à visualisé les dégats    |");
-        System.out.println("                 |     Chaque joueur possede 10 navires : 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous marins     |");
-        System.out.println("                 |     Taille : ");
-        System.out.println("                 |     Cuirassé : 7 cases");
-        System.out.println("                 |     Croiseur : 5 cases");
-        System.out.println("                 |     Destroyer : 3 cases");
-        System.out.println("                 |     Sous marin : 1 case");
-        System.out.println("                 |     Puissance de tir : ");
-        System.out.println("                 |     Cuirassé : 9 cases");
-        System.out.println("                 |     Croiseur : 4 cases");
-        System.out.println("                 |     Destroyer : 1 cases");
-        System.out.println("                 |     Sous marin : 1 case");
-        System.out.println("                 |      L'objectif est de faire couler tous les bateaux ennemis     |");
+        System.out.println("                                                    **********  Aide  **********\n");
+        System.out.println("|     L'objectif est de faire couler tous les bateaux ennemis                                                               |");
+        System.out.println("|     Chacun des joueurs possède une grille afin de positionner les navires, l'autre grille sert à visualiser les dégâts    |");
+        System.out.println("|     Chaque joueur possède 10 navires : 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous-marins                             |\n");
+        System.out.println("|     Voici les Tailles :                                                                                                   |");
+        System.out.println("|     Cuirassé : 7 cases                                                                                                    |");
+        System.out.println("|     Croiseur : 5 cases                                                                                                    |");
+        System.out.println("|     Destroyer : 3 cases                                                                                                   |");
+        System.out.println("|     Sous marin : 1 case                                                                                                   |\n");
+        System.out.println("|     Puissance de tir :                                                                                                    |");
+        System.out.println("|     Cuirassé : 9 cases                                                                                                    |");
+        System.out.println("|     Croiseur : 4 cases                                                                                                    |");
+        System.out.println("|     Destroyer : 1 case                                                                                                    |");
+        System.out.println("|     Sous marin : 1 case                                                                                                   |");
+        System.out.println("|     L'objectif est de faire couler tous les bateaux ennemis                                                               |");
 
         System.out.println();
         System.out.println("                 Appuyez sur Entrée pour confirmer.");

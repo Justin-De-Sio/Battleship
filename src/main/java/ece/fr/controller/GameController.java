@@ -6,6 +6,7 @@ import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
 import ece.fr.model.ship.Ship;
 import ece.fr.view.Viewable;
+import ece.fr.model.BOT;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ public class GameController implements Serializable {
     private final Viewable view;
     private Board board1;
     private Board board2;
+    private BOT Bot;
     private Board attacker;
     private Board victim;
     private GameState gameState;
@@ -27,6 +29,7 @@ public class GameController implements Serializable {
         this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
         this.board1 = new Board();
         this.board2 = new Board();
+        this.Bot=new BOT(this.board2);
         this.attacker = board1;
         this.victim = board2;
 
@@ -55,7 +58,15 @@ public class GameController implements Serializable {
             } else {
                 // BOT
                 view.displayBoard(board2);
-                view.askForMoveOrShoot();
+                Bot.set_BoardBot(board2);
+                boolean i=Bot.hit_or_move();
+                if (i){
+                    Bot.hitBot(board1);
+                }
+                else{
+                    Bot.move();
+                }
+                board2=Bot.get_BoardBot();
             }
             // winner
             if (evaluateWinner() != null) {

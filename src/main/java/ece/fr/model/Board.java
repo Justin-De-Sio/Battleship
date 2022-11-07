@@ -22,10 +22,10 @@ public class Board {
 
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
 
-        final int totalBattleship = 2;
+        final int totalBattleship = 1;
         final int totalCruiser = 2;
-        final int totalDestroyer = 2;
-        final int totalSubmarine = 2;
+        final int totalDestroyer = 3;
+        final int totalSubmarine = 4;
         this.shipsList = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
 //        placeShipsRandomly(this.shipsList);
         placeShipsForTest(this.shipsList);
@@ -70,6 +70,8 @@ public class Board {
         placeShip(shipsList[5], 13, 10, false);
         placeShip(shipsList[6], 14, 5, false);
         placeShip(shipsList[7], 11, 12, false);
+        placeShip(shipsList[8],13,14,false);
+        placeShip(shipsList[9],0,14,false);
     }
 
     public boolean placeShip(Ship ship, int x, int y) {
@@ -110,13 +112,13 @@ public class Board {
         try {
             if (isVertical) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    if (board[x + i][y] != null) {
+                    if ((board[x + i][y] != null)&&(board[x + i][y] !=ship)) {
                         return false;
                     }
                 }
             } else {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    if (board[x][y + i] != null) {
+                    if ((board[x][y + i] != null)&&(board[x ][y+1] !=ship)) {
                         return false;
                     }
                 }
@@ -156,27 +158,28 @@ public class Board {
 
     //le bateau peut bouger d'une case à la fois
     // le bateau sera remove de l'ancienne position et placé à la nouvelle
-    public void moveShip(Ship ship, Direction direction) {
+    public void moveShip(Ship ship, Direction direction) throws IllegalArgumentException {
         int[] coordinate = ship.getCoordinates().get(0);
         int x = coordinate[0];
         int y = coordinate[1];
         // take care of length
-        try {
-            switch (direction) {
+        switch (direction) {
                 case NORTH:
-                    if (isPlaceable(ship, x, y - 1, ship.isVertical())) {
+                    if (isPlaceable(ship, x- 1, y , ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x - 1, y);
                     }
                     break;
                 case SOUTH:
-                    if (isPlaceable(ship, x, y + 1, ship.isVertical())) {
+                    if (isPlaceable(ship, x+ 1, y , ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x + 1, y);
                     }
                     break;
                 case EAST:
-                    if (isPlaceable(ship, x + 1, y, ship.isVertical())) {
+                    Boolean r=isPlaceable(ship, x  , y+1, ship.isVertical());
+                    if (r)
+                    {
                         removeShip(ship);
                         placeShip(ship, x, y + 1);
                     }
@@ -190,11 +193,6 @@ public class Board {
                 default:
                     throw new IllegalArgumentException(String.valueOf(direction));
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("direction impossible: " + direction);
-            // TODO : demander à l'utilisateur de choisir une autre direction
-        }
-
 
     }
 
