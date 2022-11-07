@@ -9,12 +9,14 @@ import ece.fr.model.ship.*;
 public class Board {
     private final Ship[][] board;
     private final Ship[] shipsList;
+    private SecondBoard secondBoard;
 
 
     public Board() {
         final int BOARD_SIZE = 15;
 
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
+        this.secondBoard = new SecondBoard();
 
         final int totalBattleship = 1;
         final int totalCruiser = 2;
@@ -26,6 +28,7 @@ public class Board {
 
 
     }
+
 
 
     public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
@@ -205,12 +208,15 @@ public class Board {
         switch (shipAttacker.getPowershot().value()) {
             case 1: {
                 shipAttacker.shoot(victim.getBoard()[xTarget][yTarget]);
-
+                victim.getSecondBoard().addStrike(xTarget, yTarget);
+                break;
             }
             case 4: {
                 for (int y = 0; y < 2; y++) {
                     for (int x = 0; x < 2; x++) {
                         shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]);
+                        victim.getSecondBoard().addStrike(xTarget, yTarget);
+
                     }
                 }
 
@@ -221,11 +227,16 @@ public class Board {
                 for (int y = 0; y < 3; y++) {
                     for (int x = 0; x < 3; x++) {
                         shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]);
+                        victim.getSecondBoard().addStrike(xTarget, yTarget);
                     }
                 }
             }
 
 
         }
+    }
+
+    public SecondBoard getSecondBoard() {
+        return secondBoard;
     }
 }
