@@ -4,6 +4,7 @@ import ece.fr.manager.ChoiceManager;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
+import ece.fr.model.ship.SecondBoard;
 import ece.fr.model.ship.Ship;
 import ece.fr.view.Viewable;
 
@@ -12,6 +13,7 @@ public class GameController {
     private final Viewable view;
     private Board board1;
     private Board board2;
+
     private Board attacker;
     private Board victim;
     private GameState gameState;
