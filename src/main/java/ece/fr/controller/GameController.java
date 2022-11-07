@@ -6,27 +6,26 @@ import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
 import ece.fr.model.ship.Ship;
 import ece.fr.view.Viewable;
+import ece.fr.model.BOT;
 
-import java.io.Serializable;
-
-public class GameController implements Serializable {
+public class GameController {
 
     private final Viewable view;
     private Board board1;
     private Board board2;
+    private BOT Bot;
     private Board attacker;
     private Board victim;
     private GameState gameState;
     private GameEvaluator evaluator;
     private ChoiceManagerable choiceManager;
-
-
     public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
         this.evaluator = evaluator;
         this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
         this.board1 = new Board();
         this.board2 = new Board();
+        this.Bot=new BOT(this.board2);
         this.attacker = board1;
         this.victim = board2;
 
@@ -46,14 +45,20 @@ public class GameController implements Serializable {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
-                // Joueur 1
-                view.displayBoard(board1);
+               view.displayBoard(board1);
                 view.askForMoveOrShoot();
 
             } else {
-                // BOT
                 view.displayBoard(board2);
-                view.askForMoveOrShoot();
+                Bot.set_BoardBot(board2);
+                boolean i=Bot.hit_or_move();
+                if (i){
+                    Bot.hitBot(board1);
+                }
+                else{
+                    Bot.move();
+                }
+                board2=Bot.get_BoardBot();
             }
             // winner
             if (evaluateWinner() != null) {
@@ -61,7 +66,7 @@ public class GameController implements Serializable {
                 gameState = GameState.FINISHED;
             }
 
-            saveGame();
+
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
@@ -82,13 +87,7 @@ public class GameController implements Serializable {
     }
 
     public void startLastGame() {
-        board1 = (Board) Serializer.deSerialize(board1, "board1Data");
-        board2 = (Board) Serializer.deSerialize(board2, "board2Data");
-    }
-
-    public void saveGame() {
-        Serializer.serialize(board1, "board1Data");
-        Serializer.serialize(board2, "board2Data");
+        //TODO load last game
     }
 
 
@@ -115,6 +114,7 @@ public class GameController implements Serializable {
         this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
 
     }
+
     public void moveShip() {
         Ship ship = selectShip();
         Direction direction;
@@ -196,7 +196,6 @@ public class GameController implements Serializable {
     public Board evaluateWinner() {
         return evaluator.evaluateWinner(board1, board2);
     }
-
 
 
 }
