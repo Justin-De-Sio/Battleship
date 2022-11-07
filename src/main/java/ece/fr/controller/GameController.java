@@ -43,7 +43,7 @@ public class GameController implements Serializable {
     }
 
     public void run() {
-        saveGame();
+
 
         if (gameState == GameState.NOT_STARTED) {
             view.displayMenu();
@@ -73,7 +73,7 @@ public class GameController implements Serializable {
                 view.displayWinner(evaluateWinner());
                 gameState = GameState.FINISHED;
             }
-
+            saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
