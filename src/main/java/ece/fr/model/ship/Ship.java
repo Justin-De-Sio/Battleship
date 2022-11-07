@@ -2,7 +2,7 @@ package ece.fr.model.ship;
 
 import java.util.ArrayList;
 
-public abstract class Ship {
+public abstract class Ship implements java.io.Serializable {
 
     protected boolean isVertical;
     protected ShootingPower shootingPower;

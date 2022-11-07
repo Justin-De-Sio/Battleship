@@ -7,10 +7,16 @@ import ece.fr.model.ship.*;
 // contain 10 ships
 //Les bateaux peuvent bouger d'une case à la fois
 public class Board {
-    private final Ship[][] board;
-    private final Ship[] shipsList;
+    private  Ship[][] board;
+    private  Ship[] shipsList;
 
+    public void setBoard(Ship[][] board){
+        this.board=board;
+    }
 
+    public void setShipsList(Ship[] shipList){
+        this.shipsList=shipList;
+    }
     public Board() {
         final int BOARD_SIZE = 15;
 

@@ -1,10 +1,10 @@
-package controller;
+package ece.fr.controller;
 
 
 import java.io.*;
 
 interface Serializer {
-     static void serialize(Object object, String path) {
+    static void serialize(Object object, String path) {
 
         // Serialization
         try {
@@ -21,11 +21,11 @@ interface Serializer {
             System.out.println("Object has been serialized");
 
         } catch (IOException ex) {
-            System.out.println("IOException is caught");
+            System.out.println("IOException is caught " + ex);
         }
     }
 
-     static Object deSerialize(Object object, String path) {
+    static Object deSerialize(Object object, String path) {
 // Deserialization
         try {
             // Reading the object from a file
@@ -33,7 +33,7 @@ interface Serializer {
             ObjectInputStream in = new ObjectInputStream(file);
 
             // Method for deserialization of object
-            object = (Object) in.readObject();
+            object = in.readObject();
 
             in.close();
             file.close();
@@ -42,10 +42,10 @@ interface Serializer {
 
 
         } catch (IOException ex) {
-            System.out.println("IOException is caught");
+            System.out.println("IOException is caught1");
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException is caught");
         }
-         return object;
+        return object;
     }
 }

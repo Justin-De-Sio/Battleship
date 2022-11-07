@@ -40,6 +40,8 @@ public class GameController implements Serializable {
     }
 
     public void run() {
+        saveGame();
+
         if (gameState == GameState.NOT_STARTED) {
             view.displayMenu();
         }
@@ -61,7 +63,6 @@ public class GameController implements Serializable {
                 gameState = GameState.FINISHED;
             }
 
-            saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
@@ -82,13 +83,14 @@ public class GameController implements Serializable {
     }
 
     public void startLastGame() {
-        board1 = (Board) Serializer.deSerialize(board1, "board1Data");
-        board2 = (Board) Serializer.deSerialize(board2, "board2Data");
+        board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "src/main/resources/board1DataBoard"));
+        board1.setShipsList((Ship[])Serializer.deSerialize(board1.getShipsList(), "src/main/resources/board1DataShipList"));
     }
 
     public void saveGame() {
-        Serializer.serialize(board1, "board1Data");
-        Serializer.serialize(board2, "board2Data");
+        Serializer.serialize(board1.getShipsList(), "src/main/resources/board1DataShipList");
+        Serializer.serialize(board1.getBoard(), "src/main/resources/board1DataBoard");
+        //Serializer.serialize(board2.getShipsList(), "src/main/resources/board2Data");
     }
 
 
