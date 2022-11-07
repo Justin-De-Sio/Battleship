@@ -4,6 +4,7 @@ import ece.fr.manager.ChoiceManager;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
+import ece.fr.model.ship.SecondBoard;
 import ece.fr.model.ship.Ship;
 import ece.fr.view.Viewable;
 import ece.fr.model.BOT;
