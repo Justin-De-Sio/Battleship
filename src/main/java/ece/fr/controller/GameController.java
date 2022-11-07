@@ -7,7 +7,9 @@ import ece.fr.model.ship.GameState;
 import ece.fr.model.ship.Ship;
 import ece.fr.view.Viewable;
 
-public class GameController {
+import java.io.Serializable;
+
+public class GameController implements Serializable {
 
     private final Viewable view;
     private Board board1;
@@ -17,6 +19,8 @@ public class GameController {
     private GameState gameState;
     private GameEvaluator evaluator;
     private ChoiceManagerable choiceManager;
+
+
     public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
         this.evaluator = evaluator;
@@ -42,11 +46,14 @@ public class GameController {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
+                // Joueur 1
                 view.displayBoard(board1);
                 view.askForMoveOrShoot();
 
             } else {
-
+                // BOT
+                view.displayBoard(board2);
+                view.askForMoveOrShoot();
             }
             // winner
             if (evaluateWinner() != null) {
@@ -54,7 +61,7 @@ public class GameController {
                 gameState = GameState.FINISHED;
             }
 
-
+            saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
@@ -75,7 +82,13 @@ public class GameController {
     }
 
     public void startLastGame() {
-        //TODO load last game
+        board1 = (Board) Serializer.deSerialize(board1, "board1Data");
+        board2 = (Board) Serializer.deSerialize(board2, "board2Data");
+    }
+
+    public void saveGame() {
+        Serializer.serialize(board1, "board1Data");
+        Serializer.serialize(board2, "board2Data");
     }
 
 
@@ -102,7 +115,6 @@ public class GameController {
         this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
 
     }
-
     public void moveShip() {
         Ship ship = selectShip();
         Direction direction;
@@ -184,6 +196,7 @@ public class GameController {
     public Board evaluateWinner() {
         return evaluator.evaluateWinner(board1, board2);
     }
+
 
 
 }
