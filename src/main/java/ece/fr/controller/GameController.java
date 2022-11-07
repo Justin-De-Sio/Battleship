@@ -99,11 +99,14 @@ public class GameController implements Serializable {
     public void startLastGame() {
         board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "src/main/resources/board1DataBoard"));
         board1.setShipsList((Ship[])Serializer.deSerialize(board1.getShipsList(), "src/main/resources/board1DataShipList"));
+        board1.setSecondBoard((SecondBoard)Serializer.deSerialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard"));
+
     }
 
     public void saveGame() {
         Serializer.serialize(board1.getShipsList(), "src/main/resources/board1DataShipList");
         Serializer.serialize(board1.getBoard(), "src/main/resources/board1DataBoard");
+        Serializer.serialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard");
         //Serializer.serialize(board2.getShipsList(), "src/main/resources/board2Data");
     }
 
