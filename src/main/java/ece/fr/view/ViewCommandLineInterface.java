@@ -52,7 +52,27 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("3 : Aide");
         System.out.println("4 : Quitter\n");
 
-        controller.selectMenuChoice(new Scanner(System.in).nextInt());
+        Scanner scanner = new Scanner(System.in);
+
+        int choice = 0;
+        while (choice != 1 && choice != 2 && choice!=3 && choice!=4 ) {
+            try {
+                choice = scanner.nextInt();
+
+            } catch (java.util.InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Vous devez entrer un chiffre !");
+            } catch (Exception e) {
+                System.out.println("Une erreur est survenue !");
+            }
+
+            if (choice != 1 && choice != 2 && choice!=3 && choice!=4)
+                System.out.println("Mauvais input ! Vous devez choisir entre Jouer une partie (1) ou de charger une partie (2) ou d'afficher les aides (3) et encore de quitter !");
+
+            System.out.println();
+        }
+        controller.selectMenuChoice(choice);
+
 
     }
 
