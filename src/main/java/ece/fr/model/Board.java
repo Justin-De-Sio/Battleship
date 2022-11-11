@@ -7,7 +7,15 @@ import ece.fr.model.ship.*;
 // contain 10 ships
 //Les bateaux peuvent bouger d'une case à la fois
 public class Board {
-    private final Ship[][] board;
+
+
+    public void setBoard(int x, int y,Ship ship) {
+        this.board[x][y] = ship;
+    }
+
+    private  Ship[][] board;
+
+
     private final Ship[] shipsList;
     private SecondBoard secondBoard;
 
@@ -17,9 +25,8 @@ public class Board {
 
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
         this.secondBoard = new SecondBoard();
-
-        final int totalBattleship = 1;
-        final int totalCruiser = 2;
+        final int totalBattleship =1;
+        final int totalCruiser =2;
         final int totalDestroyer = 3;
         final int totalSubmarine = 4;
         this.shipsList = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
@@ -63,7 +70,7 @@ public class Board {
         placeShip(shipsList[1], 0, 3, true);
         placeShip(shipsList[2], 0, 6, true);
         placeShip(shipsList[3], 3, 7, true);
-        placeShip(shipsList[4], 1, 8, false);
+        placeShip(shipsList[4], 1, 7, false);
         placeShip(shipsList[5], 13, 10, false);
         placeShip(shipsList[6], 14, 5, false);
         placeShip(shipsList[7], 11, 12, false);
@@ -115,7 +122,7 @@ public class Board {
                 }
             } else {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    if ((board[x][y + i] != null)&&(board[x ][y+1] !=ship)) {
+                    if ((board[x][y + i] != null)&&(board[x ][y+i] !=ship)) {
                         return false;
                     }
                 }
@@ -160,6 +167,7 @@ public class Board {
         int x = coordinate[0];
         int y = coordinate[1];
         // take care of length
+        if(ship.getStrikeCount()==0){
         switch (direction) {
                 case NORTH:
                     if (isPlaceable(ship, x- 1, y , ship.isVertical())) {
@@ -189,7 +197,7 @@ public class Board {
 
                     break;
                 case WEST:
-                    if (isPlaceable(ship, x - 1, y, ship.isVertical())) {
+                    if (isPlaceable(ship, x , y-1, ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x, y - 1);
                     }else {
@@ -200,6 +208,11 @@ public class Board {
                 default:
                     throw new IllegalArgumentException(String.valueOf(direction));
             }
+        }else
+        {
+            System.out.println("erreur");
+            throw new IllegalArgumentException(String.valueOf(direction));
+        }
 //TODO amméliorer l'exeption (reafractor) et cath l'erreur pour la vue
     }
 
@@ -208,25 +221,42 @@ public class Board {
         return shipsList;
     }
 
+
+
     public Ship[][] getBoard() {
         return board;
     }
 
-    public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {
+    public Board shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim)
+    {
 
 
         switch (shipAttacker.getPowershot().value()) {
             case 1: {
-                shipAttacker.shoot(victim.getBoard()[xTarget][yTarget]);
-                victim.getSecondBoard().addStrike(xTarget, yTarget);
-                break;
+                if(victim.getBoard()[xTarget][yTarget]!=null) {
+                    if (victim.getSecondBoard().isStrike(xTarget, yTarget) != true) {
+                       victim.setBoard(xTarget,yTarget,shipAttacker.shoot(victim.getBoard()[xTarget][yTarget]));
+                       victim.getSecondBoard().addStrike(xTarget, yTarget);
+                        break;
+                    }
+                }
             }
             case 4: {
+                if(yTarget==14){
+                    yTarget--;
+                }
+                if(xTarget==14){
+                    xTarget--;
+                }
                 for (int y = 0; y < 2; y++) {
                     for (int x = 0; x < 2; x++) {
-                        shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]);
-                        victim.getSecondBoard().addStrike(xTarget, yTarget);
-
+                        if(victim.getBoard()[xTarget+x][yTarget+y]!=null)
+                        {
+                            if (victim.getSecondBoard().isStrike(xTarget + x,yTarget + y)!=true) {
+                                victim.setBoard(xTarget+x,yTarget+y,shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]));
+                                victim.getSecondBoard().addStrike(xTarget+x, yTarget+y);
+                            }
+                        }
                     }
                 }
 
@@ -234,19 +264,41 @@ public class Board {
             case 9: {
                 xTarget--;//je me positione en haut à droite
                 yTarget--;
+                if (xTarget >= 13) {
+                    xTarget--;
+                }
+                if(yTarget>=13){
+                    yTarget--;
+                }
+                if (xTarget<0){
+                    xTarget++;
+                }
+                if (yTarget<0){
+                    yTarget++;
+                }
                 for (int y = 0; y < 3; y++) {
                     for (int x = 0; x < 3; x++) {
-                        shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]);
-                        victim.getSecondBoard().addStrike(xTarget, yTarget);
+                        if(victim.getBoard()[xTarget+x][yTarget+y]!=null) {
+                            if (victim.getSecondBoard().isStrike(xTarget + x, yTarget + y) != true) {
+                                victim.setBoard(xTarget+x,yTarget+y,shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]));
+                                victim.getSecondBoard().addStrike(xTarget+x, yTarget+y);
+                            }
+                        }
                     }
                 }
             }
 
 
         }
+
+        return victim;
     }
 
     public SecondBoard getSecondBoard() {
         return secondBoard;
     }
+    public void setSecondBoard(SecondBoard s2){
+        this.secondBoard=s2;
+    }
+
 }

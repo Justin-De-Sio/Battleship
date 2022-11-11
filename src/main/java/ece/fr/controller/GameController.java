@@ -48,23 +48,28 @@ public class GameController {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
+                System.out.println("AFFICHAGE du board du joeur");
                view.displayBoard(board1);
                 view.askForMoveOrShoot();
-
-            } else {
+                System.out.println("AFFICHAGE du board du bot");
                 view.displayBoard(board2);
+            } else
+            {
                 Bot.set_BoardBot(board2);
                 boolean i=Bot.hit_or_move();
                 if (i){
-                    Bot.hitBot(board1);
+                    System.out.println("le bot tir:");
+                    board1=Bot.hitBot(board1);
                 }
                 else{
+                    System.out.println("bouge:");
                     Bot.move();
                 }
                 board2=Bot.get_BoardBot();
             }
             // winner
             if (evaluateWinner() != null) {
+
                 view.displayWinner(evaluateWinner());
                 gameState = GameState.FINISHED;
             }
@@ -114,7 +119,7 @@ public class GameController {
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-        this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
+      this.victim=this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
 
     }
 
