@@ -12,6 +12,7 @@ public class Board {
     private final Ship[] shipsList;
     private Ship[][] board;
     private SecondBoard secondBoard;
+
     public Board() {
         final int BOARD_SIZE = 15;
 
@@ -221,18 +222,30 @@ public class Board {
     public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {
 
         int powerShip = shipAttacker.getPowershot().value();
-        for (int x=0; x < powerShip; x++) {
-            for (int y=0; y < powerShip; y++) {
-                try{
-                    if (victim.getBoard()[xTarget + x][yTarget + y] != null&& !victim.getSecondBoard().isStrike(xTarget, yTarget)) {
-                        victim.getBoard()[xTarget + x][yTarget + y].strike();
-                        victim.secondBoard.setStrike(xTarget, yTarget);
+        // centrer le point de tir
+        int xTargetCenter = xTarget - (powerShip / 2);
+        int yTargetCenter = yTarget - (powerShip / 2);
+        // tirer sur la cible
+        for (int x = 0; x < powerShip; x++) {
+            for (int y = 0; y < powerShip; y++) {
+                try {
+                    if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
+                            && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
+                            && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)) {
+
+                        victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
+                        victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("out of bound");
+                    System.out.println(" out of bound");
                 }
             }
         }
+
+    }
+
+    private boolean isRealCoordonate(int i, int i1) {
+        return (i >= 0 && i <= 14) && (i1 >= 0 && i1 <= 14);
     }
 
     public SecondBoard getSecondBoard() {

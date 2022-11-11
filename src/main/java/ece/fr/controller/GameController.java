@@ -111,7 +111,6 @@ public class GameController {
 
 
     public void AskForShoot() {
-        //TODO regler les problemes de nullpointer
         Ship attackerShip = selectShip();
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
