@@ -43,7 +43,7 @@ public class ChoiceManager implements ChoiceManagerable {
                 gameController.moveShip();
                 break;
             case 2:
-                gameController.Shoot();
+                gameController.AskForShoot();
                 break;
             default:
                 view.askForMoveOrShoot();

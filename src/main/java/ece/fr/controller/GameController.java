@@ -5,10 +5,8 @@ import ece.fr.model.BOT;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
-import ece.fr.model.ship.SecondBoard;
 import ece.fr.model.ship.Ship;
 import ece.fr.view.Viewable;
-import ece.fr.model.BOT;
 
 public class GameController {
 
@@ -59,17 +57,16 @@ public class GameController {
                 boolean i=Bot.hit_or_move();
                 if (i){
                     System.out.println("le bot tir:");
-                    board1=Bot.hitBot(board1);
+                    Bot.hitBot(board1);
                 }
                 else{
                     System.out.println("bouge:");
                     Bot.move();
                 }
-                board2=Bot.get_BoardBot();
+
             }
             // winner
             if (evaluateWinner() != null) {
-
                 view.displayWinner(evaluateWinner());
                 gameState = GameState.FINISHED;
             }
@@ -113,14 +110,13 @@ public class GameController {
     }
 
 
-    public void Shoot() {
+    public void AskForShoot() {
         //TODO regler les problemes de nullpointer
         Ship attackerShip = selectShip();
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-      this.victim=this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
-
+        this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
     }
 
     public void moveShip() {

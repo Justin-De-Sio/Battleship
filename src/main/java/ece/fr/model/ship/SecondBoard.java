@@ -12,7 +12,7 @@ public class SecondBoard {
         board = new boolean[15][15];
     }
 
-    public void addStrike(int x, int y) {
+    public void setStrike(int x, int y) {
         board[x][y] = true;
     }
 

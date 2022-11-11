@@ -40,12 +40,12 @@ public class BOT {
             return BoardBot;
         }
 
-        public Board  hitBot (Board Joeur){
+        public void  hitBot (Board Joeur){
             int rand_boat = (int) (Math.random() * 10);//on choisi un bateau random parmis les 10
             int randy = (int) (Math.random() * 15);
             int randx = (int) (Math.random() * 15);
             Ship bateau = BoardBot.getShipsList()[rand_boat];
-           return BoardBot.shoots(bateau, randx, randy, Joeur);
+            BoardBot.shoots(bateau, randx, randy, Joeur);
         }
         public boolean verifShip(){
             for (int i=0;i<3;i++){
