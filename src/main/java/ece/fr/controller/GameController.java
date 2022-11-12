@@ -6,6 +6,7 @@ import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
 import ece.fr.model.ship.Ship;
+import ece.fr.model.ship.ShootingPower;
 import ece.fr.view.Viewable;
 
 public class GameController {
@@ -115,7 +116,13 @@ public class GameController {
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-        this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
+        if((attackerShip.getPowershot()== ShootingPower.DESTROYER)&&(attackerShip.isFusee())){
+            view.displayfuse(board2,xVictim,yVictim);
+            attackerShip.setFusee();
+        }
+        else {
+            this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
+        }
     }
 
     public void moveShip() {

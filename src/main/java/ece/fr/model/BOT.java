@@ -50,7 +50,6 @@ public class BOT {
         public boolean verifShip(){
             for (int i=0;i<3;i++){
                 if (BoardBot.getShipsList()[i].getStrikeCount()==0){
-                    System.out.println("sa marche verif");
                     return true;
                 }
             }
