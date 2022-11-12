@@ -12,6 +12,7 @@ public interface Viewable {
     void askForMoveOrShoot();
 
     void displayWinner(Board board);
+    void displayfuse(Board board,int x, int y);
 
     void setController(GameController gameController);
 
@@ -22,6 +23,7 @@ public interface Viewable {
     String askSelectShip();
 
     String askSelectTarget();
+
 
 
     Direction askDirection(Direction direction1, Direction direction2);

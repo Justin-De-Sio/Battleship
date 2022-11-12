@@ -71,7 +71,15 @@ public abstract class Ship {
         }
         return target;
     }
+    public boolean isFusee() {
+        return fusee;
+    }
 
+    public void setFusee() {
+        this.fusee = false;
+    }
+
+    protected boolean fusee=false;
 
 }
 
