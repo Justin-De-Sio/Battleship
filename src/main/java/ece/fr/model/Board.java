@@ -3,6 +3,8 @@ package ece.fr.model;
 
 import ece.fr.model.ship.*;
 
+import static java.lang.Math.sqrt;
+
 // board 15x15
 // contain 10 ships
 //Les bateaux peuvent bouger d'une case à la fois
@@ -221,14 +223,17 @@ public class Board {
 
     public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {
 
-        int powerShip = shipAttacker.getPowershot().value();
+        int powerShip =(int) sqrt( shipAttacker.getPowershot().value());
         // centrer le point de tir
-        int xTargetCenter = xTarget - (powerShip / 2);
-        int yTargetCenter = yTarget - (powerShip / 2);
+        int xTargetCenter = (int) (xTarget - (powerShip) / 2);
+        int yTargetCenter = (int) (yTarget - (powerShip) / 2);
+        System.out.println("xTargetCenter = " + xTargetCenter);
+        System.out.println("yTargetCenter = " + yTargetCenter);
         // tirer sur la cible
         for (int x = 0; x < powerShip; x++) {
             for (int y = 0; y < powerShip; y++) {
                 try {
+                    System.out.println("x = " + x+ " y = " + y);
                     if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
                             && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
                             && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)) {
