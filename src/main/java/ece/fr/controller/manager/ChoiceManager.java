@@ -1,4 +1,4 @@
-package ece.fr.manager;
+package ece.fr.controller.manager;
 
 import ece.fr.controller.ChoiceManagerable;
 import ece.fr.controller.GameController;

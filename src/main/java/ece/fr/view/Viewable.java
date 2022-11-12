@@ -27,4 +27,6 @@ public interface Viewable {
 
 
     Direction askDirection(Direction direction1, Direction direction2);
+
+    void displayError(String message);
 }

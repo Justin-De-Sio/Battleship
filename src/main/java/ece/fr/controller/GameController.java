@@ -1,6 +1,6 @@
 package ece.fr.controller;
 
-import ece.fr.manager.ChoiceManager;
+import ece.fr.controller.manager.ChoiceManager;
 import ece.fr.model.BOT;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
@@ -137,7 +137,7 @@ public class GameController {
             this.attacker.moveShip(ship, direction);
         }
         catch (IllegalArgumentException e) {
-            System.out.println("erreur: déplacement imposible");
+            view.displayError(e.getMessage());
             moveShip();
         }
     }

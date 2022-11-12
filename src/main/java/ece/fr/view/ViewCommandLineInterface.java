@@ -181,6 +181,11 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    @Override
+    public void displayError(String message) {
+        System.out.println("\033[31m" + message + "\033[0m");
+    }
+
 
     // Retourne 1 si déplacement
     // Retourne 2 si tir

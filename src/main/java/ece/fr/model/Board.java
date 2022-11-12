@@ -124,7 +124,7 @@ public class Board {
                     }
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             return false;
         }
         return true;
@@ -171,7 +171,6 @@ public class Board {
                         removeShip(ship);
                         placeShip(ship, x - 1, y);
                     } else {
-
                         throw new IllegalArgumentException(String.valueOf(direction));
                     }
                     break;
@@ -205,10 +204,8 @@ public class Board {
                     throw new IllegalArgumentException(String.valueOf(direction));
             }
         } else {
-            System.out.println("erreur");
             throw new IllegalArgumentException(String.valueOf(direction));
         }
-//TODO amméliorer l'exeption (reafractor) et cath l'erreur pour la vue
     }
 
 
@@ -227,13 +224,12 @@ public class Board {
         // centrer le point de tir
         int xTargetCenter = (int) (xTarget - (powerShip) / 2);
         int yTargetCenter = (int) (yTarget - (powerShip) / 2);
-        System.out.println("xTargetCenter = " + xTargetCenter);
-        System.out.println("yTargetCenter = " + yTargetCenter);
+
         // tirer sur la cible
         for (int x = 0; x < powerShip; x++) {
             for (int y = 0; y < powerShip; y++) {
-                try {
-                    System.out.println("x = " + x+ " y = " + y);
+
+
                     if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
                             && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
                             && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)) {
@@ -241,9 +237,7 @@ public class Board {
                         victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
                         victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println(" out of bound");
-                }
+
             }
         }
 
