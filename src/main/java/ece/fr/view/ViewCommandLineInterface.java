@@ -9,6 +9,23 @@ import java.util.Scanner;
 
 public class ViewCommandLineInterface implements Viewable {
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
     private GameController controller;
 
@@ -28,7 +45,12 @@ public class ViewCommandLineInterface implements Viewable {
                 if (board.getBoard()[i][j] == null)
                     System.out.print("~" + " | ");
                 else {
-                    System.out.print("■" + " | ");
+                    if(board.getSecondBoard().isStrike(i,j)==true){
+                        System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
+                    }
+                    else {
+                        System.out.print("■" + " | ");
+                    }
                 }
 
             }
@@ -159,6 +181,11 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    @Override
+    public void displayError(String message) {
+        System.out.println("\033[31m" + message + "\033[0m");
+    }
+
 
     // Retourne 1 si déplacement
     // Retourne 2 si tir
@@ -210,5 +237,50 @@ public class ViewCommandLineInterface implements Viewable {
             enterkey = readinput.nextLine();
         }
         displayMenu();
+    }
+
+
+    public void displayfuse(Board board,int debutx, int debuy) {
+
+        if(debutx>11){
+            int r=14-debutx;
+            debutx=debutx-r;
+        }
+        if (debuy>11){
+            int r=14-debuy;
+            debuy=debuy-r;
+        }
+            int finx=debutx+4;
+        int finy=debuy+4;
+        System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
+
+        for (int i = 0; i < 15; i++) {
+            System.out.print(i + "\t");
+            for (int j = 0; j < 15; j++) {
+                if((i>=debutx)&&(j>=debuy)){
+                    if((i<finx)&&(j<finy)){
+
+                        if (board.getBoard()[i][j] == null)
+                            System.out.print("~" + " | ");
+                        else {
+                            if(board.getSecondBoard().isStrike(i,j)==true){
+                                System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
+                            }
+                            else {
+                                System.out.print("■" + " | ");
+                            }
+                        }
+            }
+                    else{
+                        System.out.print(ANSI_WHITE_BACKGROUND+" " + " | "+ANSI_RESET);
+                    }
+                }
+                else{
+                    System.out.print(ANSI_WHITE_BACKGROUND+" " + " | "+ANSI_RESET);
+                }
+            }
+            System.out.println();
+        }
+
     }
 }

@@ -19,9 +19,8 @@ public class BOT {
         }
         public Board move () {
             try {
-                int rand_boat =0;// (int) (Math.random() * 10);//on choisi un bateau random parmis les 10
+                int rand_boat =(int) (Math.random() * 10);//on choisi un bateau random parmis les 10
                 int direction = (int) (Math.random() * 2);
-
                 if (BoardBot.getShipsList()[rand_boat].isVertical()) {//on regarde si le bateau est horizontal ou vertical
                     if (direction == 0) {
                         BoardBot.moveShip(BoardBot.getShipsList()[rand_boat], Direction.NORTH);
@@ -41,19 +40,32 @@ public class BOT {
             return BoardBot;
         }
 
-        public void hitBot (Board Joeur){
+        public void  hitBot (Board Joeur){
             int rand_boat = (int) (Math.random() * 10);//on choisi un bateau random parmis les 10
             int randy = (int) (Math.random() * 15);
             int randx = (int) (Math.random() * 15);
             Ship bateau = BoardBot.getShipsList()[rand_boat];
             BoardBot.shoots(bateau, randx, randy, Joeur);
         }
+        public boolean verifShip(){
+            for (int i=0;i<3;i++){
+                if (BoardBot.getShipsList()[i].getStrikeCount()==0){
+                    return true;
+                }
+            }
+            return false;
+        }
         public boolean hit_or_move () {// si 1 on tir, si 0 on bouge
             int rand = (int) (Math.random() * 10);
-            if (rand ==7) { //on à une 7/10 de faire un tir
-                return true;
+            if (rand <=7) { //on à une 7/10 de faire un tir
+              return true;
             } else {//on à 2/10 de bouger
-                return false;
+                if(verifShip()){
+                    return false;
+                }
+                else{
+                    return true;
+                }
             }
         }
 

@@ -1,4 +1,4 @@
-package ece.fr.manager;
+package ece.fr.controller.manager;
 
 import ece.fr.controller.ChoiceManagerable;
 import ece.fr.controller.GameController;
@@ -45,7 +45,7 @@ public class ChoiceManager implements ChoiceManagerable {
                 gameController.moveShip();
                 break;
             case 2:
-                gameController.Shoot();
+                gameController.AskForShoot();
                 break;
             default:
                 view.askForMoveOrShoot();
