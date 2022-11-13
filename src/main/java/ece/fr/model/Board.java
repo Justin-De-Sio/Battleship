@@ -9,17 +9,17 @@ import static java.lang.Math.sqrt;
 // contain 10 ships
 //Les bateaux peuvent bouger d'une case à la fois
 public class Board {
-
-
-    private final Ship[] shipsList;
     private Ship[][] board;
+    private Ship[] shipsList;
     private SecondBoard secondBoard;
+
 
     public Board() {
         final int BOARD_SIZE = 15;
 
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
         this.secondBoard = new SecondBoard();
+
         final int totalBattleship = 1;
         final int totalCruiser = 2;
         final int totalDestroyer = 3;
@@ -213,9 +213,16 @@ public class Board {
         return shipsList;
     }
 
+    public void setShipsList(Ship[] shipList) {
+        this.shipsList = shipList;
+    }
 
     public Ship[][] getBoard() {
         return board;
+    }
+
+    public void setBoard(Ship[][] board) {
+        this.board = board;
     }
 
     public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {

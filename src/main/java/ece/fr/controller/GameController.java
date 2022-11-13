@@ -3,13 +3,12 @@ package ece.fr.controller;
 import ece.fr.controller.manager.ChoiceManager;
 import ece.fr.model.BOT;
 import ece.fr.model.Board;
-import ece.fr.model.ship.Direction;
-import ece.fr.model.ship.GameState;
-import ece.fr.model.ship.Ship;
-import ece.fr.model.ship.ShootingPower;
+import ece.fr.model.ship.*;
 import ece.fr.view.Viewable;
 
-public class GameController {
+import java.io.Serializable;
+
+public class GameController implements Serializable {
 
     private final Viewable view;
     private Board board1;
@@ -21,6 +20,8 @@ public class GameController {
     private GameState gameState;
     private GameEvaluator evaluator;
     private ChoiceManagerable choiceManager;
+
+
     public GameController(Viewable view, GameEvaluator evaluator) {
         this.view = view;
         this.evaluator = evaluator;
@@ -41,13 +42,15 @@ public class GameController {
     }
 
     public void run() {
+
+
         if (gameState == GameState.NOT_STARTED) {
             view.displayMenu();
         }
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
-                System.out.println("AFFICHAGE du board du joeur");
+                System.out.println("AFFICHAGE du board du joueur");
                view.displayBoard(board1);
                 view.askForMoveOrShoot();
                 System.out.println("AFFICHAGE du board du bot");
@@ -71,8 +74,7 @@ public class GameController {
                 view.displayWinner(evaluateWinner());
                 gameState = GameState.FINISHED;
             }
-
-
+            saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
@@ -93,7 +95,23 @@ public class GameController {
     }
 
     public void startLastGame() {
-        //TODO load last game
+        board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "src/main/resources/board1DataBoard"));
+        board1.setShipsList((Ship[])Serializer.deSerialize(board1.getShipsList(), "src/main/resources/board1DataShipList"));
+        board1.setSecondBoard((SecondBoard) Serializer.deSerialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard"));
+        board2.setBoard((Ship[][]) Serializer.deSerialize(board2.getBoard(), "src/main/resources/board2DataBoard"));
+        board2.setShipsList((Ship[])Serializer.deSerialize(board2.getShipsList(), "src/main/resources/board2DataShipList"));
+        board2.setSecondBoard((SecondBoard) Serializer.deSerialize(board2.getSecondBoard(), "src/main/resources/board2DataSecondBoard"));
+
+    }
+
+    public void saveGame() {
+        Serializer.serialize(board1.getShipsList(), "src/main/resources/board1DataShipList");
+        Serializer.serialize(board1.getBoard(), "src/main/resources/board1DataBoard");
+        Serializer.serialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard");
+        Serializer.serialize(board2.getShipsList(), "src/main/resources/board2DataShipList");
+        Serializer.serialize(board2.getBoard(), "src/main/resources/board2DataBoard");
+        Serializer.serialize(board2.getSecondBoard(), "src/main/resources/board2DataSecondBoard");
+
     }
 
 
@@ -211,6 +229,7 @@ public class GameController {
     public Board evaluateWinner() {
         return evaluator.evaluateWinner(board1, board2);
     }
+
 
 
 }

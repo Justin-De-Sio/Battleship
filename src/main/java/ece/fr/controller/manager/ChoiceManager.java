@@ -23,6 +23,8 @@ public class ChoiceManager implements ChoiceManagerable {
                 break;
             case 2:
                 gameController.startLastGame();
+                this.gameController.startNewGame();
+
                 break;
             case 3:
                 view.displayHelp();
