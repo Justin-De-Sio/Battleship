@@ -53,11 +53,11 @@ public class GameController implements Serializable {
                 System.out.println("AFFICHAGE du board du joueur");
                view.displayBoard(board1);
                 view.askForMoveOrShoot();
-                System.out.println("AFFICHAGE du board du bot");
-                view.displayBoard(board2);
+                System.out.println("AFFICHAGE du board de tir");
+                view.displayBoardToucherOuPas(board2);
             } else
             {
-                Bot.set_BoardBot(board2);
+
                 boolean i=Bot.hit_or_move();
                 if (i){
                     System.out.println("le bot tir:");
