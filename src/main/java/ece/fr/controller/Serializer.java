@@ -8,6 +8,13 @@ interface Serializer {
 
         // Serialization
         try {
+            //create directory if not exist
+            File directory = new File(path);
+            if (!directory.getParentFile().exists()) {
+                directory.getParentFile().mkdirs();
+            }
+
+
             //Saving of object in a file
             FileOutputStream file = new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(file);
