@@ -2,7 +2,7 @@ package ece.fr;
 
 import ece.fr.controller.GameController;
 import ece.fr.controller.GameEvaluator;
-import ece.fr.manager.LastAliveEvaluator;
+import ece.fr.controller.manager.LastAliveEvaluator;
 import ece.fr.view.ViewCommandLineInterface;
 
 public class Main {

@@ -1,14 +1,13 @@
 package ece.fr.controller;
 
-import ece.fr.manager.ChoiceManager;
+import ece.fr.controller.manager.ChoiceManager;
 import ece.fr.model.BOT;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.GameState;
-import ece.fr.model.ship.SecondBoard;
 import ece.fr.model.ship.Ship;
+import ece.fr.model.ship.ShootingPower;
 import ece.fr.view.Viewable;
-import ece.fr.model.BOT;
 
 public class GameController {
 
@@ -48,20 +47,24 @@ public class GameController {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
+                System.out.println("AFFICHAGE du board du joeur");
                view.displayBoard(board1);
                 view.askForMoveOrShoot();
-
-            } else {
+                System.out.println("AFFICHAGE du board du bot");
                 view.displayBoard(board2);
+            } else
+            {
                 Bot.set_BoardBot(board2);
                 boolean i=Bot.hit_or_move();
                 if (i){
+                    System.out.println("le bot tir:");
                     Bot.hitBot(board1);
                 }
                 else{
+                    System.out.println("bouge:");
                     Bot.move();
                 }
-                board2=Bot.get_BoardBot();
+
             }
             // winner
             if (evaluateWinner() != null) {
@@ -108,26 +111,35 @@ public class GameController {
     }
 
 
-    public void Shoot() {
-        //TODO regler les problemes de nullpointer
+    public void AskForShoot() {
         Ship attackerShip = selectShip();
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-        this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
-
+        if((attackerShip.getPowershot()== ShootingPower.DESTROYER)&&(attackerShip.isFusee())){
+            view.displayfuse(board2,xVictim,yVictim);
+            attackerShip.setFusee();
+        }
+        else {
+            this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
+        }
     }
 
     public void moveShip() {
-        Ship ship = selectShip();
-        Direction direction;
-        if (ship.isVertical()) {
-            direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
-        } else {
-            direction = view.askDirection(Direction.EAST, Direction.WEST);
+        try {
+            Ship ship = selectShip();
+            Direction direction;
+            if (ship.isVertical()) {
+                direction = view.askDirection(Direction.NORTH, Direction.SOUTH);
+            } else {
+                direction = view.askDirection(Direction.EAST, Direction.WEST);
+            }
+            this.attacker.moveShip(ship, direction);
         }
-        this.attacker.moveShip(ship, direction);
-
+        catch (IllegalArgumentException e) {
+            view.displayError(e.getMessage());
+            moveShip();
+        }
     }
 
 

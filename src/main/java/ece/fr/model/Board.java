@@ -3,21 +3,23 @@ package ece.fr.model;
 
 import ece.fr.model.ship.*;
 
+import static java.lang.Math.sqrt;
+
 // board 15x15
 // contain 10 ships
 //Les bateaux peuvent bouger d'une case à la fois
 public class Board {
-    private final Ship[][] board;
-    private final Ship[] shipsList;
-    private SecondBoard secondBoard;
 
+
+    private final Ship[] shipsList;
+    private Ship[][] board;
+    private SecondBoard secondBoard;
 
     public Board() {
         final int BOARD_SIZE = 15;
 
         this.board = new Ship[BOARD_SIZE][BOARD_SIZE];
         this.secondBoard = new SecondBoard();
-
         final int totalBattleship = 1;
         final int totalCruiser = 2;
         final int totalDestroyer = 3;
@@ -29,7 +31,9 @@ public class Board {
 
     }
 
-
+    public void setBoard(int x, int y, Ship ship) {
+        this.board[x][y] = ship;
+    }
 
     public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
         int shipNumber = 0;
@@ -63,12 +67,12 @@ public class Board {
         placeShip(shipsList[1], 0, 3, true);
         placeShip(shipsList[2], 0, 6, true);
         placeShip(shipsList[3], 3, 7, true);
-        placeShip(shipsList[4], 1, 8, false);
+        placeShip(shipsList[4], 1, 7, false);
         placeShip(shipsList[5], 13, 10, false);
         placeShip(shipsList[6], 14, 5, false);
         placeShip(shipsList[7], 11, 12, false);
-        placeShip(shipsList[8],13,14,false);
-        placeShip(shipsList[9],0,14,false);
+        placeShip(shipsList[8], 13, 14, false);
+        placeShip(shipsList[9], 0, 14, false);
     }
 
     public boolean placeShip(Ship ship, int x, int y) {
@@ -109,18 +113,18 @@ public class Board {
         try {
             if (isVertical) {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    if ((board[x + i][y] != null)&&(board[x + i][y] !=ship)) {
+                    if ((board[x + i][y] != null) && (board[x + i][y] != ship)) {
                         return false;
                     }
                 }
             } else {
                 for (int i = 0; i < ship.getLength().value(); i++) {
-                    if ((board[x][y + i] != null)&&(board[x ][y+1] !=ship)) {
+                    if ((board[x][y + i] != null) && (board[x][y + i] != ship)) {
                         return false;
                     }
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             return false;
         }
         return true;
@@ -160,37 +164,48 @@ public class Board {
         int x = coordinate[0];
         int y = coordinate[1];
         // take care of length
-        switch (direction) {
+        if (ship.getStrikeCount() == 0) {
+            switch (direction) {
                 case NORTH:
-                    if (isPlaceable(ship, x- 1, y , ship.isVertical())) {
+                    if (isPlaceable(ship, x - 1, y, ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x - 1, y);
+                    } else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
                     break;
                 case SOUTH:
-                    if (isPlaceable(ship, x+ 1, y , ship.isVertical())) {
+                    if (isPlaceable(ship, x + 1, y, ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x + 1, y);
+                    } else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
                     break;
                 case EAST:
-                    Boolean r=isPlaceable(ship, x  , y+1, ship.isVertical());
-                    if (r)
-                    {
+                    if (isPlaceable(ship, x, y + 1, ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x, y + 1);
+                    } else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
+
                     break;
                 case WEST:
-                    if (isPlaceable(ship, x - 1, y, ship.isVertical())) {
+                    if (isPlaceable(ship, x, y - 1, ship.isVertical())) {
                         removeShip(ship);
                         placeShip(ship, x, y - 1);
+                    } else {
+                        throw new IllegalArgumentException(String.valueOf(direction));
                     }
+
                     break;
                 default:
                     throw new IllegalArgumentException(String.valueOf(direction));
             }
-
+        } else {
+            throw new IllegalArgumentException(String.valueOf(direction));
+        }
     }
 
 
@@ -198,45 +213,46 @@ public class Board {
         return shipsList;
     }
 
+
     public Ship[][] getBoard() {
         return board;
     }
 
     public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {
 
+        int powerShip =(int) sqrt( shipAttacker.getPowershot().value());
+        // centrer le point de tir
+        int xTargetCenter = (int) (xTarget - (powerShip) / 2);
+        int yTargetCenter = (int) (yTarget - (powerShip) / 2);
 
-        switch (shipAttacker.getPowershot().value()) {
-            case 1: {
-                shipAttacker.shoot(victim.getBoard()[xTarget][yTarget]);
-                victim.getSecondBoard().addStrike(xTarget, yTarget);
-                break;
-            }
-            case 4: {
-                for (int y = 0; y < 2; y++) {
-                    for (int x = 0; x < 2; x++) {
-                        shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]);
-                        victim.getSecondBoard().addStrike(xTarget, yTarget);
+        // tirer sur la cible
+        for (int x = 0; x < powerShip; x++) {
+            for (int y = 0; y < powerShip; y++) {
 
+
+                    if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
+                            && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
+                            && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)) {
+
+                        victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
+                        victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
                     }
-                }
 
             }
-            case 9: {
-                xTarget--;//je me positione en haut à droite
-                yTarget--;
-                for (int y = 0; y < 3; y++) {
-                    for (int x = 0; x < 3; x++) {
-                        shipAttacker.shoot(victim.getBoard()[xTarget + x][yTarget + y]);
-                        victim.getSecondBoard().addStrike(xTarget, yTarget);
-                    }
-                }
-            }
-
-
         }
+
+    }
+
+    private boolean isRealCoordonate(int i, int i1) {
+        return (i >= 0 && i <= 14) && (i1 >= 0 && i1 <= 14);
     }
 
     public SecondBoard getSecondBoard() {
         return secondBoard;
     }
+
+    public void setSecondBoard(SecondBoard s2) {
+        this.secondBoard = s2;
+    }
+
 }

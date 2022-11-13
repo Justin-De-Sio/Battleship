@@ -60,20 +60,26 @@ public abstract class Ship {
         this.strikeCount++;
     }
 
-    public boolean shoot(Ship target) {
+    public Ship shoot(Ship target) {
         Length submarine = Length.SUBMARINE;
         if (target != null) {
             if (this.length == submarine) {
                 target.strike();
-                return true;
             } else if (target.getLength() != submarine) {
                 target.strike();
-                return true;
             }
         }
-        return false;
+        return target;
+    }
+    public boolean isFusee() {
+        return fusee;
     }
 
+    public void setFusee() {
+        this.fusee = false;
+    }
+
+    protected boolean fusee=false;
 
 }
 
