@@ -3,10 +3,7 @@ package ece.fr.controller;
 import ece.fr.controller.manager.ChoiceManager;
 import ece.fr.model.BOT;
 import ece.fr.model.Board;
-import ece.fr.model.ship.Direction;
-import ece.fr.model.ship.GameState;
-import ece.fr.model.ship.Ship;
-import ece.fr.model.ship.ShootingPower;
+import ece.fr.model.ship.*;
 import ece.fr.view.Viewable;
 
 import java.io.Serializable;
@@ -100,7 +97,10 @@ public class GameController implements Serializable {
     public void startLastGame() {
         board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "src/main/resources/board1DataBoard"));
         board1.setShipsList((Ship[])Serializer.deSerialize(board1.getShipsList(), "src/main/resources/board1DataShipList"));
-        board1.setSecondBoard((SecondBoard)Serializer.deSerialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard"));
+        board1.setSecondBoard((SecondBoard) Serializer.deSerialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard"));
+        board2.setBoard((Ship[][]) Serializer.deSerialize(board2.getBoard(), "src/main/resources/board2DataBoard"));
+        board2.setShipsList((Ship[])Serializer.deSerialize(board2.getShipsList(), "src/main/resources/board2DataShipList"));
+        board2.setSecondBoard((SecondBoard) Serializer.deSerialize(board2.getSecondBoard(), "src/main/resources/board2DataSecondBoard"));
 
     }
 
@@ -108,7 +108,10 @@ public class GameController implements Serializable {
         Serializer.serialize(board1.getShipsList(), "src/main/resources/board1DataShipList");
         Serializer.serialize(board1.getBoard(), "src/main/resources/board1DataBoard");
         Serializer.serialize(board1.getSecondBoard(), "src/main/resources/board1DataSecondBoard");
-        //Serializer.serialize(board2.getShipsList(), "src/main/resources/board2Data");
+        Serializer.serialize(board2.getShipsList(), "src/main/resources/board2DataShipList");
+        Serializer.serialize(board2.getBoard(), "src/main/resources/board2DataBoard");
+        Serializer.serialize(board2.getSecondBoard(), "src/main/resources/board2DataSecondBoard");
+
     }
 
 

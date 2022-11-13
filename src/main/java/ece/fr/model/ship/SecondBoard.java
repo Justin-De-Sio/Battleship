@@ -1,11 +1,13 @@
 package ece.fr.model.ship;
 
+import java.io.Serializable;
+
 /**
  * @author Justin
  * savegarde les tires touchés
  * 15x15
  */
-public class SecondBoard {
+public class SecondBoard implements Serializable {
     boolean[][] board;
 
     public SecondBoard() {
