@@ -54,15 +54,15 @@ public class GameController {
                 view.displayBoardToucherOuPas(board2);
             } else
             {
-                Bot.set_BoardBot(board2);
-                boolean i=Bot.hit_or_move(board2);
+
+                boolean i=Bot.hit_or_move();
                 if (i){
                     System.out.println("le bot tir:");
-                    Bot.hitBot(board1,board2);
+                    Bot.hitBot(board1);
                 }
                 else{
                     System.out.println("bouge:");
-                    Bot.move(board2);
+                    Bot.move();
                 }
 
             }
