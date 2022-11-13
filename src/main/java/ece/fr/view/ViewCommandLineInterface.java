@@ -281,6 +281,39 @@ public class ViewCommandLineInterface implements Viewable {
             }
             System.out.println();
         }
+        System.out.println("                 Appuyez sur Entrée pour confirmer.");
+        Scanner readinput = new Scanner(System.in);
+
+        String enterkey = "x";
+
+        while (!enterkey.equals("")) {
+            enterkey = readinput.nextLine();
+        }
+
+    }
+
+
+    public void displayBoardToucherOuPas(Board board) {
+
+        System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
+
+        for (int i = 0; i < 15; i++) {
+            System.out.print(i + "\t");
+            for (int j = 0; j < 15; j++) {
+                if (board.getBoard()[i][j] == null)
+                    System.out.print("~" + " | ");
+                else {
+                    if(board.getSecondBoard().isStrike(i,j)==true){
+                        System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
+                    }
+                    else {
+                        System.out.print("~" + " | ");
+                    }
+                }
+
+            }
+            System.out.println();
+        }
 
     }
 }

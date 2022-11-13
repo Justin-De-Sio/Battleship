@@ -233,9 +233,12 @@ public class Board {
                     if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
                             && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
                             && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)) {
+                            if ((victim.getBoard()[xTargetCenter+x][yTargetCenter+y].getLength()!=Length.SUBMARINE)
+                               ||(shipAttacker.getLength()==Length.SUBMARINE)) {
+                                victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
+                                victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
+                            }
 
-                        victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
-                        victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
                     }
 
             }

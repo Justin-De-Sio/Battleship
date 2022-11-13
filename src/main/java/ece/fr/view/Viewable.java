@@ -13,6 +13,7 @@ public interface Viewable {
 
     void displayWinner(Board board);
     void displayfuse(Board board,int x, int y);
+    public void displayBoardToucherOuPas(Board board);
 
     void setController(GameController gameController);
 

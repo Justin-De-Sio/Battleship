@@ -50,19 +50,19 @@ public class GameController {
                 System.out.println("AFFICHAGE du board du joeur");
                view.displayBoard(board1);
                 view.askForMoveOrShoot();
-                System.out.println("AFFICHAGE du board du bot");
-                view.displayBoard(board2);
+                System.out.println("AFFICHAGE du board de tir");
+                view.displayBoardToucherOuPas(board2);
             } else
             {
                 Bot.set_BoardBot(board2);
-                boolean i=Bot.hit_or_move();
+                boolean i=Bot.hit_or_move(board2);
                 if (i){
                     System.out.println("le bot tir:");
-                    Bot.hitBot(board1);
+                    Bot.hitBot(board1,board2);
                 }
                 else{
                     System.out.println("bouge:");
-                    Bot.move();
+                    Bot.move(board2);
                 }
 
             }
