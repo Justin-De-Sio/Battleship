@@ -51,7 +51,7 @@ interface Serializer {
 
 
         } catch (IOException ex) {
-            System.out.println("IOException is caught1");
+            System.out.println("partie introuvable");
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException is caught");
         }
