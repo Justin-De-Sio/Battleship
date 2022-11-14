@@ -9,15 +9,18 @@ import ece.fr.view.Viewable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 import static javafx.application.Application.launch;
 
 public class Main extends Application {
     public static void main(String[] args)  {
+        boolean isCheatOn = Objects.equals(args[1], "cheat");
         switch (args[0]) {
             case "cli":
                 Viewable view = new ViewCommandLineInterface();
                 GameEvaluator gameEvaluator = new LastAliveEvaluator();
-                GameController gameController = new GameController(view,gameEvaluator);
+                GameController gameController = new GameController(view,gameEvaluator,isCheatOn);
                 gameController.startGame();
                 break;
             case "gui":
@@ -35,10 +38,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage)  {
-
         Viewable view = new ViewGraphicalUserInterface(stage);
         GameEvaluator gameEvaluator = new LastAliveEvaluator();
-        GameController gameController = new GameController(view,gameEvaluator);
+        GameController gameController = new GameController(view,gameEvaluator,false);
         gameController.startGame();
     }
 }

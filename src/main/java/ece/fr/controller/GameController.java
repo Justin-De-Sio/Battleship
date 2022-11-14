@@ -11,9 +11,9 @@ import java.io.Serializable;
 public class GameController implements Serializable {
 
     private final Viewable view;
+    final private boolean isCheatOn;
     private Board board1;
     private Board board2;
-
     private BOT Bot;
     private Board attacker;
     private Board victim;
@@ -22,15 +22,16 @@ public class GameController implements Serializable {
     private ChoiceManagerable choiceManager;
 
 
-    public GameController(Viewable view, GameEvaluator evaluator) {
+    public GameController(Viewable view, GameEvaluator evaluator, boolean isCheatOn) {
         this.view = view;
         this.evaluator = evaluator;
         this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
         this.board1 = new Board();
         this.board2 = new Board();
-        this.Bot=new BOT(this.board2);
+        this.Bot = new BOT(this.board2);
         this.attacker = board1;
         this.victim = board2;
+        this.isCheatOn = isCheatOn;
 
         view.setController(this);
 
@@ -50,28 +51,28 @@ public class GameController implements Serializable {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
-                System.out.println("AFFICHAGE du board du joueur");
-               view.displayBoard(board1);
-                view.askForMoveOrShoot();
-                System.out.println("AFFICHAGE du board de tir");
+                if(isCheatOn){
+                    view.displayBoard(board2);
+                }
+                view.displayBoard(board1);
                 view.displayBoardToucherOuPas(board2);
-            } else
-            {
+                view.askForMoveOrShoot();
 
-                boolean i=Bot.hit_or_move();
-                if (i){
+            } else {
+
+                boolean i = Bot.hit_or_move();
+                if (i) {
                     System.out.println("le bot tir:");
                     Bot.hitBot(board1);
-                }
-                else{
+                } else {
                     System.out.println("bouge:");
                     Bot.move();
                 }
 
             }
             // winner
-            if (evaluator.evaluateWinner(board1,board2) != null) {
-                evaluateWinner(board1,board2);
+            if (evaluator.evaluateWinner(board1, board2) != null) {
+                evaluateWinner(board1, board2);
 
             }
             saveGame();
@@ -79,16 +80,18 @@ public class GameController implements Serializable {
             victim = (victim == board1) ? board2 : board1;
         }
     }
-    public void evaluateWinner(Board board1,Board board2) {
+
+    public void evaluateWinner(Board board1, Board board2) {
         Board winner = evaluator.evaluateWinner(board1, board2);
 
-        if(winner== board1){
+        if (winner == board1) {
             view.displayWinner("Joueur");
-        }else{
+        } else {
             view.displayWinner("Bot");
         }
         gameState = GameState.FINISHED;
     }
+
     public void selectMenuChoice(int choice) {
         choiceManager.selectMenuChoice(choice);
     }
@@ -106,16 +109,16 @@ public class GameController implements Serializable {
     public void startLastGame() {
         String ressourcePath = "src/main/resources/";
         board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "board1DataBoard"));
-        board1.setShipsList((Ship[])Serializer.deSerialize(board1.getShipsList(), "board1DataShipList"));
+        board1.setShipsList((Ship[]) Serializer.deSerialize(board1.getShipsList(), "board1DataShipList"));
         board1.setSecondBoard((SecondBoard) Serializer.deSerialize(board1.getSecondBoard(), "board1DataSecondBoard"));
         board2.setBoard((Ship[][]) Serializer.deSerialize(board2.getBoard(), "board2DataBoard"));
-        board2.setShipsList((Ship[])Serializer.deSerialize(board2.getShipsList(), "board2DataShipList"));
+        board2.setShipsList((Ship[]) Serializer.deSerialize(board2.getShipsList(), "board2DataShipList"));
         board2.setSecondBoard((SecondBoard) Serializer.deSerialize(board2.getSecondBoard(), "board2DataSecondBoard"));
 
     }
 
     public void saveGame() {
-        Serializer.serialize(board1.getShipsList(),  "board1DataShipList");
+        Serializer.serialize(board1.getShipsList(), "board1DataShipList");
         Serializer.serialize(board1.getBoard(), "board1DataBoard");
         Serializer.serialize(board1.getSecondBoard(), "board1DataSecondBoard");
         Serializer.serialize(board2.getShipsList(), "board2DataShipList");
@@ -131,8 +134,7 @@ public class GameController implements Serializable {
         final int yAttacker = getLetterIndex(coords);
         Ship shipAttacker = this.attacker.getBoard()[xAttacker][yAttacker];
         if (shipAttacker == null) {
-            // TODO throw exception
-            System.out.println("No ship at this position");
+            view.displayError("Pas de bateau à cette position");
             shipAttacker = selectShip();
         }
         return shipAttacker;
@@ -144,11 +146,10 @@ public class GameController implements Serializable {
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-        if((attackerShip.getPowershot()== ShootingPower.DESTROYER)&&(attackerShip.isFusee())){
-            view.displayfuse(board2,xVictim,yVictim);
+        if ((attackerShip.getPowershot() == ShootingPower.DESTROYER) && (attackerShip.isFusee())) {
+            view.displayfuse(board2, xVictim, yVictim);
             attackerShip.setFusee();
-        }
-        else {
+        } else {
             this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
         }
     }
@@ -163,8 +164,7 @@ public class GameController implements Serializable {
                 direction = view.askDirection(Direction.EAST, Direction.WEST);
             }
             this.attacker.moveShip(ship, direction);
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             view.displayError(e.getMessage());
             moveShip();
         }
@@ -234,9 +234,6 @@ public class GameController implements Serializable {
     public void quit() {
         System.exit(0);
     }
-
-
-
 
 
     public void about() {
