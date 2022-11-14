@@ -4,14 +4,43 @@ import ece.fr.controller.GameController;
 import ece.fr.controller.GameEvaluator;
 import ece.fr.controller.manager.LastAliveEvaluator;
 import ece.fr.view.ViewCommandLineInterface;
+import ece.fr.view.ViewGraphicalUserInterface;
+import ece.fr.view.Viewable;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Main {
-    public static void main(String[] args) {
-        ViewCommandLineInterface view = new ViewCommandLineInterface();
+import java.util.Objects;
+
+import static javafx.application.Application.launch;
+
+public class Main extends Application {
+    public static void main(String[] args)  {
+        boolean isCheatOn = Objects.equals(args[1], "cheat");
+        switch (args[0]) {
+            case "cli":
+                Viewable view = new ViewCommandLineInterface();
+                GameEvaluator gameEvaluator = new LastAliveEvaluator();
+                GameController gameController = new GameController(view,gameEvaluator,isCheatOn);
+                gameController.startGame();
+                break;
+            case "gui":
+                launch(args);
+                break;
+            default:
+                System.out.println("Wrong argument, should be cli or gui");
+                break;
+        }
+
+
+
+    }
+
+
+    @Override
+    public void start(Stage stage)  {
+        Viewable view = new ViewGraphicalUserInterface(stage);
         GameEvaluator gameEvaluator = new LastAliveEvaluator();
-
-        GameController gameController = new GameController(view, gameEvaluator);
-        gameController.run();
-
+        GameController gameController = new GameController(view,gameEvaluator,false);
+        gameController.startGame();
     }
 }

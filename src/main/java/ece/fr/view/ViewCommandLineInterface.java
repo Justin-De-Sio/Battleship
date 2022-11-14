@@ -36,6 +36,7 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
     public void displayBoard(Board board) {
+        System.out.println("\033[34m" + "La flotte" + "\033[0m");
 
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
 
@@ -83,9 +84,9 @@ public class ViewCommandLineInterface implements Viewable {
 
             } catch (java.util.InputMismatchException e) {
                 scanner.nextLine();
-                System.out.println("Vous devez entrer un chiffre !");
+                displayError("Veuillez entrer un nombre");
             } catch (Exception e) {
-                System.out.println("Une erreur est survenue !");
+                displayError("une erreur est survenue: "+ e.getMessage());
             }
 
             if (choice != 1 && choice != 2 && choice!=3 && choice!=4)
@@ -224,10 +225,10 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    public void displayWinner(Board evaluateWinner) {
+    public void displayWinner(String winner) {
         System.out.println("                 **********  Quitter **********");
         System.out.println("                 |       La partie est finie      |");
-        System.out.println("                 |       Le gagnant est : " + evaluateWinner + "      |");
+        System.out.println("                 |       Le gagnant est : " + winner + "      |");
         System.out.println("                 |       Appuyez sur Entrée pour revenir au menu      |");
         Scanner readinput = new Scanner(System.in);
 
@@ -294,6 +295,7 @@ public class ViewCommandLineInterface implements Viewable {
 
 
     public void displayBoardToucherOuPas(Board board) {
+        System.out.println("\033[34m" + "Zone de tire" + "\033[0m");
 
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
 

@@ -56,7 +56,6 @@ public abstract class Ship implements java.io.Serializable {
     }
 
     public void strike() {
-        //TODO marker les parties du bateau touché
         this.strikeCount++;
     }
 
