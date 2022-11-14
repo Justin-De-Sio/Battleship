@@ -232,5 +232,7 @@ public class GameController implements Serializable {
     }
 
 
-
+    public void about() {
+        view.displayHelp();
+    }
 }

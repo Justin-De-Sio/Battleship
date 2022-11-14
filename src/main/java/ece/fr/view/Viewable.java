@@ -5,6 +5,10 @@ import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 
 public interface Viewable {
+
+
+
+
     void displayBoard(Board board);
 
     void displayMenu();
