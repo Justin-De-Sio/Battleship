@@ -4,21 +4,30 @@ import ece.fr.controller.GameController;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.Length;
+import ece.fr.model.ship.Ship;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ViewCommandLineInterface implements Viewable {
 
     public static final String ANSI_RESET = "\u001B[0m";
-
+    public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
+
     public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
     private GameController controller;
@@ -37,19 +46,23 @@ public class ViewCommandLineInterface implements Viewable {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (board.getBoard()[i][j] == null)
-                    System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
+                    System.out.print(ANSI_BLUE+"~"+ " | "+ANSI_RESET);
                 else {
-                    if (board.getSecondBoard().isStrike(i, j)) {
-                        System.out.print(ANSI_RED + "x" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
-                    } else {
-                        if (board.getBoard()[i][j].getLength() == Length.BATTLESHIP) {
-                            System.out.print(ANSI_CYAN + "B" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
-                        } else if (board.getBoard()[i][j].getLength() == Length.CRUISER) {
-                            System.out.print(ANSI_GREEN + "C" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
-                        } else if (board.getBoard()[i][j].getLength() == Length.DESTROYER) {
-                            System.out.print(ANSI_YELLOW + "D" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
-                        } else if (board.getBoard()[i][j].getLength() == Length.SUBMARINE) {
-                            System.out.print(ANSI_PURPLE + "S" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                    if(board.getSecondBoard().isStrike(i, j)){
+                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                    }
+                    else{
+                        if (board.getBoard()[i][j].getLength()==Length.BATTLESHIP){
+                            System.out.print(ANSI_CYAN+"B"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
+                        else if (board.getBoard()[i][j].getLength()==Length.CRUISER){
+                            System.out.print(ANSI_GREEN+"C" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
+                        else if (board.getBoard()[i][j].getLength()==Length.DESTROYER){
+                            System.out.print(ANSI_YELLOW+"D"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
+                        else if (board.getBoard()[i][j].getLength()==Length.SUBMARINE){
+                            System.out.print(ANSI_PURPLE+"S"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
                         }
                     }
                 }
@@ -78,7 +91,7 @@ public class ViewCommandLineInterface implements Viewable {
         Scanner scanner = new Scanner(System.in);
 
         int choice = 0;
-        while (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
+        while (choice != 1 && choice != 2 && choice!=3 && choice!=4 ) {
             try {
                 choice = scanner.nextInt();
 
@@ -86,10 +99,10 @@ public class ViewCommandLineInterface implements Viewable {
                 scanner.nextLine();
                 displayError("Veuillez entrer un nombre");
             } catch (Exception e) {
-                displayError("une erreur est survenue: " + e.getMessage());
+                displayError("une erreur est survenue: "+ e.getMessage());
             }
 
-            if (choice != 1 && choice != 2 && choice != 3 && choice != 4)
+            if (choice != 1 && choice != 2 && choice!=3 && choice!=4)
                 System.out.println("Mauvais input ! Vous devez choisir entre Jouer une partie (1) ou de charger une partie (2) ou d'afficher les aides (3) et encore de quitter !");
 
             System.out.println();
@@ -137,10 +150,10 @@ public class ViewCommandLineInterface implements Viewable {
         try {
             if (!controller.isValideCoord(result)) {
 
-                throw new Exception();
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             }
         } catch (Exception e) {
-            displayError("Vous devez écrire les coordonnées au format 'A0' ou 'C13' !");
+            System.out.println(e.getMessage());
             return askSelectShip();
         }
         return result;
@@ -152,10 +165,11 @@ public class ViewCommandLineInterface implements Viewable {
         String result = scanner.nextLine().toUpperCase();
         try {
             if (!controller.isValideCoord(result)) {
-                throw new IOException();
+
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             }
-        } catch (IOException e) {
-            displayError("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return askSelectTarget();
         }
         return result;
@@ -166,21 +180,15 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("Quelle direction voulez-vous utiliser ?");
         System.out.println("1 : " + direction1);
         System.out.println("2 : " + direction2);
-        Scanner scanner = new Scanner(System.in);
-        int result;
+          Scanner scanner = new Scanner(System.in);
+        int result = scanner.nextInt();
         try {
-            result = scanner.nextInt();
-
             if (result != 1 && result != 2) {
 
-                throw new IOException();
+                throw new IOException("Mauvais input ! Vous devez écrire un input au format '1' ou '2' ! ");
             }
-        } catch (InputMismatchException e) {
-            scanner.nextLine();
-            displayError("Veuillez entrer un nombre");
-            return askDirection(direction1, direction2);
-        } catch (IOException e) {
-            displayError("choisir 1 ou 2");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return askDirection(direction1, direction2);
         }
         return result == 1 ? direction1 : direction2;
@@ -246,40 +254,43 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
-    public void displayfuse(Board board, int debutx, int debuy) {
+    public void displayfuse(Board board,int debutx, int debuy) {
 
-        if (debutx > 11) {
-            int r = 14 - debutx;
-            debutx = debutx - r;
+        if(debutx>11){
+            int r=14-debutx;
+            debutx=debutx-r;
         }
-        if (debuy > 11) {
-            int r = 14 - debuy;
-            debuy = debuy - r;
+        if (debuy>11){
+            int r=14-debuy;
+            debuy=debuy-r;
         }
-        int finx = debutx + 4;
-        int finy = debuy + 4;
+            int finx=debutx+4;
+        int finy=debuy+4;
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
 
         for (int i = 0; i < 15; i++) {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
-                if ((i >= debutx) && (j >= debuy)) {
-                    if ((i < finx) && (j < finy)) {
+                if((i>=debutx)&&(j>=debuy)){
+                    if((i<finx)&&(j<finy)){
 
                         if (board.getBoard()[i][j] == null)
                             System.out.print("~" + " | ");
                         else {
-                            if (board.getSecondBoard().isStrike(i, j)) {
-                                System.out.print(ANSI_RED + "x" + ANSI_RESET + " | ");
-                            } else {
+                            if(board.getSecondBoard().isStrike(i, j)){
+                                System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
+                            }
+                            else {
                                 System.out.print("■" + " | ");
                             }
                         }
-                    } else {
-                        System.out.print(ANSI_WHITE_BACKGROUND + " " + " | " + ANSI_RESET);
+            }
+                    else{
+                        System.out.print(ANSI_WHITE_BACKGROUND+" " + " | "+ANSI_RESET);
                     }
-                } else {
-                    System.out.print(ANSI_WHITE_BACKGROUND + " " + " | " + ANSI_RESET);
+                }
+                else{
+                    System.out.print(ANSI_WHITE_BACKGROUND+" " + " | "+ANSI_RESET);
                 }
             }
             System.out.println();
@@ -305,12 +316,13 @@ public class ViewCommandLineInterface implements Viewable {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (board.getBoard()[i][j] == null)
-                    System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
+                    System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
                 else {
-                    if (board.getSecondBoard().isStrike(i, j)) {
-                        System.out.print(ANSI_RED + "x" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
-                    } else {
-                        System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
+                    if(board.getSecondBoard().isStrike(i, j)){
+                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                    }
+                    else {
+                        System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
                     }
                 }
 
