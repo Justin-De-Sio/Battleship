@@ -57,7 +57,6 @@ public class GameController implements Serializable {
                 view.displayBoardToucherOuPas(board2);
             } else
             {
-                view.displayBoard(board2);
                 boolean i=Bot.hit_or_move();
                 if (i){
                     Bot.hitBot(board1);
@@ -66,7 +65,6 @@ public class GameController implements Serializable {
                     Bot.move();
                     board2=Bot.getBoard();
                 }
-                view.displayBoard(board2);
             }
             // winner
             if (evaluateWinner() != null) {
