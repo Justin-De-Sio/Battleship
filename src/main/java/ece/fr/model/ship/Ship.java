@@ -60,17 +60,6 @@ public abstract class Ship implements java.io.Serializable {
         this.strikeCount++;
     }
 
-    public Ship shoot(Ship target) {
-        Length submarine = Length.SUBMARINE;
-        if (target != null) {
-            if (this.length == submarine) {
-                target.strike();
-            } else if (target.getLength() != submarine) {
-                target.strike();
-            }
-        }
-        return target;
-    }
     public boolean isFusee() {
         return fusee;
     }

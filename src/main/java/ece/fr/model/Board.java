@@ -227,7 +227,7 @@ public class Board {
 
     public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {
 
-        int powerShip =(int) sqrt( shipAttacker.getPowershot().value());
+        int powerShip = (int) sqrt(shipAttacker.getPowershot().value());
         // centrer le point de tir
         int xTargetCenter = (int) (xTarget - (powerShip) / 2);
         int yTargetCenter = (int) (yTarget - (powerShip) / 2);
@@ -237,16 +237,14 @@ public class Board {
             for (int y = 0; y < powerShip; y++) {
 
 
-                    if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
-                            && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
-                            && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)) {
-                            if ((victim.getBoard()[xTargetCenter+x][yTargetCenter+y].getLength()!=Length.SUBMARINE)
-                               ||(shipAttacker.getLength()==Length.SUBMARINE)) {
-                                victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
-                                victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
-                            }
-
-                    }
+                if (isRealCoordonate(xTargetCenter + x, yTargetCenter + y)
+                        && (victim.getBoard()[xTargetCenter + x][yTargetCenter + y] != null)
+                        && !victim.getSecondBoard().isStrike(xTargetCenter + x, yTargetCenter + y)
+                        && ((victim.getBoard()[xTargetCenter + x][yTargetCenter + y].getLength() != Length.SUBMARINE)
+                        || (shipAttacker.getLength() == Length.SUBMARINE))) {
+                    victim.getBoard()[xTargetCenter + x][yTargetCenter + y].strike();
+                    victim.secondBoard.strike(xTargetCenter + x, yTargetCenter + y);
+                }
 
             }
         }

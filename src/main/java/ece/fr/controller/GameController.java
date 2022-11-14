@@ -67,6 +67,7 @@ public class GameController implements Serializable {
                     System.out.println("bouge:");
                     Bot.move();
                 }
+              // TODO regler ça
 
             }
             // winner
