@@ -15,7 +15,7 @@ public interface Viewable {
 
     void askForMoveOrShoot();
 
-    void displayWinner(Board board);
+    void displayWinner(String winner);
     void displayfuse(Board board,int x, int y);
     public void displayBoardToucherOuPas(Board board);
 

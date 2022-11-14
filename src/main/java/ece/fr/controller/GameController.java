@@ -70,16 +70,25 @@ public class GameController implements Serializable {
 
             }
             // winner
-            if (evaluateWinner() != null) {
-                view.displayWinner(evaluateWinner());
-                gameState = GameState.FINISHED;
+            if (evaluator.evaluateWinner(board1,board2) != null) {
+                evaluateWinner(board1,board2);
+
             }
             saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
         }
     }
+    public void evaluateWinner(Board board1,Board board2) {
+        Board winner = evaluator.evaluateWinner(board1, board2);
 
+        if(winner== board1){
+            view.displayWinner("Joueur");
+        }else{
+            view.displayWinner("Bot");
+        }
+        gameState = GameState.FINISHED;
+    }
     public void selectMenuChoice(int choice) {
         choiceManager.selectMenuChoice(choice);
     }
@@ -227,9 +236,7 @@ public class GameController implements Serializable {
     }
 
 
-    public Board evaluateWinner() {
-        return evaluator.evaluateWinner(board1, board2);
-    }
+
 
 
     public void about() {

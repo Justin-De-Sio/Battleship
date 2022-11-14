@@ -224,10 +224,10 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    public void displayWinner(Board evaluateWinner) {
+    public void displayWinner(String winner) {
         System.out.println("                 **********  Quitter **********");
         System.out.println("                 |       La partie est finie      |");
-        System.out.println("                 |       Le gagnant est : " + evaluateWinner + "      |");
+        System.out.println("                 |       Le gagnant est : " + winner + "      |");
         System.out.println("                 |       Appuyez sur Entrée pour revenir au menu      |");
         Scanner readinput = new Scanner(System.in);
 

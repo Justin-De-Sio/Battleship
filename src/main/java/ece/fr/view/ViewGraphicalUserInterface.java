@@ -121,7 +121,7 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
     }
 
     @Override
-    public void displayWinner(Board board) {
+    public void displayWinner(String winner) {
 
     }
 
