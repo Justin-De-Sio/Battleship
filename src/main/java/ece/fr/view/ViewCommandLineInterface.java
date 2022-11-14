@@ -3,6 +3,8 @@ package ece.fr.view;
 import ece.fr.controller.GameController;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
+import ece.fr.model.ship.Length;
+import ece.fr.model.ship.Ship;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -16,6 +18,7 @@ public class ViewCommandLineInterface implements Viewable {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
+
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
     public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
@@ -39,18 +42,28 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("\033[34m" + "La flotte" + "\033[0m");
 
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
-
         for (int i = 0; i < 15; i++) {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (board.getBoard()[i][j] == null)
-                    System.out.print("~" + " | ");
+                    System.out.print(ANSI_BLUE+"~"+ " | "+ANSI_RESET);
                 else {
-                    if(board.getSecondBoard().isStrike(i,j)==true){
-                        System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
+                    if(board.getSecondBoard().isStrike(i, j)){
+                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
                     }
-                    else {
-                        System.out.print("■" + " | ");
+                    else{
+                        if (board.getBoard()[i][j].getLength()==Length.BATTLESHIP){
+                            System.out.print(ANSI_CYAN+"B"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
+                        else if (board.getBoard()[i][j].getLength()==Length.CRUISER){
+                            System.out.print(ANSI_GREEN+"C" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
+                        else if (board.getBoard()[i][j].getLength()==Length.DESTROYER){
+                            System.out.print(ANSI_YELLOW+"D"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
+                        else if (board.getBoard()[i][j].getLength()==Length.SUBMARINE){
+                            System.out.print(ANSI_PURPLE+"S"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                        }
                     }
                 }
 
@@ -226,10 +239,10 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
     public void displayWinner(String winner) {
-        System.out.println("                 **********  Quitter **********");
-        System.out.println("                 |       La partie est finie      |");
-        System.out.println("                 |       Le gagnant est : " + winner + "      |");
-        System.out.println("                 |       Appuyez sur Entrée pour revenir au menu      |");
+        System.out.println("******************  Quitter ********************");
+        System.out.println("\t\t La partie est finie\t\t\t");
+        System.out.println("\t\tLe gagnant est : Joueur\t\t");
+        System.out.println("\tAppuyez sur Entrée pour revenir au menu\t");
         Scanner readinput = new Scanner(System.in);
 
         String enterkey = "x";
@@ -264,7 +277,7 @@ public class ViewCommandLineInterface implements Viewable {
                         if (board.getBoard()[i][j] == null)
                             System.out.print("~" + " | ");
                         else {
-                            if(board.getSecondBoard().isStrike(i,j)==true){
+                            if(board.getSecondBoard().isStrike(i, j)){
                                 System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
                             }
                             else {
@@ -303,13 +316,13 @@ public class ViewCommandLineInterface implements Viewable {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (board.getBoard()[i][j] == null)
-                    System.out.print("~" + " | ");
+                    System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
                 else {
-                    if(board.getSecondBoard().isStrike(i,j)==true){
-                        System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
+                    if(board.getSecondBoard().isStrike(i, j)){
+                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
                     }
                     else {
-                        System.out.print("~" + " | ");
+                        System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
                     }
                 }
 
