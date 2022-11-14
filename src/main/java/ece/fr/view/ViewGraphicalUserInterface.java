@@ -12,7 +12,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 /**
  * JavaFx graphical user interface
@@ -132,6 +137,22 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
 
     @Override
     public void displayHelp() {
+        // load help.txt
+          try {
+
+                BorderPane root = new BorderPane();
+
+                Text text = new Text("help");
+                root.setCenter(text);
+                Scene scene = new Scene(root, 300, 250);
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+            }
+
 
     }
 

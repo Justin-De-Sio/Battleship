@@ -41,7 +41,7 @@ public class GameController implements Serializable {
         this.gameState = gameState;
     }
 
-    public void run() {
+    public void startGame() {
 
 
         if (gameState == GameState.NOT_STARTED) {

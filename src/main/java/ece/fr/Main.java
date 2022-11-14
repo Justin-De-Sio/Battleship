@@ -13,7 +13,21 @@ import static javafx.application.Application.launch;
 
 public class Main extends Application {
     public static void main(String[] args)  {
-        launch(args);
+        switch (args[0]) {
+            case "cli":
+                Viewable view = new ViewCommandLineInterface();
+                GameEvaluator gameEvaluator = new LastAliveEvaluator();
+                GameController gameController = new GameController(view,gameEvaluator);
+                gameController.startGame();
+                break;
+            case "gui":
+                launch(args);
+                break;
+            default:
+                System.out.println("Wrong argument, should be cli or gui");
+                break;
+        }
+
 
 
     }
@@ -21,9 +35,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage)  {
-        Viewable viewable = new ViewGraphicalUserInterface(stage);
+
+        Viewable view = new ViewGraphicalUserInterface(stage);
         GameEvaluator gameEvaluator = new LastAliveEvaluator();
-        GameController gameController = new GameController(viewable,gameEvaluator);
-        gameController.run();
+        GameController gameController = new GameController(view,gameEvaluator);
+        gameController.startGame();
     }
 }
