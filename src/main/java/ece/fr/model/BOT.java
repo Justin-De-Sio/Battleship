@@ -3,11 +3,20 @@ import ece.fr.model.ship.*;
 import ece.fr.model.ship.Direction;
 
 public class BOT {
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     Board board;
 
     public  BOT(Board B_bot) {
         this.board = B_bot;
     }
+
 
 
         public void move () {
@@ -50,7 +59,7 @@ public class BOT {
         }
         public boolean hit_or_move () {// si 1 on tir, si 0 on bouge
             int rand = (int) (Math.random() * 10);
-            if (rand <=7) { //on à une 7/10 de faire un tir
+            if (rand ==7) { //on à une 7/10 de faire un tir
               return true;
             } else {//on à 2/10 de bouger
                 return !canMove();

@@ -57,17 +57,16 @@ public class GameController implements Serializable {
                 view.displayBoardToucherOuPas(board2);
             } else
             {
-
+                view.displayBoard(board2);
                 boolean i=Bot.hit_or_move();
                 if (i){
-                    System.out.println("le bot tir:");
                     Bot.hitBot(board1);
                 }
                 else{
-                    System.out.println("bouge:");
                     Bot.move();
+                    board2=Bot.getBoard();
                 }
-
+                view.displayBoard(board2);
             }
             // winner
             if (evaluateWinner() != null) {
