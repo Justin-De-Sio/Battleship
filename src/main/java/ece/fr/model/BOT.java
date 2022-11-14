@@ -59,7 +59,7 @@ public class BOT {
         }
         public boolean hit_or_move () {// si 1 on tir, si 0 on bouge
             int rand = (int) (Math.random() * 10);
-            if (rand ==7) { //on à une 7/10 de faire un tir
+            if (rand <=7) { //on à une 7/10 de faire un tir
               return true;
             } else {//on à 2/10 de bouger
                 return !canMove();
