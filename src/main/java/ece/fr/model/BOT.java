@@ -3,11 +3,20 @@ import ece.fr.model.ship.*;
 import ece.fr.model.ship.Direction;
 
 public class BOT {
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     Board board;
 
     public  BOT(Board B_bot) {
         this.board = B_bot;
     }
+
 
 
         public void move () {
