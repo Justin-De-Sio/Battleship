@@ -1,7 +1,8 @@
 package ece.fr.model.ship;
 
 /**
- * Création du Destroyer
+ * Le destroyer est un beateau ayant comme spécialité une fusee eclairante
+ * Son tir a une puissance de 1 et le bateau fait 3 cases
  */
 public class Destroyer extends Ship {
     private boolean fusee;
