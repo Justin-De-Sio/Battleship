@@ -1,7 +1,9 @@
 package ece.fr.model.ship;
 
 /**
- * Création du battleShip
+ * Un bateau sans specialité
+ * 7 cases de long
+ * puissance de tir de 9
  */
 public class BattleShip extends Ship {
     public BattleShip() {

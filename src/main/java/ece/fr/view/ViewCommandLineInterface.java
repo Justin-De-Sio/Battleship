@@ -306,12 +306,12 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
-    /**permet à l'utilisateur de voir les case déjas toucher
+    /**permet à l'utilisateur de voir les case déja touchée
      * @param board board que l'on veut afficher seulement les casse toucher
      */
     public void displayBoardToucherOuPas(Board board) {
         System.out.println();
-        System.out.println("\033[34m" + "Zone de tire" + "\033[0m");
+        System.out.println("\033[34m" + "Zone de tir" + "\033[0m");
 
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
 
