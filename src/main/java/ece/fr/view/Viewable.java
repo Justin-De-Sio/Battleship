@@ -23,8 +23,6 @@ public interface Viewable {
 
     void displayHelp();
 
-    void askForMove();
-
     String askSelectShip();
 
     String askSelectTarget();

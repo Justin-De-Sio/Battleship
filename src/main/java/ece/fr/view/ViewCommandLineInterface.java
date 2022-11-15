@@ -4,7 +4,6 @@ import ece.fr.controller.GameController;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.Length;
-import ece.fr.model.ship.Ship;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -105,23 +104,10 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
     public void displayHelp() {
+        String text = controller.TextFromFile("about.txt");
 
         System.out.println("                                                    **********  Aide  **********\n");
-        System.out.println("|     L'objectif est de faire couler tous les bateaux ennemis                                                               |");
-        System.out.println("|     Chacun des joueurs possède une grille afin de positionner les navires, l'autre grille sert à visualiser les dégâts    |");
-        System.out.println("|     Chaque joueur possède 10 navires : 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous-marins                             |\n");
-        System.out.println("|     Voici les Tailles :                                                                                                   |");
-        System.out.println("|     Cuirassé : 7 cases                                                                                                    |");
-        System.out.println("|     Croiseur : 5 cases                                                                                                    |");
-        System.out.println("|     Destroyer : 3 cases                                                                                                   |");
-        System.out.println("|     Sous marin : 1 case                                                                                                   |\n");
-        System.out.println("|     Puissance de tir :                                                                                                    |");
-        System.out.println("|     Cuirassé : 9 cases                                                                                                    |");
-        System.out.println("|     Croiseur : 4 cases                                                                                                    |");
-        System.out.println("|     Destroyer : 1 case                                                                                                    |");
-        System.out.println("|     Sous marin : 1 case                                                                                                   |");
-        System.out.println("|     L'objectif est de faire couler tous les bateaux ennemis                                                               |");
-
+        System.out.println(text);
         System.out.println();
         System.out.println("                 Appuyez sur Entrée pour confirmer.");
 
@@ -225,11 +211,6 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    public void askForMove() {
-
-
-    }
-
     public void displayWinner(String winner) {
         System.out.println("******************  Quitter ********************");
         System.out.println("\t\t La partie est finie\t\t\t");
@@ -292,6 +273,7 @@ public class ViewCommandLineInterface implements Viewable {
 
 
     public void displayBoardToucherOuPas(Board board) {
+        System.out.println();
         System.out.println("\033[34m" + "Zone de tire" + "\033[0m");
 
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
@@ -302,16 +284,16 @@ public class ViewCommandLineInterface implements Viewable {
                 if (board.getBoard()[i][j] == null)
                     System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
                 else {
-                    if(board.getSecondBoard().isStrike(i, j)){
-                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
-                    }
-                    else {
-                        System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
+                    if (board.getSecondBoard().isStrike(i, j)) {
+                        System.out.print(ANSI_RED + "x" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                    } else {
+                        System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
                     }
                 }
 
             }
-            System.out.println();
+            System.out.println("");
+
         }
 
     }

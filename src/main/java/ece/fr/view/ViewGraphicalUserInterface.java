@@ -5,19 +5,16 @@ import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 
 /**
  * JavaFx graphical user interface
@@ -25,6 +22,10 @@ import java.io.ObjectInputStream;
 public class ViewGraphicalUserInterface extends Application implements Viewable {
 
 
+    Group group;
+    Scene scene;
+    int height = 720;
+    int width = 1080;
     private GameController controller;
     private Stage stage;
 
@@ -37,13 +38,26 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
         }
     }
 
-
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            BorderPane root = new BorderPane();
-            Scene scene = new Scene(root, 300, 250);
+            //creating a Group object
+            group = new Group();
+
+            //Creating a Scene by passing the group object, height and width
+
+            scene = new Scene(group, width, height);
+
+            //setting color to the scene
+            scene.setFill(Color.BEIGE);
+
+            //Setting the title to Stage.
+            stage.setTitle("Bataille Navale");
+
+            //Adding the scene to Stage
             stage.setScene(scene);
+
+            //Displaying the contents of the stage
             stage.show();
 
         } catch (Exception e) {
@@ -57,50 +71,69 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
 
     @Override
     public void displayMenu() {
-        // draw menu  without fxml
+
         try {
             Label label = new Label("Battleship");
-            label.setFont(new Font("Arial", 20));
+            label.setFont(new Font("Arial", 40));
             Button start = new Button("Start");
             Button load = new Button("Load");
             Button about = new Button("About");
             Button quit = new Button("Quit");
+            VBox vbox = new VBox(label, start, load, about, quit);
+            vbox.setSpacing(10);
+            vbox.setLayoutX(250);
+            vbox.setLayoutY(250);
+            group.getChildren().add(vbox);
+            start.setOnAction(this::startGame);
+            load.setOnAction(this::loadGame);
+            about.setOnAction(this::about);
+            quit.setOnAction(this::quit);
 
-            start.setOnAction((ActionEvent e) -> {
-                controller.startNewGame();
-            });
-            load.setOnAction((ActionEvent e) -> {
-                controller.startLastGame();
-            });
-            about.setOnAction((ActionEvent e) -> {
-                controller.about();
-            });
-            quit.setOnAction((ActionEvent e) -> {
-                controller.quit();
-            });
-
-
-            BorderPane root = new BorderPane();
-            // in vertical box
-            VBox vBox = new VBox();
-            vBox.getChildren().addAll(label, start, load, about, quit);
-            root.setCenter(vBox);
-
-
-
-
-
-            Scene scene = new Scene(root, 300, 250);
-            stage.setScene(scene);
-            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
 
-
         }
+    }
 
+    private void about(ActionEvent actionEvent) {
+        group.getChildren().clear();
+        try {
+            Label label = new Label("Battleship");
+            label.setFont(new Font("Arial", 40))
+            ;
+            String text = controller.TextFromFile("about.txt");
 
+            Text text1 = new Text(text);
+            text1.setFont(new Font("Arial", 20));
+            text1.setLayoutX(250);
+            text1.setLayoutY(250);
+            Button back = new Button("Back");
+            back.setLayoutX(250);
+            back.setLayoutY(550);
+            group.getChildren().addAll(label, text1, back);
+            back.setOnAction(this::back);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displayMenu(ActionEvent actionEvent) {
+        group.getChildren().clear();
+        displayMenu();
+    }
+
+    private void back(ActionEvent actionEvent) {
+        group.getChildren().clear();
+        displayMenu();
+    }
+
+    private void loadGame(ActionEvent actionEvent) {
+        controller.startLastGame();
+    }
+
+    private void quit(ActionEvent actionEvent) {
+        controller.quit();
     }
 
     @Override
@@ -138,26 +171,21 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
     @Override
     public void displayHelp() {
         // load help.txt
-          try {
+        try {
 
-                BorderPane root = new BorderPane();
+            BorderPane root = new BorderPane();
 
-                Text text = new Text("help");
-                root.setCenter(text);
-                Scene scene = new Scene(root, 300, 250);
-                stage.setScene(scene);
-                stage.show();
+            Text text = new Text("help");
+            root.setCenter(text);
+            Scene scene = new Scene(root, 300, 250);
+            stage.setScene(scene);
+            stage.show();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
 
-
-    }
-
-    @Override
-    public void askForMove() {
 
     }
 
@@ -182,7 +210,7 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
     }
 
     public void startGame(ActionEvent actionEvent) {
-
+        controller.startGame();
     }
 
 

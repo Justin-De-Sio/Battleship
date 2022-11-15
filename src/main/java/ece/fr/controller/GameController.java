@@ -6,7 +6,10 @@ import ece.fr.model.Board;
 import ece.fr.model.ship.*;
 import ece.fr.view.Viewable;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class GameController implements Serializable {
 
@@ -51,7 +54,7 @@ public class GameController implements Serializable {
 
         while (gameState == GameState.IN_PROGRESS) {
             if (attacker == board1) {
-                if(isCheatOn){
+                if (isCheatOn) {
                     view.displayBoard(board2);
                 }
                 view.displayBoard(board1);
@@ -68,7 +71,7 @@ public class GameController implements Serializable {
                     System.out.println("bouge:");
                     Bot.move();
                 }
-              // TODO regler ça
+                // TODO regler ça
 
             }
             // winner
@@ -114,7 +117,6 @@ public class GameController implements Serializable {
     }
 
     public void startLastGame() {
-        String ressourcePath = "src/main/resources/";
         board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "board1DataBoard"));
         board1.setShipsList((Ship[]) Serializer.deSerialize(board1.getShipsList(), "board1DataShipList"));
         board1.setSecondBoard((SecondBoard) Serializer.deSerialize(board1.getSecondBoard(), "board1DataSecondBoard"));
@@ -246,4 +248,16 @@ public class GameController implements Serializable {
     public void about() {
         view.displayHelp();
     }
+
+    public String TextFromFile(String fileName) {
+        String text = "";
+        String path = "src/main/resources/" + fileName;
+        try {
+            text = new String(Files.readAllBytes(Paths.get(path)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
+    }
+
 }
