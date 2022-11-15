@@ -9,22 +9,13 @@ import ece.fr.view.Viewable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
 public class Main extends Application {
     public static void main(String[] args) {
-        boolean isCheatOn = false;
-        try {
-            if (Objects.equals(args[0], "cheat")) {
-                isCheatOn = true;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            isCheatOn = false;
-        }
+
         if (args.length == 0) {
             Viewable view = new ViewCommandLineInterface();
             GameEvaluator gameEvaluator = new LastAliveEvaluator();
-            GameController gameController = new GameController(view, gameEvaluator, isCheatOn);
+            GameController gameController = new GameController(view, gameEvaluator, false);
             System.out.println("Pour lancer l'interface graphique du jeu veuillez entrer l'argument <gui> avant de lancer le programme");
             System.out.println("Pour pouvoir voir la board adverse(cheat) veuillez entrer l'argument <cheat>\n");
             gameController.startGame();
@@ -34,9 +25,10 @@ public class Main extends Application {
                     launch(args);
                     break;
                 case "cheat":
+
                     Viewable view = new ViewCommandLineInterface();
                     GameEvaluator gameEvaluator = new LastAliveEvaluator();
-                    GameController gameController = new GameController(view, gameEvaluator, isCheatOn);
+                    GameController gameController = new GameController(view, gameEvaluator, true);
                     gameController.startGame();
                     break;
                 default:
