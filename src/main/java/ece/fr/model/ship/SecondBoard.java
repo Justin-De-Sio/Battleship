@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * @author Justin
- * savegarde les tires touchés
+ * sauvegarde les tires touchés
  * 15x15
  */
 public class SecondBoard implements Serializable {
@@ -29,8 +29,6 @@ public class SecondBoard implements Serializable {
     public boolean[][] getBoard() {
         return board;
     }
-
-
 
 
 }

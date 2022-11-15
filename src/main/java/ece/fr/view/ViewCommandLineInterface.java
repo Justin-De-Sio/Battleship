@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * toute les méthode de l'affichage sont dans cette classe
+ */
 public class ViewCommandLineInterface implements Viewable {
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -29,6 +32,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**affiche la board
+     * @param board affhiche las board choisis
+     */
     public void displayBoard(Board board) {
         System.out.println("\033[34m" + "La flotte" + "\033[0m");
 
@@ -64,6 +70,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**
+     * affiche le menus
+     */
     public void displayMenu() {
         System.out.println("\t\t\t  **********************************");
         System.out.println("\t\t\t  **********************************");
@@ -103,6 +112,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**
+     * affiche help
+     */
     public void displayHelp() {
         String text = controller.TextFromFile("about.txt");
 
@@ -121,6 +133,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**sélectionne le bateaux
+     * @return demande sur quelle case est efficher le bateau
+     */
     public String askSelectShip() {
         System.out.println("Quel navire voulez utiliser ?");
         Scanner scanner = new Scanner(System.in);
@@ -137,6 +152,9 @@ public class ViewCommandLineInterface implements Viewable {
         return result;
     }
 
+    /**permet de demander quelle case est la cible
+     * @return renvois la casse ou l'on tire
+     */
     public String askSelectTarget() {
         System.out.println("Où souhaitez-vous Tirer ?");
         Scanner scanner = new Scanner(System.in);
@@ -153,6 +171,11 @@ public class ViewCommandLineInterface implements Viewable {
         return result;
     }
 
+    /**
+     * @param direction1 affiche direction ou il peut bouger
+     * @param direction2 affiche la deuxième direction de ou il peut bouger
+     * @return la direction choisis
+     */
     @Override
     public Direction askDirection(Direction direction1, Direction direction2) {
         System.out.println("Quelle direction voulez-vous utiliser ?");
@@ -179,6 +202,9 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
+    /**
+     * demande à l'utilisateur si il veut  tirer ou bouger
+     */
     // Retourne 1 si déplacement
     // Retourne 2 si tir
     public void askForMoveOrShoot() {
@@ -211,6 +237,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**affiche la fin du jeux
+     * @param winner nom du gagnant
+     */
     public void displayWinner(String winner) {
         System.out.println("******************  Quitter ********************");
         System.out.println("\t\t La partie est finie\t\t\t");
@@ -227,6 +256,11 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
+    /**
+     * @param board le board que l'on veut afficher
+     * @param debutx à partir d'ou commencer le tir de fussée éclairante en x
+     * @param debuy  à partir d'ou commencer le tir de fussée éclairante en y
+     */
     public void displayfuse(Board board,int debutx, int debuy) {
 
         if(debutx>11){
@@ -272,6 +306,9 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
+    /**permet à l'utilisateur de voir les case déjas toucher
+     * @param board board que l'on veut afficher seulement les casse toucher
+     */
     public void displayBoardToucherOuPas(Board board) {
         System.out.println();
         System.out.println("\033[34m" + "Zone de tire" + "\033[0m");
@@ -297,6 +334,10 @@ public class ViewCommandLineInterface implements Viewable {
         }
 
     }
+
+    /**
+     * crée un délay de 3s
+     */
     public static void delay3s(){
         try {
             TimeUnit.SECONDS.sleep(3);
