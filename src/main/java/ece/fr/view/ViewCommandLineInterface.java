@@ -143,10 +143,10 @@ public class ViewCommandLineInterface implements Viewable {
         try {
             if (!controller.isValideCoord(result)) {
 
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                throw new IOException();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            displayError("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             return askSelectShip();
         }
         return result;
@@ -162,10 +162,10 @@ public class ViewCommandLineInterface implements Viewable {
         try {
             if (!controller.isValideCoord(result)) {
 
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                throw new IOException();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            displayError("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             return askSelectTarget();
         }
         return result;
@@ -181,15 +181,17 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("Quelle direction voulez-vous utiliser ?");
         System.out.println("1 : " + direction1);
         System.out.println("2 : " + direction2);
-          Scanner scanner = new Scanner(System.in);
+
+        Scanner scanner = new Scanner(System.in);
         int result = scanner.nextInt();
         try {
             if (result != 1 && result != 2) {
 
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format '1' ou '2' ! ");
+                throw new IOException();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            scanner.nextLine();
+            displayError("Mauvais input ! Vous devez écrire un input au format '1' ou '2' ! ");
             return askDirection(direction1, direction2);
         }
         return result == 1 ? direction1 : direction2;
