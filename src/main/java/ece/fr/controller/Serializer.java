@@ -49,7 +49,6 @@ interface Serializer {
             in.close();
             file.close();
 
-
         } catch (IOException ex) {
             System.out.println("partie introuvable");
         } catch (ClassNotFoundException ex) {

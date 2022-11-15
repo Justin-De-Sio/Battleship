@@ -42,6 +42,12 @@ public class GameController implements Serializable {
         this.gameState = gameState;
     }
 
+    /**
+     * Méthode permettant la création d'une partie en changeant le GameState
+     * Appelle la méthode pour évaluer le winner en fonction des ship coulés
+     * Appelle les fonctions pour que le bot fasse une action (tirer ou bouger)
+     * Sauvegarde la partie automatiquement à la fin de chaque tour dans un fichier
+     */
     public void startGame() {
 
 
@@ -68,7 +74,6 @@ public class GameController implements Serializable {
                     System.out.println("bouge:");
                     Bot.move();
                 }
-              // TODO regler ça
 
             }
             // winner
@@ -88,6 +93,11 @@ public class GameController implements Serializable {
         System.out.flush();
     }
 
+    /**
+     * Termine la partie et donne le Winner
+     * @param board1
+     * @param board2
+     */
     public void evaluateWinner(Board board1, Board board2) {
         Board winner = evaluator.evaluateWinner(board1, board2);
 
@@ -99,22 +109,35 @@ public class GameController implements Serializable {
         gameState = GameState.FINISHED;
     }
 
+    /**
+     * Choix dans le menu
+     * @param choice
+     */
     public void selectMenuChoice(int choice) {
         choiceManager.selectMenuChoice(choice);
     }
 
+    /**
+     * Choix d'actions dans la partie
+     * @param choice
+     */
     public void selectMoveOrShoot(int choice) {
         choiceManager.selectMoveOrShoot(choice);
     }
 
 
+    /**
+     * Crée une nouvelle partie
+     */
     public void startNewGame() {
         this.gameState = GameState.IN_PROGRESS;
 
     }
 
+    /**
+     * Chargement de la partie en récupérant le plateau, la liste de ship ainsi que le plateau adverse
+     */
     public void startLastGame() {
-        String ressourcePath = "src/main/resources/";
         board1.setBoard((Ship[][]) Serializer.deSerialize(board1.getBoard(), "board1DataBoard"));
         board1.setShipsList((Ship[]) Serializer.deSerialize(board1.getShipsList(), "board1DataShipList"));
         board1.setSecondBoard((SecondBoard) Serializer.deSerialize(board1.getSecondBoard(), "board1DataSecondBoard"));
@@ -124,6 +147,9 @@ public class GameController implements Serializable {
 
     }
 
+    /**
+     *Sauvegarde la partie dans un fichier
+     */
     public void saveGame() {
         Serializer.serialize(board1.getShipsList(), "board1DataShipList");
         Serializer.serialize(board1.getBoard(), "board1DataBoard");
@@ -135,6 +161,10 @@ public class GameController implements Serializable {
     }
 
 
+    /**
+     * Permet la selection des ship en utilisant les coordonnées
+     * @return de type Ship
+     */
     public Ship selectShip() {
         String coords = view.askSelectShip();
         final int xAttacker = getNumberIndex(coords);
@@ -148,6 +178,10 @@ public class GameController implements Serializable {
     }
 
 
+    /**
+     * Permet de selectionner ou on veut tirer
+     * Verifie aussi si la fusee eclairante est utilisée ou pas encore
+     */
     public void AskForShoot() {
         Ship attackerShip = selectShip();
         String coords = view.askSelectTarget();
@@ -161,6 +195,9 @@ public class GameController implements Serializable {
         }
     }
 
+    /**
+     * Demande pour bouger un ship en fonction de sa direction
+     */
     public void moveShip() {
         try {
             Ship ship = selectShip();
@@ -189,6 +226,11 @@ public class GameController implements Serializable {
     }
 
 
+    /**
+     * Verifie si les coordonnées entrée sont dans le bon format
+     * @param coords
+     * @return boolean
+     */
     public boolean isValideCoord(String coords) {
 
 
@@ -227,6 +269,11 @@ public class GameController implements Serializable {
 
     }
 
+    /**
+     * Conversion des lettres pour la selection de l'utilisateur
+     * @param accii_lettre
+     * @return int
+     */
     public int converter_A_to_0(int accii_lettre) {
         if ((97 <= accii_lettre) && (accii_lettre <= 111)) {//si on à des minuscule je le transforme en majuscule
             accii_lettre = accii_lettre - 32;

@@ -17,12 +17,20 @@ public abstract class Ship implements java.io.Serializable {
         this.coordinates = new ArrayList<int[]>();
     }
 
+    /**
+     * Donne des coordonnées aux ship
+     * @param x
+     * @param y
+     */
     public void addCoordinates(int x, int y) {
         int[] coordinate = {x, y};
         coordinates.add(coordinate);
     }
 
 
+    /**
+     * Clear les coordonnées d'un ship
+     */
     public void clearCoordinates() {
         coordinates.clear();
     }
@@ -35,6 +43,10 @@ public abstract class Ship implements java.io.Serializable {
         return coordinates;
     }
 
+    /**
+     * Permet de savoir la direction d'un ship pour le déplacement
+     * @return boolean
+     */
     public boolean isVertical() {
         return isVertical;
     }
@@ -48,6 +60,10 @@ public abstract class Ship implements java.io.Serializable {
     }
 
 
+    /**
+     * Met l'état à sunk si toutes les cases d'un ship est égale a la taille totale du ship
+     * @return boolean
+     */
     public boolean isSunk() {
         return strikeCount == length.value();
     }

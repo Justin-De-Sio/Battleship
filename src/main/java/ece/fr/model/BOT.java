@@ -19,7 +19,7 @@ public class BOT {
 
     Board board;
 
-    /**getter Booard BOT
+    /**getter Board BOT
      * @param B_bot board
      */
     public  BOT(Board B_bot) {
