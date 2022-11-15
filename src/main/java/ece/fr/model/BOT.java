@@ -10,12 +10,18 @@ public class BOT {
         return board;
     }
 
+    /**setter  board Bot
+     * @param board
+     */
     public void setBoard(Board board) {
         this.board = board;
     }
 
     Board board;
 
+    /**getter Booard BOT
+     * @param B_bot
+     */
     public  BOT(Board B_bot) {
         this.board = B_bot;
     }
