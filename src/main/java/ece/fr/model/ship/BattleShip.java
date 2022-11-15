@@ -1,5 +1,8 @@
 package ece.fr.model.ship;
 
+/**
+ * Création du battleShip
+ */
 public class BattleShip extends Ship {
     public BattleShip() {
         super();
