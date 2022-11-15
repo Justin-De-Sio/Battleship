@@ -30,6 +30,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**affiche le board
+     * @param board
+     */
     public void displayBoard(Board board) {
         System.out.println("\033[34m" + "La flotte" + "\033[0m");
 
@@ -65,6 +68,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**
+     * affiche le menus
+     */
     public void displayMenu() {
         System.out.println("\t\t\t  **********************************");
         System.out.println("\t\t\t  **********************************");
@@ -104,6 +110,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**
+     * affiche help
+     */
     public void displayHelp() {
 
         System.out.println("                                                    **********  Aide  **********\n");
@@ -135,6 +144,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**sélectionne le bateaux
+     * @return demande sur quelle case est efficher le bateau
+     */
     public String askSelectShip() {
         System.out.println("Quel navire voulez utiliser ?");
         Scanner scanner = new Scanner(System.in);
@@ -151,6 +163,9 @@ public class ViewCommandLineInterface implements Viewable {
         return result;
     }
 
+    /**permet de demander quelle case est la cible
+     * @return renvois la casse ou l'on tire
+     */
     public String askSelectTarget() {
         System.out.println("Où souhaitez-vous Tirer ?");
         Scanner scanner = new Scanner(System.in);
@@ -167,6 +182,11 @@ public class ViewCommandLineInterface implements Viewable {
         return result;
     }
 
+    /**
+     * @param direction1 affiche direction ou il peut bouger
+     * @param direction2 affiche la deuxième direction de ou il peut bouger
+     * @return la direction choisis
+     */
     @Override
     public Direction askDirection(Direction direction1, Direction direction2) {
         System.out.println("Quelle direction voulez-vous utiliser ?");
@@ -193,6 +213,9 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
+    /**
+     * demande à l'utilisateur si il veut  tirer ou bouger
+     */
     // Retourne 1 si déplacement
     // Retourne 2 si tir
     public void askForMoveOrShoot() {
