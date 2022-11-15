@@ -1,5 +1,7 @@
-L'objectif est de faire couler tous les bateaux ennemis                                                           
-Chacun des joueurs possède une grille afin de positionner les navires, l'autre grille sert à visualiser les dégâts
+L'objectif est de faire couler tous les bateaux ennemis.
+Chacun des joueurs possède une grille afin de positionner les navires,
+l'autre grille sert à visualiser les dégâts.
+
 Chaque joueur possède 10 navires : 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous-marins                         
 Voici les Tailles :                                                                                               
 Cuirassé : 7 cases                                                                                                

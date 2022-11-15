@@ -99,9 +99,7 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
     private void about(ActionEvent actionEvent) {
         group.getChildren().clear();
         try {
-            Label label = new Label("Battleship");
-            label.setFont(new Font("Arial", 40))
-            ;
+
             String text = controller.TextFromFile("about.txt");
 
             Text text1 = new Text(text);
@@ -110,8 +108,8 @@ public class ViewGraphicalUserInterface extends Application implements Viewable 
             text1.setLayoutY(250);
             Button back = new Button("Back");
             back.setLayoutX(250);
-            back.setLayoutY(550);
-            group.getChildren().addAll(label, text1, back);
+            back.setLayoutY(600);
+            group.getChildren().addAll(text1, back);
             back.setOnAction(this::back);
         } catch (Exception e) {
             e.printStackTrace();

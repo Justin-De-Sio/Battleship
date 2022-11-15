@@ -11,6 +11,7 @@ public abstract class Ship implements java.io.Serializable {
     protected ArrayList<int[]> coordinates;
 
     protected int strikeCount;
+    protected boolean fusee = false;
 
     public Ship() {
         this.strikeCount = 0;
@@ -21,14 +22,15 @@ public abstract class Ship implements java.io.Serializable {
         int[] coordinate = {x, y};
         coordinates.add(coordinate);
     }
+
     public void clearCoordinates() {
         coordinates.clear();
     }
 
-
-    public void setIsVertical(boolean isVertical){
+    public void setIsVertical(boolean isVertical) {
         this.isVertical = isVertical;
     }
+
     public ArrayList<int[]> getCoordinates() {
         return coordinates;
     }
@@ -45,11 +47,9 @@ public abstract class Ship implements java.io.Serializable {
         return length;
     }
 
-
     public boolean isSunk() {
         return strikeCount == length.value();
     }
-
 
     public int getStrikeCount() {
         return strikeCount;
@@ -66,8 +66,6 @@ public abstract class Ship implements java.io.Serializable {
     public void setFusee() {
         this.fusee = false;
     }
-
-    protected boolean fusee=false;
 
 }
 
