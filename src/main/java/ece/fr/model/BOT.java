@@ -23,7 +23,7 @@ public class BOT {
             try {
                 int rand_boat =(int) (Math.random() * 10);//on choisi un bateau random parmis les 10
                 int direction = (int) (Math.random() * 2);
-                System.out.println(board.getShipsList()[rand_boat]);
+//                System.out.println(board.getShipsList()[rand_boat]);
                 if (board.getShipsList()[rand_boat].isVertical()) {//on regarde si le bateau est horizontal ou vertical
                     if (direction == 0) {
                         board.moveShip(board.getShipsList()[rand_boat], Direction.NORTH);
