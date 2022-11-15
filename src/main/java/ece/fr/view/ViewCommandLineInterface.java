@@ -189,7 +189,7 @@ public class ViewCommandLineInterface implements Viewable {
             displayError("Veuillez entrer un nombre");
             return askDirection(direction1, direction2);
         } catch (IOException e) {
-            displayError("Mauvais input ! Vous devez écrire un input au format '1' ou '2' !");
+            displayError("choisir 1 ou 2");
             return askDirection(direction1, direction2);
         }
         return result == 1 ? direction1 : direction2;
