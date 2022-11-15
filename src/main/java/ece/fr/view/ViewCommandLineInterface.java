@@ -146,10 +146,10 @@ public class ViewCommandLineInterface implements Viewable {
         try {
             if (!controller.isValideCoord(result)) {
 
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            displayError("Vous devez écrire les coordonnées au format 'A0' ou 'C13' !");
             return askSelectShip();
         }
         return result;
@@ -161,11 +161,10 @@ public class ViewCommandLineInterface implements Viewable {
         String result = scanner.nextLine().toUpperCase();
         try {
             if (!controller.isValideCoord(result)) {
-
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                throw new IOException();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            displayError("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             return askSelectTarget();
         }
         return result;
