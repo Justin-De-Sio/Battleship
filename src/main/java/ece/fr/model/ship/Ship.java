@@ -21,6 +21,8 @@ public abstract class Ship implements java.io.Serializable {
         int[] coordinate = {x, y};
         coordinates.add(coordinate);
     }
+
+
     public void clearCoordinates() {
         coordinates.clear();
     }
