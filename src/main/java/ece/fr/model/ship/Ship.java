@@ -11,7 +11,7 @@ public abstract class Ship implements java.io.Serializable {
     protected ArrayList<int[]> coordinates;
 
     protected int strikeCount;
-    protected boolean fusee = false;
+
 
     public Ship() {
         this.strikeCount = 0;
@@ -59,13 +59,6 @@ public abstract class Ship implements java.io.Serializable {
         this.strikeCount++;
     }
 
-    public boolean isFusee() {
-        return fusee;
-    }
-
-    public void setFusee() {
-        this.fusee = false;
-    }
 
 }
 

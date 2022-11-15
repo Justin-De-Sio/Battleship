@@ -28,7 +28,7 @@ public class GameController implements Serializable {
     public GameController(Viewable view, GameEvaluator evaluator, boolean isCheatOn) {
         this.view = view;
         this.evaluator = evaluator;
-        this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
+        this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être en paramètre
         this.board1 = new Board();
         this.board2 = new Board();
         this.Bot = new BOT(this.board2);
@@ -62,26 +62,21 @@ public class GameController implements Serializable {
                 view.askForMoveOrShoot();
 
             } else {
-
                 boolean i = Bot.hit_or_move();
                 if (i) {
-                    System.out.println("le bot tir:");
                     Bot.hitBot(board1);
                 } else {
-                    System.out.println("bouge:");
                     Bot.move();
                 }
-                // TODO regler ça
-
             }
-            // winner
+
             if (evaluator.evaluateWinner(board1, board2) != null) {
                 evaluateWinner(board1, board2);
 
             }
-            saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
+            saveGame();
             clearScreen();
         }
     }
@@ -156,9 +151,13 @@ public class GameController implements Serializable {
         String coords = view.askSelectTarget();
         final int xVictim = getNumberIndex(coords);
         final int yVictim = getLetterIndex(coords);
-        if ((attackerShip.getPowershot() == ShootingPower.DESTROYER) && (attackerShip.isFusee())) {
-            view.displayfuse(board2, xVictim, yVictim);
-            attackerShip.setFusee();
+        if ((attackerShip.getPowershot() == ShootingPower.DESTROYER)) {
+            Destroyer destroyer = (Destroyer) attackerShip;
+            if ((destroyer.isFusee())) {
+                view.displayfuse(board2, xVictim, yVictim);
+                destroyer.setFusee(false);
+            }
+
         } else {
             this.attacker.shoots(attackerShip, xVictim, yVictim, this.victim);
         }
