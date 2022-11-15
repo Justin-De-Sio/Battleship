@@ -8,6 +8,7 @@ import ece.fr.model.ship.Ship;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class ViewCommandLineInterface implements Viewable {
 
@@ -275,7 +276,7 @@ public class ViewCommandLineInterface implements Viewable {
                     if((i<finx)&&(j<finy)){
 
                         if (board.getBoard()[i][j] == null)
-                            System.out.print("~" + " | ");
+                            System.out.print("~" + " | " );
                         else {
                             if(board.getSecondBoard().isStrike(i, j)){
                                 System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
@@ -295,15 +296,7 @@ public class ViewCommandLineInterface implements Viewable {
             }
             System.out.println();
         }
-        System.out.println("                 Appuyez sur Entrée pour confirmer.");
-        Scanner readinput = new Scanner(System.in);
-
-        String enterkey = "x";
-
-        while (!enterkey.equals("")) {
-            enterkey = readinput.nextLine();
-        }
-
+        delay3s();
     }
 
 
@@ -330,5 +323,14 @@ public class ViewCommandLineInterface implements Viewable {
             System.out.println();
         }
 
+    }
+    public static void delay3s(){
+        try {
+            TimeUnit.SECONDS.sleep(3);
+            String ESC = "3[";
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
