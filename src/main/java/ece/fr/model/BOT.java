@@ -3,7 +3,7 @@ import ece.fr.model.ship.*;
 import ece.fr.model.ship.Direction;
 
 /**
- * classe Bot permet d'utiliser différente méthode qui modifie la board du bot
+ * class Bot permet d'utiliser différente méthode qui modifie la board du bot
  */
 public class BOT {
     public Board getBoard() {
@@ -11,7 +11,7 @@ public class BOT {
     }
 
     /**setter  board Bot
-     * @param board
+     * @param board du bord
      */
     public void setBoard(Board board) {
         this.board = board;
@@ -20,15 +20,15 @@ public class BOT {
     Board board;
 
     /**getter Booard BOT
-     * @param B_bot
+     * @param B_bot board
      */
     public  BOT(Board B_bot) {
         this.board = B_bot;
     }
 
 
-    /** fait bouger un bateau aux hasard, dans une direction random
-     *
+    /**
+     * fait bouger un bateau aux hasard, dans une direction random
      */
         public void move () {
             try {
@@ -54,7 +54,7 @@ public class BOT {
         }
 
     /**lance le tir sur  une case aux hasard du bateau
-     * @param Joeur
+     * @param Joeur board du joueur
      */
         public void  hitBot (Board Joeur){
             int rand_boat = (int) (Math.random() * 10);//on choisi un bateau random parmis les 10
