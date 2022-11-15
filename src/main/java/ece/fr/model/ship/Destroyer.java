@@ -1,5 +1,8 @@
 package ece.fr.model.ship;
 
+/**
+ * Création du Destroyer
+ */
 public class Destroyer extends Ship {
     private boolean fusee;
 

@@ -1,5 +1,8 @@
 package ece.fr.model.ship;
 
+/**
+ * Création du Submarine
+ */
 public class Submarine extends Ship {
     public Submarine() {
         super();

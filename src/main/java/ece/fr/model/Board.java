@@ -5,9 +5,9 @@ import ece.fr.model.ship.*;
 
 import static java.lang.Math.sqrt;
 
-// board 15x15
-// contain 10 ships
-//Les bateaux peuvent bouger d'une case à la fois
+/**
+ * Création du plateau de jeu
+ */
 public class Board {
     private Ship[][] board;
     private Ship[] shipsList;
@@ -35,7 +35,14 @@ public class Board {
         this.board[x][y] = ship;
     }
 
-
+    /**
+     * On crée les bateaux qui ont des tailles différentes en remplissant des tableaux
+     * @param battleShipNumber
+     * @param cruiserNumber
+     * @param destroyerNumber
+     * @param submarineNumber
+     * @return tableau de type ship représentant les bateaux
+     */
     public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
         int shipNumber = 0;
         Ship[] ships = new Ship[battleShipNumber + cruiserNumber + destroyerNumber + submarineNumber];
@@ -59,10 +66,20 @@ public class Board {
     }
 
 
+    /**
+     * Pour vérifier l'état d'un bateau, si coulé alors cela retourne true sur la bonne case
+     * @param x
+     * @param y
+     * @return boolean
+     */
     public boolean isSunk(int x, int y) {
         return board[x][y].isSunk();
     }
 
+    /**
+     * Permet de placer les bateaux manuellement si besoin
+     * @param shipsList
+     */
     void placeShipsForTest(Ship[] shipsList) {
         placeShip(shipsList[0], 0, 0, true);
         placeShip(shipsList[1], 0, 3, true);
@@ -80,7 +97,16 @@ public class Board {
         return placeShip(ship, x, y, ship.isVertical());
     }
 
-    // take care of orientation and position
+    /**
+     * Permet de placer les bateaux avec une orientation en fonction de s'il est possible ou pas de le mettre
+     * prend en charge l'orientation et le positionnement
+     * @param ship
+     * @param x
+     * @param y
+     * @param isVertical
+     * @return boolean
+     */
+
     public boolean placeShip(Ship ship, int x, int y, boolean isVertical) {
         //use isPlaceable
 
@@ -105,6 +131,14 @@ public class Board {
         return false;
     }
 
+    /**
+     * Permet de savoir si le bateau ne sort pas du plateau, s'il ne touche pas d'autres bateaux...
+     * @param ship
+     * @param x
+     * @param y
+     * @param isVertical
+     * @return boolean
+     */
     public boolean isPlaceable(Ship ship, int x, int y, boolean isVertical) {
         // check if ship is placeable
         // check if ship is not out of bound
@@ -131,6 +165,11 @@ public class Board {
         return true;
     }
 
+    /**
+     * Permet de retirer un ship d'une case (pour le bouger par exemple)
+     * @param ship
+     * @return un tableau d'entier
+     */
     public int[] removeShip(Ship ship) {
         int[] coordinates = new int[2];
         for (int i = 0; i < ship.getLength().value(); i++) {
@@ -140,12 +179,17 @@ public class Board {
         return coordinates;
     }
 
+
     public void placeShipsRandomly(Ship[] shipsList) {
         for (Ship ship : shipsList) {
             placeShipRandomly(ship);
         }
     }
 
+    /**
+     * Permet de placer aléatoirement les ship en début de partie
+     * @param ship
+     */
     public void placeShipRandomly(Ship ship) {
         int x = (int) (Math.random() * 15);
         int y = (int) (Math.random() * 15);
@@ -158,8 +202,14 @@ public class Board {
     }
 
 
-    //le bateau peut bouger d'une case à la fois
-    // le bateau sera remove de l'ancienne position et placé à la nouvelle
+    /**
+     * Deplacement du bateau en fonction de sa direction
+     * le bateau peut bouger d'une case à la fois
+     * On retire sa position précédente pour lui en attribuer une nouvelle
+     * @param ship
+     * @param direction
+     * @throws IllegalArgumentException
+     */
     public void moveShip(Ship ship, Direction direction) throws IllegalArgumentException {
         int[] coordinate = ship.getCoordinates().get(0);
         int x = coordinate[0];
@@ -226,6 +276,13 @@ public class Board {
         this.board = board;
     }
 
+    /**
+     * Permet de tirer en fonction de la puissance du bateau sélectionné en choisissant les coordonnées
+     * @param shipAttacker
+     * @param xTarget
+     * @param yTarget
+     * @param victim
+     */
     public void shoots(Ship shipAttacker, int xTarget, int yTarget, Board victim) {
 
         int powerShip = (int) sqrt(shipAttacker.getPowershot().value());
@@ -252,6 +309,12 @@ public class Board {
 
     }
 
+    /**
+     * Permet de vérifier si les coordonnées sont comprises entre 0 et 14
+     * @param i
+     * @param i1
+     * @return boolean
+     */
     private boolean isRealCoordonate(int i, int i1) {
         return (i >= 0 && i <= 14) && (i1 >= 0 && i1 <= 14);
     }

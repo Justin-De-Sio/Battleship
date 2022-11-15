@@ -4,6 +4,9 @@ import ece.fr.controller.ChoiceManagerable;
 import ece.fr.controller.GameController;
 import ece.fr.view.Viewable;
 
+/**
+ * Gère les choix de l'utilisateur en renvoyant aux méthodes respectives
+ */
 public class ChoiceManager implements ChoiceManagerable {
 
     private final Viewable view;
@@ -15,6 +18,10 @@ public class ChoiceManager implements ChoiceManagerable {
 
     }
 
+    /**
+     * Appelle les méthodes du gamecontroller pour les 5 choix que l'utilisateur a au lancement du jeu
+     * @param choice
+     */
     public void selectMenuChoice(int choice) {
         switch (choice) {
 
@@ -39,6 +46,10 @@ public class ChoiceManager implements ChoiceManagerable {
         }
     }
 
+    /**
+     * Appelle les méthodes dugameController pour choisir l'action une fois la partie lancée
+     * @param choice
+     */
     public void selectMoveOrShoot(int choice) {
         switch (choice) {
             case 1:
