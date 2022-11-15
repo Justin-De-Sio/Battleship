@@ -230,6 +230,9 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
+    /**affiche la fin du jeux
+     * @param winner nom du gagnant
+     */
     public void displayWinner(String winner) {
         System.out.println("******************  Quitter ********************");
         System.out.println("\t\t La partie est finie\t\t\t");
@@ -246,6 +249,11 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
+    /**
+     * @param board le board que l'on veut afficher
+     * @param debutx à partir d'ou commencer le tir de fussée éclairante en x
+     * @param debuy  à partir d'ou commencer le tir de fussée éclairante en y
+     */
     public void displayfuse(Board board,int debutx, int debuy) {
 
         if(debutx>11){
@@ -318,6 +326,10 @@ public class ViewCommandLineInterface implements Viewable {
         }
 
     }
+
+    /**
+     * crée un délay de 3s
+     */
     public static void delay3s(){
         try {
             TimeUnit.SECONDS.sleep(3);
