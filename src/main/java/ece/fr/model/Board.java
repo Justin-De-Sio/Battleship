@@ -25,8 +25,8 @@ public class Board {
         final int totalDestroyer = 3;
         final int totalSubmarine = 4;
         this.shipsList = shipCreator(totalBattleship, totalCruiser, totalDestroyer, totalSubmarine);
-//        placeShipsRandomly(this.shipsList);
-        placeShipsForTest(this.shipsList);
+        placeShipsRandomly(this.shipsList);
+//        placeShipsForTest(this.shipsList);
 
 
     }
@@ -34,6 +34,7 @@ public class Board {
     public void setBoard(int x, int y, Ship ship) {
         this.board[x][y] = ship;
     }
+
 
     public Ship[] shipCreator(int battleShipNumber, int cruiserNumber, int destroyerNumber, int submarineNumber) {
         int shipNumber = 0;
