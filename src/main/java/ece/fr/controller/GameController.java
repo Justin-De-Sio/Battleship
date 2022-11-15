@@ -79,7 +79,13 @@ public class GameController implements Serializable {
             saveGame();
             attacker = (attacker == board1) ? board2 : board1;
             victim = (victim == board1) ? board2 : board1;
+            clearScreen();
         }
+    }
+
+    private void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public void evaluateWinner(Board board1, Board board2) {

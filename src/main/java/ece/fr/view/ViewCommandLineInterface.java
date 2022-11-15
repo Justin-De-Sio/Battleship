@@ -4,9 +4,9 @@ import ece.fr.controller.GameController;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Direction;
 import ece.fr.model.ship.Length;
-import ece.fr.model.ship.Ship;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ViewCommandLineInterface implements Viewable {
@@ -46,23 +46,19 @@ public class ViewCommandLineInterface implements Viewable {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (board.getBoard()[i][j] == null)
-                    System.out.print(ANSI_BLUE+"~"+ " | "+ANSI_RESET);
+                    System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
                 else {
-                    if(board.getSecondBoard().isStrike(i, j)){
-                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
-                    }
-                    else{
-                        if (board.getBoard()[i][j].getLength()==Length.BATTLESHIP){
-                            System.out.print(ANSI_CYAN+"B"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
-                        }
-                        else if (board.getBoard()[i][j].getLength()==Length.CRUISER){
-                            System.out.print(ANSI_GREEN+"C" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
-                        }
-                        else if (board.getBoard()[i][j].getLength()==Length.DESTROYER){
-                            System.out.print(ANSI_YELLOW+"D"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
-                        }
-                        else if (board.getBoard()[i][j].getLength()==Length.SUBMARINE){
-                            System.out.print(ANSI_PURPLE+"S"+ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
+                    if (board.getSecondBoard().isStrike(i, j)) {
+                        System.out.print(ANSI_RED + "x" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                    } else {
+                        if (board.getBoard()[i][j].getLength() == Length.BATTLESHIP) {
+                            System.out.print(ANSI_CYAN + "B" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                        } else if (board.getBoard()[i][j].getLength() == Length.CRUISER) {
+                            System.out.print(ANSI_GREEN + "C" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                        } else if (board.getBoard()[i][j].getLength() == Length.DESTROYER) {
+                            System.out.print(ANSI_YELLOW + "D" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                        } else if (board.getBoard()[i][j].getLength() == Length.SUBMARINE) {
+                            System.out.print(ANSI_PURPLE + "S" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
                         }
                     }
                 }
@@ -91,7 +87,7 @@ public class ViewCommandLineInterface implements Viewable {
         Scanner scanner = new Scanner(System.in);
 
         int choice = 0;
-        while (choice != 1 && choice != 2 && choice!=3 && choice!=4 ) {
+        while (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
             try {
                 choice = scanner.nextInt();
 
@@ -99,10 +95,10 @@ public class ViewCommandLineInterface implements Viewable {
                 scanner.nextLine();
                 displayError("Veuillez entrer un nombre");
             } catch (Exception e) {
-                displayError("une erreur est survenue: "+ e.getMessage());
+                displayError("une erreur est survenue: " + e.getMessage());
             }
 
-            if (choice != 1 && choice != 2 && choice!=3 && choice!=4)
+            if (choice != 1 && choice != 2 && choice != 3 && choice != 4)
                 System.out.println("Mauvais input ! Vous devez choisir entre Jouer une partie (1) ou de charger une partie (2) ou d'afficher les aides (3) et encore de quitter !");
 
             System.out.println();
@@ -150,10 +146,10 @@ public class ViewCommandLineInterface implements Viewable {
         try {
             if (!controller.isValideCoord(result)) {
 
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            displayError("Vous devez écrire les coordonnées au format 'A0' ou 'C13' !");
             return askSelectShip();
         }
         return result;
@@ -165,11 +161,10 @@ public class ViewCommandLineInterface implements Viewable {
         String result = scanner.nextLine().toUpperCase();
         try {
             if (!controller.isValideCoord(result)) {
-
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
+                throw new IOException();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            displayError("Mauvais input ! Vous devez écrire un input au format 'A0' ou 'C13' ! ");
             return askSelectTarget();
         }
         return result;
@@ -180,15 +175,21 @@ public class ViewCommandLineInterface implements Viewable {
         System.out.println("Quelle direction voulez-vous utiliser ?");
         System.out.println("1 : " + direction1);
         System.out.println("2 : " + direction2);
-          Scanner scanner = new Scanner(System.in);
-        int result = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int result;
         try {
+             result = scanner.nextInt();
+
             if (result != 1 && result != 2) {
 
-                throw new IOException("Mauvais input ! Vous devez écrire un input au format '1' ou '2' ! ");
+                throw new IOException();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            displayError("Veuillez entrer un nombre");
+            return askDirection(direction1, direction2);
+        } catch (IOException e) {
+            displayError("choisir 1 ou 2");
             return askDirection(direction1, direction2);
         }
         return result == 1 ? direction1 : direction2;
@@ -254,43 +255,40 @@ public class ViewCommandLineInterface implements Viewable {
     }
 
 
-    public void displayfuse(Board board,int debutx, int debuy) {
+    public void displayfuse(Board board, int debutx, int debuy) {
 
-        if(debutx>11){
-            int r=14-debutx;
-            debutx=debutx-r;
+        if (debutx > 11) {
+            int r = 14 - debutx;
+            debutx = debutx - r;
         }
-        if (debuy>11){
-            int r=14-debuy;
-            debuy=debuy-r;
+        if (debuy > 11) {
+            int r = 14 - debuy;
+            debuy = debuy - r;
         }
-            int finx=debutx+4;
-        int finy=debuy+4;
+        int finx = debutx + 4;
+        int finy = debuy + 4;
         System.out.println("\tA   B   C   D   E   F   G   H   I   J   K   L   M   N   O");
 
         for (int i = 0; i < 15; i++) {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
-                if((i>=debutx)&&(j>=debuy)){
-                    if((i<finx)&&(j<finy)){
+                if ((i >= debutx) && (j >= debuy)) {
+                    if ((i < finx) && (j < finy)) {
 
                         if (board.getBoard()[i][j] == null)
                             System.out.print("~" + " | ");
                         else {
-                            if(board.getSecondBoard().isStrike(i, j)){
-                                System.out.print(ANSI_RED+"x" +ANSI_RESET+" | ");
-                            }
-                            else {
+                            if (board.getSecondBoard().isStrike(i, j)) {
+                                System.out.print(ANSI_RED + "x" + ANSI_RESET + " | ");
+                            } else {
                                 System.out.print("■" + " | ");
                             }
                         }
-            }
-                    else{
-                        System.out.print(ANSI_WHITE_BACKGROUND+" " + " | "+ANSI_RESET);
+                    } else {
+                        System.out.print(ANSI_WHITE_BACKGROUND + " " + " | " + ANSI_RESET);
                     }
-                }
-                else{
-                    System.out.print(ANSI_WHITE_BACKGROUND+" " + " | "+ANSI_RESET);
+                } else {
+                    System.out.print(ANSI_WHITE_BACKGROUND + " " + " | " + ANSI_RESET);
                 }
             }
             System.out.println();
@@ -316,13 +314,12 @@ public class ViewCommandLineInterface implements Viewable {
             System.out.print(i + "\t");
             for (int j = 0; j < 15; j++) {
                 if (board.getBoard()[i][j] == null)
-                    System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
+                    System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
                 else {
-                    if(board.getSecondBoard().isStrike(i, j)){
-                        System.out.print(ANSI_RED+"x" +ANSI_RESET+ANSI_BLUE+" | "+ANSI_RESET);
-                    }
-                    else {
-                        System.out.print(ANSI_BLUE+"~" + " | "+ANSI_RESET);
+                    if (board.getSecondBoard().isStrike(i, j)) {
+                        System.out.print(ANSI_RED + "x" + ANSI_RESET + ANSI_BLUE + " | " + ANSI_RESET);
+                    } else {
+                        System.out.print(ANSI_BLUE + "~" + " | " + ANSI_RESET);
                     }
                 }
 
