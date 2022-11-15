@@ -5,6 +5,9 @@ import ece.fr.model.ship.*;
 
 import static java.lang.Math.sqrt;
 
+/**
+ * Création du plateau de jeu
+ */
 public class Board {
     private Ship[][] board;
     private Ship[] shipsList;

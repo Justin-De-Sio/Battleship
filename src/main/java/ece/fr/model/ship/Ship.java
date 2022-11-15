@@ -2,6 +2,9 @@ package ece.fr.model.ship;
 
 import java.util.ArrayList;
 
+/**
+ * Création de la classe ship mère abstraite
+ */
 public abstract class Ship implements java.io.Serializable {
 
     protected boolean isVertical;

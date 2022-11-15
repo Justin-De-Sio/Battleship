@@ -8,6 +8,9 @@ import ece.fr.view.Viewable;
 
 import java.io.Serializable;
 
+/**
+ * Controlleur principal
+ */
 public class GameController implements Serializable {
 
     private final Viewable view;
@@ -25,7 +28,7 @@ public class GameController implements Serializable {
     public GameController(Viewable view, GameEvaluator evaluator, boolean isCheatOn) {
         this.view = view;
         this.evaluator = evaluator;
-        this.choiceManager = new ChoiceManager(view, this);//TODO le choixManager doit être créé dans le main
+        this.choiceManager = new ChoiceManager(view, this);
         this.board1 = new Board();
         this.board2 = new Board();
         this.Bot = new BOT(this.board2);

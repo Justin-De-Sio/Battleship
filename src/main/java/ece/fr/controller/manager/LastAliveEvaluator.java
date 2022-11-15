@@ -4,6 +4,9 @@ import ece.fr.controller.GameEvaluator;
 import ece.fr.model.Board;
 import ece.fr.model.ship.Ship;
 
+/**
+ * Vérifie que les règles officielles du jeu sont respectées  pour la fin de game
+ */
 public class LastAliveEvaluator implements GameEvaluator {
 
     //use isGameOver(

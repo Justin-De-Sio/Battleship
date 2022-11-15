@@ -3,6 +3,9 @@ package ece.fr.controller;
 
 import java.io.*;
 
+/**
+ * Permet la sauvegarde dans un fichier qui se crée dans le dossier ressources
+ */
 interface Serializer {
     static void serialize(Object object, String fileName) {
         String ressourcePath = "src/main/resources/";
@@ -33,6 +36,12 @@ interface Serializer {
         }
     }
 
+    /**
+     * Permet le chargement d'une partie en utilisant les fichiers mis dans le dossier ressources
+     * @param object
+     * @param fileName
+     * @return Object
+     */
     static Object deSerialize(Object object, String fileName) {
         String ressourcePath = "src/main/resources/";
         String filePath = ressourcePath + fileName;
