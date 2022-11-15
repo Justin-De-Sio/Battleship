@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * toute les méthode de l'affichage sont dans cette classe
+ */
 public class ViewCommandLineInterface implements Viewable {
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -30,8 +33,8 @@ public class ViewCommandLineInterface implements Viewable {
 
     }
 
-    /**affiche le board
-     * @param board
+    /**affiche la board
+     * @param board affhiche las board choisis
      */
     public void displayBoard(Board board) {
         System.out.println("\033[34m" + "La flotte" + "\033[0m");
